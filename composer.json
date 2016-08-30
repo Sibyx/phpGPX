@@ -1,5 +1,7 @@
 {
   "name": "Sibyx/phpGPX",
+  "type": "library",
+  "version": "0.1",
   "description": "A simple PHP library for GPX import/export",
   "minimum-stability": "dev",
   "license": "MIT",
@@ -8,5 +10,8 @@
 	  "name": "Jakub Dubec",
 	  "email": "jakub.dubec@gmail.com"
 	}
-  ]
+  ],
+  "autoload": {
+	"psr-0": { "phpGPX": "src/" }
+  }
 }

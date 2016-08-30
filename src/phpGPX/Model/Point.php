@@ -1,13 +1,13 @@
 <?php
 /**
- * Created            26/08/16 16:46
+ * Created            26/08/16 14:22
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
 namespace phpGPX\Model;
 
 
-abstract class Point
+class Point
 {
 	/** @var  float */
 	public $latitude;
@@ -23,6 +23,9 @@ abstract class Point
 
 	/** @var  Extension */
 	public $extension;
+
+	/** @var  \DateTime */
+	public $timestamp;
 
 	/**
 	 * Point constructor.

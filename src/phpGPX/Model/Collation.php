@@ -7,7 +7,7 @@
 namespace phpGPX\Model;
 
 
-class Track
+class Collation
 {
 
 	/** @var  string */

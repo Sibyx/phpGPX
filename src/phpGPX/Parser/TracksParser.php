@@ -7,71 +7,116 @@
 namespace phpGPX\Parser;
 
 
-use phpGPX\Model\Track;
+use phpGPX\Model\Extension;
+use phpGPX\Model\Segment;
+use phpGPX\Model\Collation;
+use phpGPX\Model\Point;
 
 abstract class TracksParser
 {
 
 	/**
-	 * @param \DOMNode $gpx
-	 * @return \phpGPX\Model\Track[]
+	 * @param \SimpleXMLElement $nodes
+	 * @return \phpGPX\Model\Collation[]
 	 */
-	public static function parse(\DOMNode $gpx)
+	public static function parse(\SimpleXMLElement $nodes)
 	{
 
-		/** @var Track[] $tracks */
 		$tracks = [];
 
-		$children = $gpx->childNodes->length;
-
-		for ($i = 0; $i < $children; $i++)
+		foreach ($nodes as $trk)
 		{
-			$trk = $gpx->childNodes->item($i);
-			$tracks[] = self::parse_trk($trk);
+			$tracks[] = self::parseNode($trk);
 		}
 
 		return $tracks;
 	}
 
 	/**
-	 * @param \DOMNode $trk
-	 * @return Track
+	 * @param \SimpleXMLElement $node
+	 * @return Collation
 	 */
-	private static function parse_trk(\DOMNode $trk)
+	private static function parseNode(\SimpleXMLElement $node)
 	{
-		$track = new Track();
-		$nodes = $trk->childNodes->length;
+		$track = new Collation();
 
-		for ($i = 0; $i < $nodes; $i++)
+		if (isset($node->src))
 		{
-			$node = $trk->childNodes->item($i);
+			$track->source = (string) $node->src;
+		}
 
-			switch ($node->nodeName)
+		if (isset($node->link))
+		{
+			$track->url = (string) $node->link['href'];
+		}
+
+		if (isset($node->type))
+		{
+			$track->type = (string) $node->type;
+		}
+
+		if (isset($node->trkseg))
+		{
+			foreach ($node->trkseg as $seg)
 			{
-				case 'src':
-					$track->source = $node->nodeValue;
-					printf("src: %s", $track->source);
-					break;
-				case 'type':
-					$track->type = $node->nodeValue;
-					printf("type: %s", $track->type);
-					break;
-				case 'link':
-					$track->url = $node->attributes->getNamedItem('href')->nodeValue;
-					printf("link: %s", $track->url);
-					break;
-				case 'trkseg':
-
-
+				$track->segments[] = self::parseSegment($seg);
 			}
 		}
 
 		return $track;
 	}
 
-	private static function parse_trkseg(\DOMNode $trkseg)
+	private static function parseSegment(\SimpleXMLElement $seg)
 	{
+		$segment = new Segment();
 
+		foreach ($seg as $pt)
+		{
+			$point = new Point();
+
+			$point->latitude = isset($pt['lat']) ? ((double) $pt['lat']) : null;
+			$point->longitude = isset($pt['lon']) ? ((double) $pt['lon']) : null;
+			$point->altitude = isset($pt->ele) ? ((double) $pt->ele) : null;
+
+			if (isset($pt->time))
+			{
+				$utc = new \DateTimeZone('UTC');
+				$point->timestamp = new \DateTime($pt->time, $utc);
+			}
+
+			if (isset($pt->extensions))
+			{
+				$point->extension = self::parseExtensions($pt->extensions);
+			}
+
+			$segment->points[] = $point;
+		}
+
+		return $segment;
+	}
+
+	/**
+	 * @param \SimpleXMLElement $ext
+	 * @return Extension
+	 */
+	private static function parseExtensions(\SimpleXMLElement $ext)
+	{
+		$extension = new Extension();
+		$ns = $ext->getNamespaces(true);
+
+		$trackPointExtension = $ext->children($ns['gpxtpx'])->TrackPointExtension;
+
+		if (!empty($trackPointExtension))
+		{
+			$extension->heartRate = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null; //check
+			$extension->avgTemperature = isset($trackPointExtension->atemp) ? ((double) $trackPointExtension->atemp) : null; //check
+			$extension->cadence = isset($trackPointExtension->cad) ? ((double) $trackPointExtension->cad) : null; //check
+//			$extension->course = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null;
+//			$extension->distance = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null;
+//			$extension->speed = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null;
+		}
+
+		return $extension;
 	}
 
 }
