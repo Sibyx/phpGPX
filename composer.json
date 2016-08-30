@@ -1,0 +1,12 @@
+{
+  "name": "Sibyx/phpGPX",
+  "description": "A simple PHP library for GPX import/export",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "Jakub Dubec",
+	  "email": "jakub.dubec@gmail.com"
+	}
+  ]
+}
