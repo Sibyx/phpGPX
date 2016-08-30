@@ -9,7 +9,7 @@ namespace phpGPX\Parser;
 
 use phpGPX\Model\Extension;
 use phpGPX\Model\Segment;
-use phpGPX\Model\Collation;
+use phpGPX\Model\Collection;
 use phpGPX\Model\Point;
 
 abstract class TracksParser
@@ -17,11 +17,10 @@ abstract class TracksParser
 
 	/**
 	 * @param \SimpleXMLElement $nodes
-	 * @return \phpGPX\Model\Collation[]
+	 * @return \phpGPX\Model\Collection[]
 	 */
 	public static function parse(\SimpleXMLElement $nodes)
 	{
-
 		$tracks = [];
 
 		foreach ($nodes as $trk)
@@ -34,11 +33,11 @@ abstract class TracksParser
 
 	/**
 	 * @param \SimpleXMLElement $node
-	 * @return Collation
+	 * @return Collection
 	 */
 	private static function parseNode(\SimpleXMLElement $node)
 	{
-		$track = new Collation();
+		$track = new Collection();
 
 		if (isset($node->src))
 		{

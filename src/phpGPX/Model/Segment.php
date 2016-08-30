@@ -10,7 +10,9 @@ namespace phpGPX\Model;
 class Segment
 {
 
-	/** @var  RoutePoint[]|Point[]|WaypointPoint[] */
+	/**
+	 * @var Point[]
+	 */
 	public $points;
 
 }

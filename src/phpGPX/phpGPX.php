@@ -8,7 +8,7 @@ namespace phpGPX;
 
 
 use phpGPX\Model\Route;
-use phpGPX\Model\Collation;
+use phpGPX\Model\Collection;
 use phpGPX\Parser\TracksParser;
 
 class phpGPX
@@ -17,23 +17,21 @@ class phpGPX
 	/** @var  \SimpleXMLElement */
 	private $xml;
 
-	/** @var  Collation[] */
+	/** @var  Collection[] */
 	public $waypoints;
 
-	/** @var  Collation[] */
+	/** @var  Collection[] */
 	public $routes;
 
-	/** @var  Collation[] */
+	/** @var  Collection[] */
 	public $tracks;
 
 	/** @var  array */
 	public $metadata;
 
-	/** @var  array */
-	public static $config 			= [
-
-	];
-
+	public static $CALCULATE_DISTANCE = false;
+	public static $CALCULATE_AVERAGE_STATS = false;
+	public static $CALCULATE_MIN_MAX = false;
 
 	public function load($path)
 	{
