@@ -70,6 +70,11 @@ abstract class StatsHelper
 				$collection->segments[$s]->points[$p]->distance = $collection->stats->distance;
 			}
 
+			if ($collection->stats->minAltitude == null)
+			{
+				$collection->stats->minAltitude = $collection->segments[$s]->stats->minAltitude;
+			}
+
 			if ($collection->stats->maxAltitude < $collection->segments[$s]->stats->maxAltitude)
 			{
 				$collection->stats->maxAltitude = $collection->segments[$s]->stats->maxAltitude;
