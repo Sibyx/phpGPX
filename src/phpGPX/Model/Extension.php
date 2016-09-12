@@ -7,7 +7,7 @@
 namespace phpGPX\Model;
 
 
-class Extension
+class Extension implements Summarizable
 {
 
 	/** @var  float */
@@ -29,7 +29,7 @@ class Extension
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function summary()
 	{
 		return [
 			'speed' => $this->speed,
@@ -40,4 +40,12 @@ class Extension
 		];
 	}
 
+	/**
+	 * Return valid XML node based on GPX standard and Garmin Extensions
+	 * @return mixed
+	 */
+	function toNode()
+	{
+		return null;
+	}
 }

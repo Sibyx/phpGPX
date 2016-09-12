@@ -7,24 +7,45 @@
 namespace phpGPX\Model;
 
 
-class Point
+use phpGPX\Helpers\Utils;
+use phpGPX\phpGPX;
+
+class Point implements Summarizable
 {
-	/** @var  float */
+	/**
+	 * Latitude
+	 * @var float
+	 */
 	public $latitude;
 
-	/** @var  float */
+	/**
+	 * Longitude
+	 * @var float
+	 */
 	public $longitude;
 
-	/** @var  float */
+	/**
+	 * Altitude in meters (m)
+	 * @var double
+	 */
 	public $altitude;
 
-	/** @var  float */
+	/**
+	 * Difference in in distance (in meters) between last point
+	 * @var double
+	 */
 	public $difference;
 
-	/** @var  float */
+	/**
+	 * Distance from collection start in meters
+	 * @var double
+	 */
 	public $distance;
 
-	/** @var  string */
+	/**
+	 * Name of point if defined
+	 * @var string
+	 */
 	public $name;
 
 	/** @var  Extension */
@@ -45,22 +66,31 @@ class Point
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function summary()
 	{
 		return [
-			'latitude' => $this->latitude,
-			'longitude' => $this->longitude,
-			'altitude' => $this->altitude,
-			'difference' => $this->difference,
-			'distance' => $this->distance,
-			'name' => $this->name,
-			'timestamp' => $this->timestamp->format("c"),
-			'extension' => $this->extension->toArray()
+			'latitude' => (float) $this->latitude,
+			'longitude' => (float) $this->longitude,
+			'altitude' => (double) $this->altitude,
+			'difference' => (double) $this->difference,
+			'distance' => (double) $this->distance,
+			'name' => (string) $this->name,
+			'timestamp' => Utils::formatDateTime($this->timestamp, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'extension' => $this->extension->summary()
 		];
 	}
 
 	public function createNode()
 	{
 
+	}
+
+	/**
+	 * Return valid XML node based on GPX standard and Garmin Extensions
+	 * @return mixed
+	 */
+	function toNode()
+	{
+		return null;
 	}
 }

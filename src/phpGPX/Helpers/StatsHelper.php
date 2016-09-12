@@ -96,7 +96,10 @@ abstract class StatsHelper
 				$collection->stats->averageSpeed = $collection->stats->distance / $collection->stats->duration;
 			}
 
-			//TODO: average pace
+			if ($collection->stats->distance != 0)
+			{
+				$collection->stats->averagePace = $collection->stats->duration / $collection->stats->distance;
+			}
 		}
 
 
@@ -149,7 +152,10 @@ abstract class StatsHelper
 				$segment->stats->averageSpeed = $segment->stats->distance / $segment->stats->duration;
 			}
 
-			//TODO: average pace
+			if ($segment->stats->distance != 0)
+			{
+				$segment->stats->averagePace = $segment->stats->duration / $segment->stats->distance;
+			}
 		}
 	}
 

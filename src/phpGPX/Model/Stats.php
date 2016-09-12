@@ -7,45 +7,56 @@
 namespace phpGPX\Model;
 
 
-class Stats
+use phpGPX\Helpers\Utils;
+use phpGPX\phpGPX;
+
+class Stats implements Summarizable
 {
 
 	/**
+	 * Distance in meters (m)
 	 * @var double
 	 */
 	public $distance = 0;
 
 	/**
+	 * Average speed in meters per second (m/s)
 	 * @var double
 	 */
 	public $averageSpeed = null;
 
 	/**
+	 * Average pace in seconds per kilometer (s/km)
 	 * @var double
 	 */
 	public $averagePace = null;
 
 	/**
+	 * Minimal altitude in meters (m)
 	 * @var int
 	 */
 	public $minAltitude = null;
 
 	/**
+	 * Maximal altitude in meters (m)
 	 * @var int
 	 */
 	public $maxAltitude = null;
 
 	/**
+	 * Started time
 	 * @var \DateTime
 	 */
 	public $startedAt = null;
 
 	/**
+	 * Ending time
 	 * @var \DateTime
 	 */
 	public $finishedAt = null;
 
 	/**
+	 * Duration is seconds
 	 * @var int
 	 */
 	public $duration = null;
@@ -64,4 +75,28 @@ class Stats
 		$this->finishedAt = null;
 	}
 
+	/**
+	 * @return array
+	 */
+	function summary()
+	{
+		return [
+			'distance' => (double) $this->distance,
+			'avgSpeed' => (double) $this->averageSpeed,
+			'avgPace' => (double) $this->averagePace,
+			'minAltitude' => (double) $this->minAltitude,
+			'maxAltitude' => (double) $this->maxAltitude,
+			'startedAt' => Utils::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'finishedAt' => Utils::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT)
+		];
+	}
+
+	/**
+	 * Return valid XML node based on GPX standard and Garmin Extensions
+	 * @return mixed
+	 */
+	function toNode()
+	{
+		return null;
+	}
 }

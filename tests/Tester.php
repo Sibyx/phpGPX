@@ -9,7 +9,7 @@ use phpGPX\phpGPX;
 require_once '../vendor/autoload.php';
 
 $gpx = new phpGPX();
-$gpx->load('example.xml');
+$gpx->load('example.gpx');
 
 foreach ($gpx->tracks as $track)
 {

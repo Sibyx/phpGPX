@@ -10,15 +10,21 @@ namespace phpGPX\Model;
 use phpGPX\Helpers\Utils;
 use phpGPX\phpGPX;
 
-class Collection
+class Collection implements Summarizable
 {
 
+	const TRACK_COLLECTION = 'track';
+	const WAYPOINT_COLLECTION = 'waypoint';
+	const ROUTE_COLLECTION = 'route';
+
 	/**
+	 * Name of collection if defined
 	 * @var string
 	 */
 	public $name;
 
 	/**
+	 * Type of collection
 	 * @var string
 	 */
 	public $type;
@@ -26,14 +32,22 @@ class Collection
 	/**
 	 * @var string
 	 */
+	public $collectionType;
+
+	/**
+	 * Url of original data source
+	 * @var string
+	 */
 	public $url;
 
 	/**
+	 * Data source name (data origin)
 	 * @var string
 	 */
 	public $source;
 
 	/**
+	 * Segments array
 	 * @var Segment[]
 	 */
 	public $segments = [];
@@ -67,5 +81,29 @@ class Collection
 		}
 
 		return $points;
+	}
+
+	/**
+	 * @return array
+	 */
+	function summary()
+	{
+		return [
+			'name' => $this->name,
+			'type' => $this->type,
+			'url' => $this->url,
+			'source' => $this->source,
+			'segments' => Utils::serialize($this->segments),
+			'stats' => $this->stats->summary()
+		];
+	}
+
+	/**
+	 * Return valid XML node based on GPX standard and Garmin Extensions
+	 * @return mixed
+	 */
+	function toNode()
+	{
+		return null;
 	}
 }

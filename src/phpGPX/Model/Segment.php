@@ -7,10 +7,13 @@
 namespace phpGPX\Model;
 
 
-class Segment
+use phpGPX\Helpers\Utils;
+
+class Segment implements Summarizable
 {
 
 	/**
+	 * Array of segment points
 	 * @var Point[]
 	 */
 	public $points;
@@ -26,5 +29,25 @@ class Segment
 	public function __construct()
 	{
 		$this->stats = new Stats();
+	}
+
+	/**
+	 * @return array
+	 */
+	function summary()
+	{
+		return [
+			'points' => Utils::serialize($this->points),
+			'stats' => $this->summary()
+		];
+	}
+
+	/**
+	 * Return valid XML node based on GPX standard and Garmin Extensions
+	 * @return mixed
+	 */
+	function toNode()
+	{
+		return null;
 	}
 }
