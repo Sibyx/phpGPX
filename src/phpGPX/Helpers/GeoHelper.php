@@ -7,7 +7,7 @@
 namespace phpGPX\Helpers;
 
 
-use phpGPX\Model\Point;
+use phpGPX\Models\Point;
 
 abstract class GeoHelper
 {

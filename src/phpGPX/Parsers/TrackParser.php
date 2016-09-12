@@ -4,18 +4,18 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace phpGPX\Parser;
+namespace phpGPX\Parsers;
 
 
 use phpGPX\Helpers\StatsHelper;
 use phpGPX\Helpers\Utils;
-use phpGPX\Model\Extension;
-use phpGPX\Model\Segment;
-use phpGPX\Model\Collection;
-use phpGPX\Model\Point;
+use phpGPX\Models\Extension;
+use phpGPX\Models\Segment;
+use phpGPX\Models\Collection;
+use phpGPX\Models\Point;
 use phpGPX\phpGPX;
 
-abstract class TracksParser
+abstract class TrackParser
 {
 
 	/**
@@ -40,7 +40,7 @@ abstract class TracksParser
 	 */
 	private static function parseNode(\SimpleXMLElement $node)
 	{
-		$track = new Collection();
+		$track = new Collection(Collection::TRACK_COLLECTION);
 
 		if (isset($node->src))
 		{
@@ -49,7 +49,8 @@ abstract class TracksParser
 
 		if (isset($node->link))
 		{
-			$track->url = (string) $node->link['href'];
+			$track->url['href'] = (string) $node->link['href'];
+			$track->url['text'] = (string) $node->link->text;
 		}
 
 		if (isset($node->type))
@@ -72,11 +73,11 @@ abstract class TracksParser
 
 	private static function parseSegment(\SimpleXMLElement $seg)
 	{
-		$segment = new Segment();
+		$segment = new Segment(Collection::TRACK_COLLECTION);
 
 		foreach ($seg as $pt)
 		{
-			$point = new Point();
+			$point = new Point(Collection::TRACK_COLLECTION);
 
 			$point->latitude = isset($pt['lat']) ? ((double) $pt['lat']) : null;
 			$point->longitude = isset($pt['lon']) ? ((double) $pt['lon']) : null;

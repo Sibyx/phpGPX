@@ -7,8 +7,8 @@
 namespace phpGPX\Helpers;
 
 
-use phpGPX\Model\Point;
-use phpGPX\Model\Summarizable;
+use phpGPX\Models\Point;
+use phpGPX\Models\Summarizable;
 
 class Utils
 {

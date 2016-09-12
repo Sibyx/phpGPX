@@ -7,8 +7,8 @@
 namespace phpGPX\Helpers;
 
 
-use phpGPX\Model\Collection;
-use phpGPX\Model\Segment;
+use phpGPX\Models\Collection;
+use phpGPX\Models\Segment;
 
 abstract class StatsHelper
 {

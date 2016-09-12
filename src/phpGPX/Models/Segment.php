@@ -4,13 +4,19 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace phpGPX\Model;
+namespace phpGPX\Models;
 
 
 use phpGPX\Helpers\Utils;
 
 class Segment implements Summarizable
 {
+
+	/**
+	 * Type of the segment (parent collation type (ROUTE|WAYPOINT|TRACK))
+	 * @var string
+	 */
+	private $segmentType;
 
 	/**
 	 * Array of segment points
@@ -25,13 +31,16 @@ class Segment implements Summarizable
 
 	/**
 	 * Segment constructor.
+	 * @param string $segmentType
 	 */
-	public function __construct()
+	public function __construct($segmentType)
 	{
 		$this->stats = new Stats();
+		$this->segmentType = $segmentType;
 	}
 
 	/**
+	 * Serialize object to array
 	 * @return array
 	 */
 	function summary()
@@ -40,14 +49,5 @@ class Segment implements Summarizable
 			'points' => Utils::serialize($this->points),
 			'stats' => $this->summary()
 		];
-	}
-
-	/**
-	 * Return valid XML node based on GPX standard and Garmin Extensions
-	 * @return mixed
-	 */
-	function toNode()
-	{
-		return null;
 	}
 }

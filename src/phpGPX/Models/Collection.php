@@ -4,7 +4,7 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace phpGPX\Model;
+namespace phpGPX\Models;
 
 
 use phpGPX\Helpers\Utils;
@@ -36,7 +36,7 @@ class Collection implements Summarizable
 
 	/**
 	 * Url of original data source
-	 * @var string
+	 * @var array
 	 */
 	public $url;
 
@@ -59,10 +59,12 @@ class Collection implements Summarizable
 
 	/**
 	 * Collection constructor.
+	 * @param string $collectionType
 	 */
-	public function __construct()
+	public function __construct($collectionType)
 	{
 		$this->stats = new Stats();
+		$this->collectionType = $collectionType;
 	}
 
 	public function getPoints()
@@ -84,6 +86,7 @@ class Collection implements Summarizable
 	}
 
 	/**
+	 * Serialize object to array
 	 * @return array
 	 */
 	function summary()
@@ -96,14 +99,5 @@ class Collection implements Summarizable
 			'segments' => Utils::serialize($this->segments),
 			'stats' => $this->stats->summary()
 		];
-	}
-
-	/**
-	 * Return valid XML node based on GPX standard and Garmin Extensions
-	 * @return mixed
-	 */
-	function toNode()
-	{
-		return null;
 	}
 }

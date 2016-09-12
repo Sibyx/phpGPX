@@ -4,7 +4,7 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace phpGPX\Model;
+namespace phpGPX\Models;
 
 
 use phpGPX\Helpers\Utils;
@@ -76,6 +76,7 @@ class Stats implements Summarizable
 	}
 
 	/**
+	 * Serialize object to array
 	 * @return array
 	 */
 	function summary()
@@ -89,14 +90,5 @@ class Stats implements Summarizable
 			'startedAt' => Utils::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'finishedAt' => Utils::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT)
 		];
-	}
-
-	/**
-	 * Return valid XML node based on GPX standard and Garmin Extensions
-	 * @return mixed
-	 */
-	function toNode()
-	{
-		return null;
 	}
 }

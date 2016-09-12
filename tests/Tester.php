@@ -11,7 +11,5 @@ require_once '../vendor/autoload.php';
 $gpx = new phpGPX();
 $gpx->load('example.gpx');
 
-foreach ($gpx->tracks as $track)
-{
-	var_dump($track->stats);
-}
+$gpx->save('output.gpx', phpGPX::XML_FORMAT);
+//$gpx->save('output.json', phpGPX::JSON_FORMAT);

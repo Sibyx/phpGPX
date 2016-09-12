@@ -4,7 +4,7 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace phpGPX\Parser;
+namespace phpGPX\Parsers;
 
 
 class MetaParser
