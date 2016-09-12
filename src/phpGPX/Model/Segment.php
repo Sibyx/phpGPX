@@ -15,4 +15,16 @@ class Segment
 	 */
 	public $points;
 
+	/**
+	 * @var Stats
+	 */
+	public $stats;
+
+	/**
+	 * Segment constructor.
+	 */
+	public function __construct()
+	{
+		$this->stats = new Stats();
+	}
 }

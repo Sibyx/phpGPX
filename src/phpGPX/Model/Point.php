@@ -18,6 +18,12 @@ class Point
 	/** @var  float */
 	public $altitude;
 
+	/** @var  float */
+	public $difference;
+
+	/** @var  float */
+	public $distance;
+
 	/** @var  string */
 	public $name;
 
@@ -33,5 +39,28 @@ class Point
 	public function __construct()
 	{
 		$this->extension = new Extension();
+	}
+
+	/**
+	 * Serialize object to array
+	 * @return array
+	 */
+	public function toArray()
+	{
+		return [
+			'latitude' => $this->latitude,
+			'longitude' => $this->longitude,
+			'altitude' => $this->altitude,
+			'difference' => $this->difference,
+			'distance' => $this->distance,
+			'name' => $this->name,
+			'timestamp' => $this->timestamp->format("c"),
+			'extension' => $this->extension->toArray()
+		];
+	}
+
+	public function createNode()
+	{
+
 	}
 }

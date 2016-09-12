@@ -7,10 +7,13 @@
 namespace phpGPX\Parser;
 
 
+use phpGPX\Helpers\StatsHelper;
+use phpGPX\Helpers\Utils;
 use phpGPX\Model\Extension;
 use phpGPX\Model\Segment;
 use phpGPX\Model\Collection;
 use phpGPX\Model\Point;
+use phpGPX\phpGPX;
 
 abstract class TracksParser
 {
@@ -62,6 +65,8 @@ abstract class TracksParser
 			}
 		}
 
+		StatsHelper::recalculateStats($track);
+
 		return $track;
 	}
 
@@ -76,6 +81,7 @@ abstract class TracksParser
 			$point->latitude = isset($pt['lat']) ? ((double) $pt['lat']) : null;
 			$point->longitude = isset($pt['lon']) ? ((double) $pt['lon']) : null;
 			$point->altitude = isset($pt->ele) ? ((double) $pt->ele) : null;
+			$point->name = isset($pt->name) ? ((string) $pt->name) : null;
 
 			if (isset($pt->time))
 			{
@@ -89,6 +95,11 @@ abstract class TracksParser
 			}
 
 			$segment->points[] = $point;
+		}
+
+		if (phpGPX::$SORT_BY_TIMESTAMP)
+		{
+			usort($segment->points, array(Utils::class, 'comparePointsByTimestamp'));
 		}
 
 		return $segment;
@@ -111,7 +122,6 @@ abstract class TracksParser
 			$extension->avgTemperature = isset($trackPointExtension->atemp) ? ((double) $trackPointExtension->atemp) : null; //check
 			$extension->cadence = isset($trackPointExtension->cad) ? ((double) $trackPointExtension->cad) : null; //check
 //			$extension->course = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null;
-//			$extension->distance = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null;
 //			$extension->speed = isset($trackPointExtension->hr) ? ((double) $trackPointExtension->hr) : null;
 		}
 

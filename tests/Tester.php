@@ -10,3 +10,8 @@ require_once '../vendor/autoload.php';
 
 $gpx = new phpGPX();
 $gpx->load('example.xml');
+
+foreach ($gpx->tracks as $track)
+{
+	var_dump($track->stats);
+}

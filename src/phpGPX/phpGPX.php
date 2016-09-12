@@ -32,6 +32,7 @@ class phpGPX
 	public static $CALCULATE_DISTANCE = false;
 	public static $CALCULATE_AVERAGE_STATS = false;
 	public static $CALCULATE_MIN_MAX = false;
+	public static $SORT_BY_TIMESTAMP = true;
 
 	public function load($path)
 	{

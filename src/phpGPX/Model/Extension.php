@@ -11,9 +11,6 @@ class Extension
 {
 
 	/** @var  float */
-	public $distance;
-
-	/** @var  float */
 	public $speed;
 
 	/** @var  float */
@@ -28,5 +25,19 @@ class Extension
 	/** @var  float */
 	public $course;
 
+	/**
+	 * Serialize object to array
+	 * @return array
+	 */
+	public function toArray()
+	{
+		return [
+			'speed' => $this->speed,
+			'heartRate' => $this->heartRate,
+			'avgTemperature' => $this->avgTemperature,
+			'cadence' => $this->cadence,
+			'course' => $this->course
+		];
+	}
 
 }

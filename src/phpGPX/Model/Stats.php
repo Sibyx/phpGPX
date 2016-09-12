@@ -35,4 +35,33 @@ class Stats
 	 */
 	public $maxAltitude = null;
 
+	/**
+	 * @var \DateTime
+	 */
+	public $startedAt = null;
+
+	/**
+	 * @var \DateTime
+	 */
+	public $finishedAt = null;
+
+	/**
+	 * @var int
+	 */
+	public $duration = null;
+
+	/**
+	 * Reset all stats
+	 */
+	public function reset()
+	{
+		$this->distance = 0;
+		$this->averageSpeed = 0;
+		$this->averagePace = 0;
+		$this->minAltitude = 0;
+		$this->maxAltitude = 0;
+		$this->startedAt = null;
+		$this->finishedAt = null;
+	}
+
 }

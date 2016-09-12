@@ -7,6 +7,9 @@
 namespace phpGPX\Model;
 
 
+use phpGPX\Helpers\Utils;
+use phpGPX\phpGPX;
+
 class Collection
 {
 
@@ -31,16 +34,6 @@ class Collection
 	public $source;
 
 	/**
-	 * @var \DateTime
-	 */
-	public $startedAt;
-
-	/**
-	 * @var \DateTime
-	 */
-	public $finishedAt;
-
-	/**
 	 * @var Segment[]
 	 */
 	public $segments = [];
@@ -51,11 +44,6 @@ class Collection
 	public $stats;
 
 	/**
-	 * @var Point
-	 */
-	public $startingPoint;
-
-	/**
 	 * Collection constructor.
 	 */
 	public function __construct()
@@ -63,4 +51,21 @@ class Collection
 		$this->stats = new Stats();
 	}
 
+	public function getPoints()
+	{
+		/** @var Point[] $points */
+		$points = [];
+
+		foreach ($this->segments as $segment)
+		{
+			$points = array_merge($points, $segment->points);
+		}
+
+		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points) && ($points[0]->timestamp instanceof \DateTime))
+		{
+			usort($points, array(Utils::class, 'comparePointsByTimestamp'));
+		}
+
+		return $points;
+	}
 }
