@@ -12,7 +12,7 @@ use phpGPX\Models\Point;
 abstract class GeoHelper
 {
 
-	const EARTH_RADIUS = 6372.795477598;
+	const EARTH_RADIUS = 6372795.477598;
 
 	/**
 	 * @param Point $point1
