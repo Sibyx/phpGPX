@@ -78,7 +78,7 @@ abstract class TrackXmlSerializer
 
 		if ($point->timestamp instanceof \DateTime)
 		{
-			$timeNode = $domDocument->createElement("time", $point->timestamp->format('Y-m-d\TH:i:s\Z'));
+			$timeNode = $domDocument->createElement("time", Utils::formatDateTime($point->timestamp, 'Y-m-d\TH:i:s\Z', 'UTC'));
 			$element->appendChild($timeNode);
 		}
 
