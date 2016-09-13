@@ -86,8 +86,8 @@ abstract class TrackParser
 
 			if (isset($pt->time))
 			{
-				$utc = new \DateTimeZone('UTC');
-				$point->timestamp = new \DateTime($pt->time, $utc);
+//				$utc = new \DateTimeZone('UTC');
+				$point->timestamp = new \DateTime($pt->time);
 			}
 
 			if (isset($pt->extensions))
