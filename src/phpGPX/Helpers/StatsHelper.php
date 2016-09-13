@@ -98,7 +98,7 @@ abstract class StatsHelper
 
 			if ($collection->stats->distance != 0)
 			{
-				$collection->stats->averagePace = $collection->stats->duration / $collection->stats->distance;
+				$collection->stats->averagePace = $collection->stats->duration / $collection->stats->distance / 1000;
 			}
 		}
 
