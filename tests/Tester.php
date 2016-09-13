@@ -15,7 +15,7 @@ $gpx->load('example.gpx');
 
 foreach ($gpx->tracks as $track)
 {
-	printf("Avg pace: %f\n", $track->stats->averagePace);
+	$track->stats->startedAt->getOffset();
 }
 
 //$gpx->save('output.json', phpGPX::JSON_FORMAT);
