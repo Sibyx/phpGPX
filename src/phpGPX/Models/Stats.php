@@ -88,7 +88,8 @@ class Stats implements Summarizable
 			'minAltitude' => (double) $this->minAltitude,
 			'maxAltitude' => (double) $this->maxAltitude,
 			'startedAt' => Utils::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
-			'finishedAt' => Utils::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT)
+			'finishedAt' => Utils::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'duration' => (double) $this->duration
 		];
 	}
 }
