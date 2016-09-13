@@ -20,7 +20,7 @@ abstract class TrackParser
 
 	/**
 	 * @param \SimpleXMLElement $nodes
-	 * @return \phpGPX\Model\Collection[]
+	 * @return \phpGPX\Models\Collection[]
 	 */
 	public static function parse(\SimpleXMLElement $nodes)
 	{

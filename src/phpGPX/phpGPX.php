@@ -114,6 +114,7 @@ class phpGPX
 		return $document;
 	}
 
+	// https://soyuka.me/streaming-big-json-files-the-good-way/
 	public function toJSON()
 	{
 		return json_encode($this->toArray(), self::$PRETTY_PRINT ? JSON_PRETTY_PRINT : null);
