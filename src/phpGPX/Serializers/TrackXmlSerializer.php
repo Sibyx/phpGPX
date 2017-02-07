@@ -25,6 +25,12 @@ abstract class TrackXmlSerializer
 			$srcNode = $domDocument->createElement("src", $collection->source);
 			$element->appendChild($srcNode);
 		}
+		
+		if (!empty($collection->name))
+		{
+		    $srcNode = $domDocument->createElement("name", $collection->name);
+		    $element->appendChild($srcNode);
+		}
 
 		if (!empty($collection->url))
 		{
