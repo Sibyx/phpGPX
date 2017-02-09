@@ -15,6 +15,42 @@ Currently is supported processing of Tracks in GPX files with calculation of bas
  - Start / end (DateTime object)
  - Duration (seconds)
 
+## Examples
+
+### Open GPX file and load basic stats
+```php
+$gpx = new phpGPX();
+	
+$gpx->load('example.gpx');
+	
+foreach ($gpx->tracks as $track)
+{
+    // Statistics for whole track
+    $track->stats->summary();
+    
+    foreach ($track->segments as $segment)
+    {
+    	// Statistics for segment of track
+    	$segment->summary();
+    }
+}
+```
+
+### Writing to file
+
+```php
+// XML
+$gpx->save('output.gpx', phpGPX::XML_FORMAT);
+	
+//JSON
+$gpx->save('output.json', phpGPX::JSON_FORMAT);
+```
+
+Currently supported output formats:
+
+ - XML
+ - JSON
+
 ## Installation
 
 Library is still not registered composer package so the installation requires some additional effort.
@@ -60,42 +96,6 @@ Library is still not registered composer package so the installation requires so
 4. Run `composer install`
 
 5. You are ready to use phpGPX
-
-## Examples
-
-### Open GPX file and load basic stats
-```php
-$gpx = new phpGPX();
-	
-$gpx->load('example.gpx');
-	
-foreach ($gpx->tracks as $track)
-{
-    // Statistics for whole track
-    $track->stats->summary();
-    
-    foreach ($track->segments as $segment)
-    {
-    	// Statistics for segment of track
-    	$segment->summary();
-    }
-}
-```
-
-### Writing to file
-
-```php
-// XML
-$gpx->save('output.gpx', phpGPX::XML_FORMAT);
-	
-//JSON
-$gpx->save('output.json', phpGPX::JSON_FORMAT);
-```
-
-Currently supported output formats:
-
- - XML
- - JSON
 
 # TODO
 
