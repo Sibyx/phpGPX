@@ -52,9 +52,7 @@ Library is still not registered composer package so the installation requires so
   ],
   "minimum-stability": "dev",
   "require": {
-    "facebook/graph-sdk": "^5.4",
-    "Sibyx/phpGPX": "master",
-    "box/spout": "^2.7"
+    "Sibyx/phpGPX": "master"
   }
 }
 ```
