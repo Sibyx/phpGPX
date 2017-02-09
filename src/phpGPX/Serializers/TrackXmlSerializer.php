@@ -16,6 +16,11 @@ use phpGPX\Models\Segment;
 abstract class TrackXmlSerializer
 {
 
+	/**
+	 * @param Collection $collection
+	 * @param \DOMDocument $domDocument
+	 * @return \DOMElement
+	 */
 	public static function serializeCollection(Collection $collection, \DOMDocument $domDocument)
 	{
 		$element = $domDocument->createElement("trk");
@@ -72,6 +77,7 @@ abstract class TrackXmlSerializer
 	/**
 	 * Convert Point object to valid GPX Track Point object.
 	 * @param Point $point
+	 * @param \DOMDocument $domDocument
 	 * @return \DOMElement
 	 */
 	private static function serializePoint(Point $point, \DOMDocument $domDocument)
@@ -113,6 +119,7 @@ abstract class TrackXmlSerializer
 	/**
 	 * Convert Extension object to valid Garmin GPX extension object. Returns null if empty extension values.
 	 * @param Extension $extension
+	 * @param \DOMDocument $domDocument
 	 * @return \DOMElement|null
 	 */
 	private static function serializeExtension(Extension $extension, \DOMDocument $domDocument)

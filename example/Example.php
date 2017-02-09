@@ -15,7 +15,14 @@ $gpx->load('example.gpx');
 
 foreach ($gpx->tracks as $track)
 {
-	$track->stats->startedAt->getOffset();
+	// Stats for whole track
+	$track->stats->summary();
+
+	foreach ($track->segments as $segment)
+	{
+		// Status for segment of track
+		$segment->summary();
+	}
 }
 
 //$gpx->save('output.json', phpGPX::JSON_FORMAT);
