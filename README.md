@@ -73,12 +73,12 @@ Library is still not registered composer package so the installation requires so
 	
 	foreach ($gpx->tracks as $track)
     {
-    	// Stats for whole track
+    	// Statistics for whole track
     	$track->stats->summary();
     
     	foreach ($track->segments as $segment)
     	{
-    		// Status for segment of track
+    		// Statistics for segment of track
     		$segment->summary();
     	}
     }
