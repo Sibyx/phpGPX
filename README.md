@@ -31,7 +31,7 @@ foreach ($gpx->tracks as $track)
     foreach ($track->segments as $segment)
     {
     	// Statistics for segment of track
-    	$segment->summary();
+    	$segment->stats->summary();
     }
 }
 ```
