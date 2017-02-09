@@ -56,7 +56,6 @@ Currently supported output formats:
 Library is still not registered composer package so the installation requires some additional effort.
 
 1. Add new git repository `https://github.com/Sibyx/phpGPX.git` to your `composer.json` file
-
 ```json
   "repositories": [
     {
@@ -65,7 +64,6 @@ Library is still not registered composer package so the installation requires so
     }
   ]
 ```
-
 2. Add `Sibyx/phpGPX` as new requirement
 
 ```json
@@ -73,9 +71,7 @@ Library is still not registered composer package so the installation requires so
     "Sibyx/phpGPX": "master"
   }
 ```
-
 3. So whole composer.json file should be similar to this one
-
 ```json
 {
   "name": "awesome-project",
@@ -92,9 +88,7 @@ Library is still not registered composer package so the installation requires so
   }
 }
 ```
-
 4. Run `composer install`
-
 5. You are ready to use phpGPX
 
 # TODO
@@ -108,6 +102,10 @@ Library is still not registered composer package so the installation requires so
 # Contributors
  
  - [Jakub Dubec](https://github.com/Sibyx) - Initial works, maintenance
- - [luklewluk](https://github.com/luklewluk)
+ - [Lukasz Lewandowski](https://github.com/luklewluk)
   
 I wrote this library as part of my job in [Backbone s.r.o.](https://www.backbone.sk/en/).
+
+# License
+
+This project is licensed under the terms of the MIT license.
