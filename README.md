@@ -67,31 +67,31 @@ Library is still not registered composer package so the installation requires so
 
 ### Open GPX file and load basic stats
 ```php
-	$gpx = new phpGPX();
+$gpx = new phpGPX();
 	
-	$gpx->load('example.gpx');
+$gpx->load('example.gpx');
 	
-	foreach ($gpx->tracks as $track)
-    {
-    	// Statistics for whole track
-    	$track->stats->summary();
+foreach ($gpx->tracks as $track)
+{
+    // Statistics for whole track
+    $track->stats->summary();
     
-    	foreach ($track->segments as $segment)
-    	{
-    		// Statistics for segment of track
-    		$segment->summary();
-    	}
+    foreach ($track->segments as $segment)
+    {
+    	// Statistics for segment of track
+    	$segment->summary();
     }
+}
 ```
 
 ### Writing to file
 
 ```php
-	// XML
-	$gpx->save('output.gpx', phpGPX::XML_FORMAT);
+// XML
+$gpx->save('output.gpx', phpGPX::XML_FORMAT);
 	
-	//JSON
-	$gpx->save('output.json', phpGPX::JSON_FORMAT);
+//JSON
+$gpx->save('output.json', phpGPX::JSON_FORMAT);
 ```
 
 Currently supported output formats:
