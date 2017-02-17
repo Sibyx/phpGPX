@@ -4,7 +4,12 @@ Simple library for reading and creating [GPX files](https://en.wikipedia.org/wik
 
 ## Features
 
-Library is still in development so not all features all implemented (see TODO). 
+Library is still in development so not all features all implemented (see TODO) due to the API is UNSTABLE.
+
+### Supported Extensions
+ - Garmin TrackPointExtension: http://www.garmin.com/xmlschemas/TrackPointExtension/v1
+ 
+## Stats calculation
 
 Currently is supported processing of Tracks in GPX files with calculation of basic stats (per collection and segment):
 
@@ -58,7 +63,7 @@ Library is still not registered composer package so the installation requires so
 1. Add new git repository `https://github.com/Sibyx/phpGPX.git` to your `composer.json` file
 2. Add `Sibyx/phpGPX` as new requirement
 3. So whole composer.json file should be similar to example bellow
-4. Run `composer install`
+4. Run `composer install --no-dev` (library has dev-requirements - PHPUnit)
 5. You are ready to use phpGPX
 
 ```json
