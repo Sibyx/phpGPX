@@ -96,6 +96,10 @@ class GpxFile implements Summarizable
 		return json_encode($this->toArray(), phpGPX::$PRETTY_PRINT ? JSON_PRETTY_PRINT : null);
 	}
 
+	/**
+	 * Create XML representation of GPX file.
+	 * @return \DOMDocument
+	 */
 	public function toXML()
 	{
 		$document = new \DOMDocument("1.0", 'UTF-8');
@@ -163,6 +167,11 @@ class GpxFile implements Summarizable
 		return $document;
 	}
 
+	/**
+	 * Save data to file according to selected format.
+	 * @param string $path
+	 * @param string $format
+	 */
 	public function save($path, $format)
 	{
 		switch ($format)

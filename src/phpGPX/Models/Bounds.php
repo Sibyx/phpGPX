@@ -11,21 +11,25 @@ class Bounds implements Summarizable
 {
 
 	/**
+	 * Minimal latitude in file.
 	 * @var float
 	 */
 	public $minLatitude;
 
 	/**
+	 * Minimal longitude in file.
 	 * @var float
 	 */
 	public $minLongitude;
 
 	/**
+	 * Maximal latitude in file.
 	 * @var float
 	 */
 	public $maxLatitude;
 
 	/**
+	 * Maximal longitude in file.
 	 * @var float
 	 */
 	public $maxLongitude;

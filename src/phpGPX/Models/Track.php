@@ -20,6 +20,7 @@ class Track extends Collection
 {
 
 	/**
+	 * Array of Track segments
 	 * @var Segment[]
 	 */
 	public $segments;

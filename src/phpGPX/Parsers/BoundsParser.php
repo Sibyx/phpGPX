@@ -18,6 +18,7 @@ abstract class BoundsParser
 	private static $tagName = 'bounds';
 
 	/**
+	 * Parse data from XML.
 	 * @param \SimpleXMLElement $node
 	 * @return Bounds|null
 	 */
@@ -37,6 +38,7 @@ abstract class BoundsParser
 	}
 
 	/**
+	 * Create XML representation.
 	 * @param Bounds $bounds
 	 * @param \DOMDocument $document
 	 * @return \DOMElement

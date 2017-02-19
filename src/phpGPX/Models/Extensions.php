@@ -19,6 +19,8 @@ class Extensions implements Summarizable
 {
 
 	/**
+	 * GPX Garmin TrackPointExtension v1
+	 * @see 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'
 	 * @var TrackPointExtension
 	 */
 	public $trackPointExtension;

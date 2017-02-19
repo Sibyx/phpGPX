@@ -73,6 +73,7 @@ class Metadata implements Summarizable
 	public $bounds;
 
 	/**
+	 * Extensions.
 	 * @var Extensions|null
 	 */
 	public $extensions;

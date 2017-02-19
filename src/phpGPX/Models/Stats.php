@@ -10,6 +10,10 @@ namespace phpGPX\Models;
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\phpGPX;
 
+/**
+ * Class Stats
+ * @package phpGPX\Models
+ */
 class Stats implements Summarizable
 {
 

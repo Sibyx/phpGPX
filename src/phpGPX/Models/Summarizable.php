@@ -6,7 +6,10 @@
 
 namespace phpGPX\Models;
 
-
+/**
+ * Interface Summarizable
+ * @package phpGPX\Models
+ */
 interface Summarizable
 {
 

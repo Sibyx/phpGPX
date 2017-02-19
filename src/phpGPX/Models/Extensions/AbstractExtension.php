@@ -19,6 +19,7 @@ abstract class AbstractExtension implements Summarizable
 	public $namespace;
 
 	/**
+	 * Node name extension.
 	 * @var string
 	 */
 	public $extensionName;

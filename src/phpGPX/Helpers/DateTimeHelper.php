@@ -9,9 +9,18 @@ namespace phpGPX\Helpers;
 
 use phpGPX\Models\Point;
 
+/**
+ * Class DateTimeHelper
+ * @package phpGPX\Helpers
+ */
 class DateTimeHelper
 {
 
+	/**
+	 * @param Point $point1
+	 * @param Point $point2
+	 * @return bool|int
+	 */
 	public static function comparePointsByTimestamp(Point $point1, Point $point2)
 	{
 		if ($point1->time == $point2->time)
@@ -19,6 +28,12 @@ class DateTimeHelper
 		return $point1->time > $point2->time;
 	}
 
+	/**
+	 * @param $datetime
+	 * @param string $format
+	 * @param string $timezone
+	 * @return null|string
+	 */
 	public static function formatDateTime($datetime, $format = 'c', $timezone = 'UTC')
 	{
 		$formatted 				= null;
@@ -32,6 +47,11 @@ class DateTimeHelper
 		return $formatted;
 	}
 
+	/**
+	 * @param $value
+	 * @param string $timezone
+	 * @return \DateTime
+	 */
 	public static function parseDateTime($value, $timezone = 'UTC')
 	{
 		$timezone = new \DateTimeZone($timezone);

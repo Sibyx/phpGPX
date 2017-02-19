@@ -31,7 +31,7 @@ $gpx = new phpGPX();
 	
 $file = $gpx->load('example.gpx');
 	
-foreach ($gpx->tracks as $track)
+foreach ($file->tracks as $track)
 {
     // Statistics for whole track
     $track->stats->toArray();

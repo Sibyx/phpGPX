@@ -70,6 +70,7 @@ abstract class Collection implements Summarizable, StatsCalculator
 	public $extensions;
 
 	/**
+	 * Objects contains calculated statistics for collection.
 	 * @var Stats|null
 	 */
 	public $stats;

@@ -184,6 +184,7 @@ class Point implements Summarizable
 	public $distance;
 
 	/**
+	 * Objects stores GPX extensions from another namespaces.
 	 * @var Extensions
 	 */
 	public $extensions;
@@ -226,7 +227,10 @@ class Point implements Summarizable
 		$this->pointType = $pointType;
 	}
 
-
+	/**
+	 * Return point type (ROUTE|TRACK|WAYPOINT)
+	 * @return string
+	 */
 	public function getPointType()
 	{
 		return $this->pointType;
