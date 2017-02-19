@@ -1,23 +1,22 @@
 <?php
 /**
- * Created            30/08/16 13:31
+ * Created            10/02/2017 15:44
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
 namespace phpGPX\Parsers;
 
-
-use phpGPX\Models\Track;
+use phpGPX\Models\Route;
 use phpGPX\phpGPX;
 
 /**
- * Class TrackParser
+ * Class RouteParser
  * @package phpGPX\Parsers
  */
-abstract class TrackParser
+abstract class RouteParser
 {
 
-	public static $tagName = 'trk';
+	public static $tagName = 'rte';
 
 	private static $attributeMapper = [
 		'name' => [
@@ -52,44 +51,44 @@ abstract class TrackParser
 			'name' => 'extensions',
 			'type' => 'object'
 		],
-		'trkseg' => [
-			'name' => 'segments',
+		'rtep' => [
+			'name' => 'points',
 			'type' => 'array'
 		],
 	];
 
 	/**
-	 * @param \SimpleXMLElement $nodes
-	 * @return Track[]
+	 * @param \SimpleXMLElement[] $nodes
+	 * @return Route[]
 	 */
-	public static function parse(\SimpleXMLElement $nodes)
+	public static function parse($nodes)
 	{
-		$tracks = [];
+		$routes = [];
 
 		foreach ($nodes as $node)
 		{
-			$track = new Track();
+			$route = new Route();
 
 			foreach (self::$attributeMapper as $key => $attribute)
 			{
 				switch ($key)
 				{
 					case 'link':
-						$track->links = isset($node->link) ? LinkParser::parse($node->link) : [];
+						$route->links = isset($node->link) ? LinkParser::parse($node->link) : [];
 						break;
 					case 'extensions':
-						$track->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
+						$route->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
 						break;
-					case 'trkseg':
-						$track->segments = isset($node->trkseg) ? SegmentParser::parse($node->trkseg) : [];
+					case 'rtep':
+						$route->points = isset($node->rtep) ? PointParser::parse($node->rtep) : [];
 						break;
 					default:
 						if (!in_array($attribute['type'], ['object', 'array']))
 						{
-							$track->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-							if (!is_null($track->{$attribute['name']}))
+							$route->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
+							if (!is_null($route->{$attribute['name']}))
 							{
-								settype($track->{$attribute['name']}, $attribute['type']);
+								settype($route->{$attribute['name']}, $attribute['type']);
 							}
 						}
 						break;
@@ -98,42 +97,42 @@ abstract class TrackParser
 
 			if (phpGPX::$CALCULATE_STATS)
 			{
-				$track->recalculateStats();
+				$route->recalculateStats();
 			}
 
-			$tracks[] = $track;
+			$routes[] = $route;
 		}
 
-		return $tracks;
+		return $routes;
 	}
 
 	/**
-	 * @param Track $track
+	 * @param Route $route
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Track $track, \DOMDocument &$document)
+	public static function toXML(Route $route, \DOMDocument &$document)
 	{
 		$node = $document->createElement(self::$tagName);
 
 		foreach (self::$attributeMapper as $key => $attribute)
 		{
-			if (!is_null($track->{$attribute['name']}))
+			if (!is_null($route->{$attribute['name']}))
 			{
 
 				switch ($key)
 				{
 					case 'link':
-						$child = LinkParser::toXMLArray($track->links, $document);
+						$child = LinkParser::toXMLArray($route->links, $document);
 						break;
 					case 'extensions':
-						$child = ExtensionParser::toXML($track->extensions, $document);
+						$child = ExtensionParser::toXML($route->extensions, $document);
 						break;
-					case 'trkseg':
-						$child = SegmentParser::toXMLArray($track->segments, $document);
+					case 'rtep':
+						$child = PointParser::toXMLArray($route->points, $document);
 						break;
 					default:
-						$child = $document->createElement($key, $track->{$attribute['name']});
+						$child = $document->createElement($key, $route->{$attribute['name']});
 						break;
 				}
 
@@ -155,17 +154,17 @@ abstract class TrackParser
 	}
 
 	/**
-	 * @param array $tracks
+	 * @param array $routes
 	 * @param \DOMDocument $document
 	 * @return \DOMElement[]
 	 */
-	public static function toXMLArray(array $tracks, \DOMDocument &$document)
+	public static function toXMLArray(array $routes, \DOMDocument &$document)
 	{
 		$result = [];
 
-		foreach ($tracks as $track)
+		foreach ($routes as $route)
 		{
-			$result[] = self::toXML($track, $document);
+			$result[] = self::toXML($route, $document);
 		}
 
 		return $result;

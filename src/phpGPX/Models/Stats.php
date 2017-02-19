@@ -7,7 +7,7 @@
 namespace phpGPX\Models;
 
 
-use phpGPX\Helpers\Utils;
+use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\phpGPX;
 
 class Stats implements Summarizable
@@ -66,11 +66,11 @@ class Stats implements Summarizable
 	 */
 	public function reset()
 	{
-		$this->distance = 0;
-		$this->averageSpeed = 0;
-		$this->averagePace = 0;
-		$this->minAltitude = 0;
-		$this->maxAltitude = 0;
+		$this->distance = null;
+		$this->averageSpeed = null;
+		$this->averagePace = null;
+		$this->minAltitude = null;
+		$this->maxAltitude = null;
 		$this->startedAt = null;
 		$this->finishedAt = null;
 	}
@@ -79,7 +79,7 @@ class Stats implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function summary()
+	function toArray()
 	{
 		return [
 			'distance' => (double) $this->distance,
@@ -87,8 +87,8 @@ class Stats implements Summarizable
 			'avgPace' => (double) $this->averagePace,
 			'minAltitude' => (double) $this->minAltitude,
 			'maxAltitude' => (double) $this->maxAltitude,
-			'startedAt' => Utils::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
-			'finishedAt' => Utils::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'duration' => (double) $this->duration
 		];
 	}

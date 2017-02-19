@@ -9,12 +9,19 @@ namespace phpGPX\Helpers;
 
 use phpGPX\Models\Point;
 
+/**
+ * Class GeoHelper
+ * Geolocation methods.
+ * @package phpGPX\Helpers
+ */
 abstract class GeoHelper
 {
 
 	const EARTH_RADIUS = 6372795.477598;
 
 	/**
+	 * Returns distance in meters between two Points according to GPX coordinates.
+	 * @see Point
 	 * @param Point $point1
 	 * @param Point $point2
 	 * @return double

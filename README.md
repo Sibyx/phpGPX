@@ -2,16 +2,20 @@
 
 Simple library for reading and creating [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format) written in PHP.
 
+Library has stable API now and it's prepared for public testing.
+
 ## Features
 
-Library is still in development so not all features all implemented (see TODO) due to the API is UNSTABLE.
+ - Full support of [official specification](http://www.topografix.com/GPX/1/1/).
+ - Statistics calculation.
+ - Extensions.
+ - JSON & XML & PHP Array output.
+
 
 ### Supported Extensions
  - Garmin TrackPointExtension: http://www.garmin.com/xmlschemas/TrackPointExtension/v1
  
 ## Stats calculation
-
-Currently is supported processing of Tracks in GPX files with calculation of basic stats (per collection and segment):
 
  - Distance (m)
  - Average speed (m/s)
@@ -26,17 +30,17 @@ Currently is supported processing of Tracks in GPX files with calculation of bas
 ```php
 $gpx = new phpGPX();
 	
-$gpx->load('example.gpx');
+$file = $gpx->load('example.gpx');
 	
 foreach ($gpx->tracks as $track)
 {
     // Statistics for whole track
-    $track->stats->summary();
+    $track->stats->toArray();
     
     foreach ($track->segments as $segment)
     {
     	// Statistics for segment of track
-    	$segment->stats->summary();
+    	$segment->stats->toArray();
     }
 }
 ```
@@ -44,11 +48,16 @@ foreach ($gpx->tracks as $track)
 ### Writing to file
 
 ```php
+
+$gpx = new phpGPX();
+	
+$file = $gpx->load('example.gpx');
+
 // XML
-$gpx->save('output.gpx', phpGPX::XML_FORMAT);
+$file->save('output.gpx', phpGPX::XML_FORMAT);
 	
 //JSON
-$gpx->save('output.json', phpGPX::JSON_FORMAT);
+$file->save('output.json', phpGPX::JSON_FORMAT);
 ```
 
 Currently supported output formats:
@@ -78,7 +87,7 @@ Library is still not registered composer package so the installation requires so
   ],
   "minimum-stability": "dev",
   "require": {
-    "Sibyx/phpGPX": "master"
+    "sibyx/phpgpx": "master"
   }
 }
 ```
@@ -88,7 +97,6 @@ Library is still not registered composer package so the installation requires so
  - [ ] Create full documentation
  - [ ] Write unit tests
  - [ ] More examples
- - [ ] Provide support for Waypoints & Routes
  - [ ] Register as valid composer package
  
 # Contributors

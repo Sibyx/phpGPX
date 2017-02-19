@@ -9,20 +9,12 @@ use phpGPX\phpGPX;
 require_once '../vendor/autoload.php';
 
 $gpx = new phpGPX();
-$gpx->load('example.gpx');
+$file = $gpx->load('Evening_Ride.gpx');
 
-//$gpx->save('output.gpx', phpGPX::XML_FORMAT);
+phpGPX::$PRETTY_PRINT = true;
+$file->save('output_Evening_Ride.gpx', phpGPX::XML_FORMAT);
 
-foreach ($gpx->tracks as $track)
+foreach ($file->tracks as $track)
 {
-	// Stats for whole track
-	$track->stats->summary();
-
-	foreach ($track->segments as $segment)
-	{
-		// Status for segment of track
-		$segment->stats->summary();
-	}
+	var_dump($track->stats->toArray());
 }
-
-//$gpx->save('output.json', phpGPX::JSON_FORMAT);
