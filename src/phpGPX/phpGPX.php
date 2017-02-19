@@ -19,7 +19,7 @@ class phpGPX
 	const XML_FORMAT = 'xml';
 
 	const PACKAGE_NAME = 'phpGPX';
-	const VERSION = '1.0';
+	const VERSION = '1.0-RC1';
 
 	/**
 	 * Create Stats object for each track, segment and route
