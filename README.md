@@ -11,7 +11,6 @@ Library has stable API now and it's prepared for public testing.
  - Extensions.
  - JSON & XML & PHP Array output.
 
-
 ### Supported Extensions
  - Garmin TrackPointExtension: http://www.garmin.com/xmlschemas/TrackPointExtension/v1
  
