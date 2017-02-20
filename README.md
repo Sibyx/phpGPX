@@ -68,36 +68,16 @@ Currently supported output formats:
 
 ## Installation
 
-Library is still not registered composer package so the installation requires some additional effort.
+You can easily install phpGPX library with composer.
 
-1. Add new git repository `https://github.com/Sibyx/phpGPX.git` to your `composer.json` file
-2. Add `Sibyx/phpGPX` as new requirement
-3. So whole composer.json file should be similar to example bellow
-4. Run `composer install --no-dev` (library has dev-requirements - PHPUnit)
-5. You are ready to use phpGPX
-
-```json
-{
-  "name": "awesome-project",
-  "license": "MIT",
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/Sibyx/phpGPX.git"
-    }
-  ],
-  "minimum-stability": "dev",
-  "require": {
-    "sibyx/phpgpx": "master"
-  }
-}
+```
+composer require sibyx/phpgpx
 ```
 
 ## TODO
 
  - [ ] Write unit tests
  - [ ] More examples
- - [ ] Register as valid composer package
  
 ## Contributors
  
