@@ -1,5 +1,7 @@
 # phpGPX
 
+[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+
 Simple library for reading and creating [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format) written in PHP.
 
 Library has stable API now and it's prepared for public testing.
@@ -14,7 +16,7 @@ Library has stable API now and it's prepared for public testing.
 ### Supported Extensions
  - Garmin TrackPointExtension: http://www.garmin.com/xmlschemas/TrackPointExtension/v1
  
-## Stats calculation
+### Stats calculation
 
  - Distance (m)
  - Average speed (m/s)
@@ -91,20 +93,19 @@ Library is still not registered composer package so the installation requires so
 }
 ```
 
-# TODO
+## TODO
 
- - [ ] Create full documentation
  - [ ] Write unit tests
  - [ ] More examples
  - [ ] Register as valid composer package
  
-# Contributors
+## Contributors
  
  - [Jakub Dubec](https://github.com/Sibyx) - Initial works, maintenance
  - [Lukasz Lewandowski](https://github.com/luklewluk)
   
 I wrote this library as part of my job in [Backbone s.r.o.](https://www.backbone.sk/en/).
 
-# License
+## License
 
 This project is licensed under the terms of the MIT license.
