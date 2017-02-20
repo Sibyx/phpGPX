@@ -1,0 +1,44 @@
+API Index
+=========
+
+* phpGPX
+    * phpGPX\Helpers
+        * [DateTimeHelper](phpGPX-Helpers-DateTimeHelper.md)
+        * [GeoHelper](phpGPX-Helpers-GeoHelper.md)
+        * [SerializationHelper](phpGPX-Helpers-SerializationHelper.md)
+    * phpGPX\Models
+        * [Bounds](phpGPX-Models-Bounds.md)
+        * [Collection](phpGPX-Models-Collection.md)
+        * [Copyright](phpGPX-Models-Copyright.md)
+        * [Email](phpGPX-Models-Email.md)
+        * [Extensions](phpGPX-Models-Extensions.md)
+            * [AbstractExtension](phpGPX-Models-Extensions-AbstractExtension.md)
+            * [TrackPointExtension](phpGPX-Models-Extensions-TrackPointExtension.md)
+        * [GpxFile](phpGPX-Models-GpxFile.md)
+        * [Link](phpGPX-Models-Link.md)
+        * [Metadata](phpGPX-Models-Metadata.md)
+        * [Person](phpGPX-Models-Person.md)
+        * [Point](phpGPX-Models-Point.md)
+        * [Route](phpGPX-Models-Route.md)
+        * [Segment](phpGPX-Models-Segment.md)
+        * [Stats](phpGPX-Models-Stats.md)
+        * [StatsCalculator](phpGPX-Models-StatsCalculator.md)
+        * [Summarizable](phpGPX-Models-Summarizable.md)
+        * [Track](phpGPX-Models-Track.md)
+    * phpGPX\Parsers
+        * [BoundsParser](phpGPX-Parsers-BoundsParser.md)
+        * [CopyrightParser](phpGPX-Parsers-CopyrightParser.md)
+        * [EmailParser](phpGPX-Parsers-EmailParser.md)
+        * [ExtensionParser](phpGPX-Parsers-ExtensionParser.md)
+        * phpGPX\Parsers\Extensions
+            * [TrackPointExtensionParser](phpGPX-Parsers-Extensions-TrackPointExtensionParser.md)
+        * [LinkParser](phpGPX-Parsers-LinkParser.md)
+        * [MetadataParser](phpGPX-Parsers-MetadataParser.md)
+        * [PersonParser](phpGPX-Parsers-PersonParser.md)
+        * [PointParser](phpGPX-Parsers-PointParser.md)
+        * [RouteParser](phpGPX-Parsers-RouteParser.md)
+        * [SegmentParser](phpGPX-Parsers-SegmentParser.md)
+        * [TrackParser](phpGPX-Parsers-TrackParser.md)
+        * [WaypointParser](phpGPX-Parsers-WaypointParser.md)
+    * [phpGPX](phpGPX-phpGPX.md)
+
