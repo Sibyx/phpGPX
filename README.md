@@ -9,7 +9,7 @@ Library has stable API now and it's prepared for public testing. [Documentation]
 
 **Warning:** Please mind that the library is currently in testing phase.
 
-Contribution and feedback is welcome! Please check the issues for TODO. I will be happy every feature or push request.
+Contribution and feedback is welcome! Please check the issues for TODO. I will be happy every feature or pull request.
 
 ## Features
 
