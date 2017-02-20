@@ -2,6 +2,8 @@
 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 
+[![Code Climate](https://codeclimate.com/github/Sibyx/phpGPX/badges/gpa.svg)](https://codeclimate.com/github/Sibyx/phpGPX)
+
 Simple library for reading and creating [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format) written in PHP.
 
 Library has stable API now and it's prepared for public testing.
