@@ -95,10 +95,10 @@ $track->segments[] 				= $segment;
 $gpx_file->tracks[] 			= $track;
 
 // GPX output
-$gpx_file->save('CreatingFileFromScratchExample.gpx', \phpGPX\phpGPX::XML_FORMAT);
+$gpx_file->save('CreateFileFromScratchExample.gpx', \phpGPX\phpGPX::XML_FORMAT);
 
 // Serialized data as JSON
-$gpx_file->save('CreatingFileFromScratchExample.json', \phpGPX\phpGPX::JSON_FORMAT);
+$gpx_file->save('CreateFileFromScratchExample.json', \phpGPX\phpGPX::JSON_FORMAT);
 
 // Direct GPX output to browser
 
