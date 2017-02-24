@@ -1,1 +1,12 @@
 theme: jekyll-theme-cayman
+author: sibyx
+title: phpGPX library
+description: Simple library for reading and creating GPX files written in PHP.
+gems:
+  - jekyll-seo-tag
+social:
+  name: Jakub Dubec
+  links:
+    - https://www.facebook.com/dubecj
+    - https://github.com/Sibyx
+    - https://keybase.io/jakubdubec

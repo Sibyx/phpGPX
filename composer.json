@@ -8,7 +8,8 @@
   "authors": [
 		{
 			"name": "Jakub Dubec",
-			"email": "jakub.dubec@gmail.com"
+			"email": "jakub.dubec@gmail.com",
+			"homepage": "https://jakubdubec.me"
 		}
   ],
 	"require": {
@@ -17,6 +18,9 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "5.*"
+	},
+	"config": {
+		"bin-dir": "bin"
 	},
   "autoload": {
 		"psr-0": { "phpGPX": "src/" }
