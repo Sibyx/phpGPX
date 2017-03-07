@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" creator="phpGPX/1.0-RC1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <desc>My pretty awesome GPX file, created using phpGPX library!</desc>
+    <link href="https://sibyx.github.io/phpgpx">
+      <text>phpGPX Docs</text>
+    </link>
+    <time>2017-03-07T22:37:19+00:00</time>
+  </metadata>
+  <wpt lat="54.932862108889" lon="9.8606242161401">
+    <ele>0</ele>
+    <time>2017-03-07T22:38:19+00:00</time>
+  </wpt>
+  <wpt lat="54.832932373209" lon="9.7609220868149">
+    <ele>10</ele>
+    <time>2017-03-07T22:39:19+00:00</time>
+  </wpt>
+  <wpt lat="54.733277435212" lon="9.6618781654375">
+    <ele>42.42</ele>
+    <time>2017-03-07T22:40:19+00:00</time>
+  </wpt>
+  <wpt lat="54.633423261679" lon="9.5624398496799">
+    <ele>12</ele>
+    <time>2017-03-07T22:41:19+00:00</time>
+  </wpt>
+</gpx>

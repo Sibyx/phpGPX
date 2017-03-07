@@ -14,14 +14,15 @@ abstract class WaypointParser
 {
 
 	/**
-	 * @param \SimpleXMLElement $node
+	 * @param \SimpleXMLElement $nodes - a non empty list of wpt elements  
 	 * @return array
 	 */
-	public static function parse(\SimpleXMLElement $node)
+	public static function parse(\SimpleXMLElement $nodes)
 	{
 		$points = [];
 
-		foreach ($node->wpt as $item)
+		// foreach ($nodes->wpt as $item) this was incorrect, the ->wpt was alreadu done in the caller
+		foreach ($nodes as $item)
 		{
 			$point = PointParser::parse($item);
 
