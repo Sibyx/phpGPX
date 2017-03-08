@@ -1,5 +1,7 @@
 composer.phar
+composer.lock
 /vendor/
 /.idea/
 /phpdocs/
 /bin/
+.DS_Store
