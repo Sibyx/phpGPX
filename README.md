@@ -1,7 +1,12 @@
 # phpGPX
 
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+[![MIT License](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/Sibyx/phpGPX/blob/master/LICENSE)
 [![Code Climate](https://codeclimate.com/github/Sibyx/phpGPX/badges/gpa.svg)](https://codeclimate.com/github/Sibyx/phpGPX)
+[![Latest development](https://img.shields.io/packagist/vpre/sibyx/phpgpx.svg)](https://packagist.org/packages/sibyx/phpgpx)
+[![Packagist downloads](https://img.shields.io/packagist/dm/sibyx/phpgpx.svg)](https://packagist.org/packages/sibyx/phpgpx)
+[![Gitter](https://img.shields.io/gitter/room/phpgpx/phpgpx.svg)](https://gitter.im/phpGPX/Lobby)
+
+
 
 Simple library written in PHP for reading and creating [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format).
 
@@ -198,6 +203,7 @@ composer require sibyx/phpgpx
  
  - [Jakub Dubec](https://github.com/Sibyx) - Initial works, maintenance
  - [Lukasz Lewandowski](https://github.com/luklewluk)
+ - [Robert Blackwell](https://github.com/robertblackwell)
   
 I wrote this library as part of my job in [Backbone s.r.o.](https://www.backbone.sk/en/).
 
