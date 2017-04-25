@@ -4,9 +4,9 @@
 
 ### Bugfix
 
- - [BUG: waypoints not loaded correctly - they are ignored]((https://github.com/Sibyx/phpGPX/issues/6))
+ - [BUG: waypoints not loaded correctly - they are ignored](https://github.com/Sibyx/phpGPX/issues/6)
  
-## Other
+### Other
  - Init of unit tests
 
 ## 1.0-RC1
