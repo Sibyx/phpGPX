@@ -59,7 +59,20 @@ class phpGPX
 	 */
 	public static function load($path)
 	{
-		$xml = simplexml_load_file($path);
+		$xml = file_get_contents($path);
+
+		return self::parse($xml);		
+	}
+
+	/**
+	 * @param $xml
+	 * @return GpxFile
+	 */
+
+	public function parse($xml) 
+	{
+		$xml = simplexml_load_string($xml);
+
 		$gpx = new GpxFile();
 
 		// Parse creator
