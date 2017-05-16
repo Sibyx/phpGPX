@@ -69,7 +69,7 @@ class phpGPX
 	 * @return GpxFile
 	 */
 
-	public function parse($xml) 
+	public static function parse($xml) 
 	{
 		$xml = simplexml_load_string($xml);
 
