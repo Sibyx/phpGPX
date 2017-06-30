@@ -118,6 +118,17 @@ class Track extends Collection
 				}
 				$this->stats->distance += $this->segments[$s]->points[$p]->difference;
 				$this->segments[$s]->points[$p]->distance = $this->stats->distance;
+
+				if($this->stats->cumulativeElevationGain === null)
+				{
+					$lastElevation = $firstPoint->elevation;
+					$this->stats->cumulativeElevationGain = 0;
+				}
+				else
+				{
+					$elevationDelta = $this->segments[$s]->points[$p]->elevation - $lastElevation;
+					$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;                     $lastElevation = $this->segments[$s]->points[$p]->elevation;
+				}
 			}
 			if ($this->stats->minAltitude == null)
 			{
