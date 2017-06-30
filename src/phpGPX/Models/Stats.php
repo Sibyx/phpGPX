@@ -81,6 +81,7 @@ class Stats implements Summarizable
 		$this->averagePace = null;
 		$this->minAltitude = null;
 		$this->maxAltitude = null;
+		$this->cumulativeElevationGain = null;
 		$this->startedAt = null;
 		$this->finishedAt = null;
 	}
@@ -97,6 +98,7 @@ class Stats implements Summarizable
 			'avgPace' => (double) $this->averagePace,
 			'minAltitude' => (double) $this->minAltitude,
 			'maxAltitude' => (double) $this->maxAltitude,
+			'cumulativeElevationGain' => (double) $this->cumulativeElevationGain,
 			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'duration' => (double) $this->duration
