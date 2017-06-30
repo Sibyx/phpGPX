@@ -48,7 +48,7 @@ class Stats implements Summarizable
 	public $maxAltitude = null;
 	
 	/**
-	 * Total elevation gain in meters (m)
+	 * Cumulative elevation gain in meters (m)
 	 * @var int
 	 */
 	public $cumulativeElevationGain = null;
