@@ -112,15 +112,15 @@ class Route extends Collection
 			$this->points[$p] = $this->stats->distance;
 		}
 		
-		if($this->stats->cumulativeElevation == null)
+		if($this->stats->cumulativeElevationGain == null)
 		{
 		        $lastElevation = $firstPoint->elevation;
-			$this->stats->cumulativeElevation = 0;
+			$this->stats->cumulativeElevationGain = 0;
 		} 
 		else 
 		{
 			$elevationDelta = $this->points[$p]->elevation - $lastElevation;
-			$this->stats->cumulativeElevation = ($elevationDelta > 0) ? $elevationDelta : 0;	
+			$this->stats->cumulativeElevationGain = ($elevationDelta > 0) ? $elevationDelta : 0;	
 			$lastElevation = $this->points[$p]->elevation;
 		}
 
