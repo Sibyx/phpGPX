@@ -134,7 +134,9 @@ abstract class MetadataParser
 						$child = ExtensionParser::toXML($metadata->extensions, $document);
 						break;
 					default:
-						$child = $document->createElement($key, $metadata->{$attribute['name']});
+						$child = $document->createElement($key);
+						$elementText = $document->createTextNode((string) $metadata->{$attribute['name']});
+						$child->appendChild($elementText);
 						break;
 				}
 

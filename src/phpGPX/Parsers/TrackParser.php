@@ -133,7 +133,9 @@ abstract class TrackParser
 						$child = SegmentParser::toXMLArray($track->segments, $document);
 						break;
 					default:
-						$child = $document->createElement($key, $track->{$attribute['name']});
+						$child = $document->createElement($key);
+						$elementText = $document->createTextNode((string) $track->{$attribute['name']});
+						$child->appendChild($elementText);
 						break;
 				}
 
