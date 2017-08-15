@@ -68,7 +68,7 @@ Original GPX 1.1 attribute.
 
 ### $elevation
 
-    public double $elevation
+    public float $elevation
 
 Elevation (in meters) of the point.
 
@@ -91,7 +91,7 @@ Fractional seconds are allowed for millisecond timing in tracklogs.
 
 ### $magVar
 
-    public double $magVar
+    public float $magVar
 
 Magnetic variation (in degrees) at the point
 Original GPX 1.1 attribute.
@@ -103,7 +103,7 @@ Original GPX 1.1 attribute.
 
 ### $geoidHeight
 
-    public double $geoidHeight
+    public float $geoidHeight
 
 Height (in meters) of geoid (mean sea level) above WGS84 earth ellipsoid. As defined in NMEA GGA message.
 
@@ -273,7 +273,7 @@ Original GPX 1.1 attribute.
 
 ### $difference
 
-    public double $difference
+    public float $difference
 
 Difference in in distance (in meters) between last point.
 
@@ -284,7 +284,7 @@ Value is created by phpGPX library.
 
 ### $distance
 
-    public double $distance
+    public float $distance
 
 Distance from collection start in meters.
 

@@ -24,7 +24,7 @@ abstract class SerializationHelper
 	 */
 	public static function integerOrNull($value)
 	{
-		return is_null($value) ? null : (integer) $value;
+			return is_int($value) ? (integer) $value : null;
 	}
 
 	/**
@@ -34,17 +34,7 @@ abstract class SerializationHelper
 	 */
 	public static function floatOrNull($value)
 	{
-		return is_null($value) ? null : (float) $value;
-	}
-
-	/**
-	 * Returns double or null.
-	 * @param $value
-	 * @return double|null
-	 */
-	public static function doubleOrNull($value)
-	{
-		return is_null($value) ? null : (double) $value;
+		return (is_float($value) || is_integer($value)) ? (float) $value : null;
 	}
 
 	/**

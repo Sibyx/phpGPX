@@ -19,7 +19,7 @@ Properties
 
 ### $distance
 
-    public double $distance
+    public float $distance
 
 Distance in meters (m)
 
@@ -30,7 +30,7 @@ Distance in meters (m)
 
 ### $averageSpeed
 
-    public double $averageSpeed = null
+    public float $averageSpeed = null
 
 Average speed in meters per second (m/s)
 
@@ -41,7 +41,7 @@ Average speed in meters per second (m/s)
 
 ### $averagePace
 
-    public double $averagePace = null
+    public float $averagePace = null
 
 Average pace in seconds per kilometer (s/km)
 

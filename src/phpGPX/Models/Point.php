@@ -40,7 +40,7 @@ class Point implements Summarizable
 	/**
 	 * Elevation (in meters) of the point.
 	 * Original GPX 1.1 attribute.
-	 * @var double|null
+	 * @var float|null
 	 */
 	public $elevation;
 
@@ -54,14 +54,14 @@ class Point implements Summarizable
 	/**
 	 * Magnetic variation (in degrees) at the point
 	 * Original GPX 1.1 attribute.
-	 * @var double|null
+	 * @var float|null
 	 */
 	public $magVar;
 
 	/**
 	 * Height (in meters) of geoid (mean sea level) above WGS84 earth ellipsoid. As defined in NMEA GGA message.
 	 * Original GPX 1.1 attribute.
-	 * @var double|null
+	 * @var float|null
 	 */
 	public $geoidHeight;
 
@@ -172,14 +172,14 @@ class Point implements Summarizable
 	/**
 	 * Difference in in distance (in meters) between last point.
 	 * Value is created by phpGPX library.
-	 * @var double
+	 * @var float
 	 */
 	public $difference;
 
 	/**
 	 * Distance from collection start in meters.
 	 * Value is created by phpGPX library.
-	 * @var double
+	 * @var float
 	 */
 	public $distance;
 
@@ -263,8 +263,8 @@ class Point implements Summarizable
 			'pdop' => SerializationHelper::floatOrNull($this->pdop),
 			'ageofdgpsdata' => SerializationHelper::floatOrNull($this->ageOfGpsData),
 			'dgpsid' => SerializationHelper::integerOrNull($this->dgpsid),
-			'difference' => SerializationHelper::doubleOrNull($this->difference),
-			'distance' => SerializationHelper::doubleOrNull($this->distance),
+			'difference' => SerializationHelper::floatOrNull($this->difference),
+			'distance' => SerializationHelper::floatOrNull($this->distance),
 			'extensions' => SerializationHelper::serialize($this->extensions)
 		];
 	}

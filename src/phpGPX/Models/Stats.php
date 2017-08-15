@@ -19,19 +19,19 @@ class Stats implements Summarizable
 
 	/**
 	 * Distance in meters (m)
-	 * @var double
+	 * @var float
 	 */
 	public $distance = 0;
 
 	/**
 	 * Average speed in meters per second (m/s)
-	 * @var double
+	 * @var float
 	 */
 	public $averageSpeed = null;
 
 	/**
 	 * Average pace in seconds per kilometer (s/km)
-	 * @var double
+	 * @var float
 	 */
 	public $averagePace = null;
 
@@ -93,15 +93,15 @@ class Stats implements Summarizable
 	function toArray()
 	{
 		return [
-			'distance' => (double) $this->distance,
-			'avgSpeed' => (double) $this->averageSpeed,
-			'avgPace' => (double) $this->averagePace,
-			'minAltitude' => (double) $this->minAltitude,
-			'maxAltitude' => (double) $this->maxAltitude,
-			'cumulativeElevationGain' => (double) $this->cumulativeElevationGain,
+			'distance' => (float) $this->distance,
+			'avgSpeed' => (float) $this->averageSpeed,
+			'avgPace' => (float) $this->averagePace,
+			'minAltitude' => (float) $this->minAltitude,
+			'maxAltitude' => (float) $this->maxAltitude,
+			'cumulativeElevationGain' => (float) $this->cumulativeElevationGain,
 			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
-			'duration' => (double) $this->duration
+			'duration' => (float) $this->duration
 		];
 	}
 }

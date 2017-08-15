@@ -17,14 +17,14 @@ use phpGPX\Models\Point;
 abstract class GeoHelper
 {
 
-	const EARTH_RADIUS = 6372795.477598;
+	const EARTH_RADIUS = 6371000;
 
 	/**
 	 * Returns distance in meters between two Points according to GPX coordinates.
 	 * @see Point
 	 * @param Point $point1
 	 * @param Point $point2
-	 * @return double
+	 * @return float
 	 */
 	public static function getDistance(Point $point1, Point $point2)
 	{

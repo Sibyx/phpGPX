@@ -104,8 +104,8 @@ abstract class PointParser
 
 		$point = new Point(self::$typeMapper[$node->getName()]);
 
-		$point->latitude = isset($node['lat']) ? ((double) $node['lat']) : null;
-		$point->longitude = isset($node['lon']) ? ((double) $node['lon']) : null;
+		$point->latitude = isset($node['lat']) ? ((float) $node['lat']) : null;
+		$point->longitude = isset($node['lon']) ? ((float) $node['lon']) : null;
 
 		foreach (self::$attributeMapper as $key => $attribute)
 		{

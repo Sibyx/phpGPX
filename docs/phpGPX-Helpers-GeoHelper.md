@@ -33,7 +33,7 @@ Methods
 
 ### getDistance
 
-    double phpGPX\Helpers\GeoHelper::getDistance(\phpGPX\Models\Point $point1, \phpGPX\Models\Point $point2)
+    float phpGPX\Helpers\GeoHelper::getDistance(\phpGPX\Models\Point $point1, \phpGPX\Models\Point $point2)
 
 Returns distance in meters between two Points according to GPX coordinates.
 

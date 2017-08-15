@@ -54,24 +54,6 @@ Returns float or null.
 * $value **mixed**
 
 
-
-### doubleOrNull
-
-    double|null phpGPX\Helpers\SerializationHelper::doubleOrNull($value)
-
-Returns double or null.
-
-
-
-* Visibility: **public**
-* This method is **static**.
-
-
-#### Arguments
-* $value **mixed**
-
-
-
 ### stringOrNull
 
     null|string phpGPX\Helpers\SerializationHelper::stringOrNull($value)
