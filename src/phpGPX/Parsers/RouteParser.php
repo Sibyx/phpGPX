@@ -132,7 +132,9 @@ abstract class RouteParser
 						$child = PointParser::toXMLArray($route->points, $document);
 						break;
 					default:
-						$child = $document->createElement($key, $route->{$attribute['name']});
+						$child = $document->createElement($key);
+						$elementText = $document->createTextNode((string) $route->{$attribute['name']});
+						$child->appendChild($elementText);
 						break;
 				}
 
