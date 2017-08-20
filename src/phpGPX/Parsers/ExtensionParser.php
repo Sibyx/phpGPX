@@ -37,6 +37,7 @@ abstract class ExtensionParser
 			switch ($namespace)
 			{
 				case TrackPointExtension::EXTENSION_NAMESPACE:
+				case TrackPointExtension::EXTENSION_V1_NAMESPACE:
 					$extension = $nodes->children($namespace)->{TrackPointExtension::EXTENSION_NAME};
 					if (!empty($extension))
 						$extensions->trackPointExtension = TrackPointExtensionParser::parse($extension);

@@ -14,7 +14,15 @@ class TrackPointExtensionParser
 {
 	private static $attributeMapper = [
 		'atemp' => [
-			'name' => 'avgTemperature',
+			'name' => 'aTemp',
+			'type' => 'float'
+		],
+		'wtemp' => [
+			'name' => 'wTemp',
+			'type' => 'float'
+		],
+		'depth' => [
+			'name' => 'depth',
 			'type' => 'float'
 		],
 		'hr' => [
@@ -24,6 +32,18 @@ class TrackPointExtensionParser
 		'cad' => [
 			'name' => 'cadence',
 			'type' => 'float'
+		],
+		'speed' => [
+			'name' => 'speed',
+			'type' => 'float'
+		],
+		'course' => [
+			'name' => 'course',
+			'type' => 'int'
+		],
+		'bearing' => [
+			'name' => 'bearing',
+			'type' => 'int'
 		]
 	];
 

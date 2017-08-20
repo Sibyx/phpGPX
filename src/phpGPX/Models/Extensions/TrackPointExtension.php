@@ -5,33 +5,71 @@
  */
 
 namespace phpGPX\Models\Extensions;
+use phpGPX\Helpers\SerializationHelper;
 
 /**
  * Class TrackPointExtension
- * TODO: https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd
+ * Extension version: v2
+ * Based on namespace: http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
  * @package phpGPX\Models\Extensions
  */
 class TrackPointExtension extends AbstractExtension
 {
-	const EXTENSION_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1';
-	const EXTENSION_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd';
+	const EXTENSION_V1_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1';
+	const EXTENSION_V1_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd';
+
+	const EXTENSION_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2';
+	const EXTENSION_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd';
+
 	const EXTENSION_NAME = 'TrackPointExtension';
 	const EXTENSION_NAMESPACE_PREFIX = 'gpxtpx';
 
-	/** @var  float */
-	public $speed;
+	/**
+	 * Average temperature value measured in degrees Celsius.
+	 * @var float
+	 */
+	public $aTemp;
 
-	/** @var  float */
-	public $heartRate;
+	/**
+	 * @var float
+	 */
+	public $wTemp;
 
-	/** @var  float */
-	public $avgTemperature;
+	/**
+	 * Depth in meters.
+	 * @var float
+	 */
+	public $depth;
 
-	/** @var  float */
+	/**
+	 * Heart rate in beats per minute.
+	 * @var float
+	 */
+	public $hearthRate;
+
+	/**
+	 * Cadence in revolutions per minute.
+	 * @var float
+	 */
 	public $cadence;
 
-	/** @var  float */
+	/**
+	 * Speed in meters per second.
+	 * @var float
+	 */
+	public $speed;
+
+	/**
+	 * Course. This type contains an angle measured in degrees in a clockwise direction from the true north line.
+	 * @var int
+	 */
 	public $course;
+
+	/**
+	 * Bearing. This type contains an angle measured in degrees in a clockwise direction from the true north line.
+	 * @var int
+	 */
+	public $bearing;
 
 	/**
 	 * TrackPointExtension constructor.
@@ -48,11 +86,14 @@ class TrackPointExtension extends AbstractExtension
 	public function toArray()
 	{
 		return [
-			'speed' => $this->speed,
-			'heartRate' => $this->heartRate,
-			'avgTemperature' => $this->avgTemperature,
-			'cadence' => $this->cadence,
-			'course' => $this->course
+			'aTemp' => SerializationHelper::floatOrNull($this->aTemp),
+			'wTemp' => SerializationHelper::floatOrNull($this->wTemp),
+			'depth' => SerializationHelper::floatOrNull($this->depth),
+			'hr' => SerializationHelper::floatOrNull($this->hearthRate),
+			'cad' => SerializationHelper::floatOrNull($this->cadence),
+			'speed' => SerializationHelper::floatOrNull($this->speed),
+			'course' => SerializationHelper::integerOrNull($this->course),
+			'bearing' => SerializationHelper::integerOrNull($this->bearing)
 		];
 	}
 }
