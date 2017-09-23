@@ -165,7 +165,10 @@ abstract class PointParser
 						$child = ExtensionParser::toXML($point->extensions, $document);
 						break;
 					default:
-						$child = $document->createElement($key, $point->{$attribute['name']});
+						$child = $document->createElement($key);
+						$elementText = $document->createTextNode((string) $point->{$attribute['name']});
+						$child->appendChild($elementText);
+						break;
 						break;
 				}
 
