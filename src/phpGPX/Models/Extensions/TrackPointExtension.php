@@ -31,6 +31,14 @@ class TrackPointExtension extends AbstractExtension
 	public $aTemp;
 
 	/**
+	 * Average temperature value measured in degrees Celsius.
+	 * @deprecated use TrackPointExtension::$aTemp instead. Will be removed in v1.0
+	 * @see TrackPointExtension::$aTemp
+	 * @var float
+	 */
+	public $avgTemperature;
+
+	/**
 	 * @var float
 	 */
 	public $wTemp;

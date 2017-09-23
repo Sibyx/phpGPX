@@ -74,6 +74,12 @@ class TrackPointExtensionParser
 			{
 				$extension->cadence = $extension->cad;
 			}
+
+			// Remove in v1.0
+			if ($key == 'atemp')
+			{
+				$extension->avgTemperature = $extension->aTemp;
+			}
 		}
 
 		return $extension;
