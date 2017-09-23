@@ -1,17 +1,9 @@
 <?xml version="1.0"?>
 <!-- see http://www.phpunit.de/wiki/Documentation -->
-<phpunit bootstrap="bootstrap.php"
-				 colors="auto"
+<phpunit bootstrap="include/bootstrap.php"
+				 colors="false"
 				 convertErrorsToExceptions="true"
 				 convertNoticesToExceptions="true"
 				 convertWarningsToExceptions="true"
-				 verbose="true"
 				 stopOnFailure="true">
-
-	<testsuites>
-		<testsuite name="Helpers">
-			<directory>tests/phpGPX/Helpers/*Test.php</directory>
-		</testsuite>
-	</testsuites>
-
 </phpunit>

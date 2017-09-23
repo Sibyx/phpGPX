@@ -45,7 +45,7 @@ class TrackPointExtension extends AbstractExtension
 	 * Heart rate in beats per minute.
 	 * @var float
 	 */
-	public $heartRate;
+	public $hearthRate;
 
 	/**
 	 * Cadence in revolutions per minute.
@@ -89,7 +89,7 @@ class TrackPointExtension extends AbstractExtension
 			'aTemp' => SerializationHelper::floatOrNull($this->aTemp),
 			'wTemp' => SerializationHelper::floatOrNull($this->wTemp),
 			'depth' => SerializationHelper::floatOrNull($this->depth),
-			'hr' => SerializationHelper::floatOrNull($this->heartRate),
+			'hr' => SerializationHelper::floatOrNull($this->hearthRate),
 			'cad' => SerializationHelper::floatOrNull($this->cadence),
 			'speed' => SerializationHelper::floatOrNull($this->speed),
 			'course' => SerializationHelper::integerOrNull($this->course),
