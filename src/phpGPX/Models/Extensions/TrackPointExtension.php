@@ -43,15 +43,32 @@ class TrackPointExtension extends AbstractExtension
 
 	/**
 	 * Heart rate in beats per minute.
+	 * @deprecated since v1.0RC3, use attribute TrackPointExtension::$hr instead, will be removed in v1.0
+	 * @see TrackPointExtension::$hr
 	 * @var float
 	 */
-	public $hearthRate;
+	public $heartRate;
+
+	/**
+	 * Heart rate in beats per minute.
+	 * @since v1.0RC3
+	 * @var float
+	 */
+	public $hr;
+
+	/**
+	 * Cadence in revolutions per minute.
+	 * @deprecated since v1.0RC3, use attribute TrackPointExtension::$cad instead, will be removed in v1.0
+	 * @see TrackPointExtension::$cad
+	 * @var float
+	 */
+	public $cadence;
 
 	/**
 	 * Cadence in revolutions per minute.
 	 * @var float
 	 */
-	public $cadence;
+	public $cad;
 
 	/**
 	 * Speed in meters per second.
@@ -89,8 +106,8 @@ class TrackPointExtension extends AbstractExtension
 			'aTemp' => SerializationHelper::floatOrNull($this->aTemp),
 			'wTemp' => SerializationHelper::floatOrNull($this->wTemp),
 			'depth' => SerializationHelper::floatOrNull($this->depth),
-			'hr' => SerializationHelper::floatOrNull($this->hearthRate),
-			'cad' => SerializationHelper::floatOrNull($this->cadence),
+			'hr' => SerializationHelper::floatOrNull($this->hr),
+			'cad' => SerializationHelper::floatOrNull($this->cad),
 			'speed' => SerializationHelper::floatOrNull($this->speed),
 			'course' => SerializationHelper::integerOrNull($this->course),
 			'bearing' => SerializationHelper::integerOrNull($this->bearing)

@@ -71,11 +71,12 @@ Maximal altitude in meters (m)
 
 * Visibility: **public**
 
+
 ### $cumulativeElevationGain
 
     public integer $cumulativeElevationGain = null
 
-Cumulative positive elevation gain in meters (m)
+Cumulative elevation gain in meters (m)
 
 
 

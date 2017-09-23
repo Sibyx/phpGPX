@@ -26,11 +26,11 @@ class TrackPointExtensionParser
 			'type' => 'float'
 		],
 		'hr' => [
-			'name' => 'heartRate',
+			'name' => 'hr',
 			'type' => 'float'
 		],
 		'cad' => [
-			'name' => 'cadence',
+			'name' => 'cad',
 			'type' => 'float'
 		],
 		'speed' => [
@@ -61,6 +61,18 @@ class TrackPointExtensionParser
 			if (!is_null($extension->{$attribute['name']}))
 			{
 				settype($extension->{$attribute['name']}, $attribute['type']);
+			}
+
+			// Remove in v1.0
+			if ($key == 'hr')
+			{
+				$extension->heartRate = $extension->hr;
+			}
+
+			// Remove in v1.0
+			if ($key == 'cad')
+			{
+				$extension->cadence = $extension->cad;
 			}
 		}
 

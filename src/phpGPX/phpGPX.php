@@ -13,13 +13,17 @@ use phpGPX\Parsers\RouteParser;
 use phpGPX\Parsers\TrackParser;
 use phpGPX\Parsers\WaypointParser;
 
+/**
+ * Class phpGPX
+ * @package phpGPX
+ */
 class phpGPX
 {
 	const JSON_FORMAT = 'json';
 	const XML_FORMAT = 'xml';
 
 	const PACKAGE_NAME = 'phpGPX';
-	const VERSION = '1.0-RC1';
+	const VERSION = '1.0RC3';
 
 	/**
 	 * Create Stats object for each track, segment and route
@@ -54,6 +58,7 @@ class phpGPX
 	public static $PRETTY_PRINT = true;
 
 	/**
+	 * Load GPX file.
 	 * @param $path
 	 * @return GpxFile
 	 */
@@ -65,10 +70,10 @@ class phpGPX
 	}
 
 	/**
+	 * Parse GPX data string.
 	 * @param $xml
 	 * @return GpxFile
 	 */
-
 	public static function parse($xml) 
 	{
 		$xml = simplexml_load_string($xml);

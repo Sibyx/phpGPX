@@ -19,7 +19,7 @@ Properties
 
 ### $attributeMapper
 
-    private mixed $attributeMapper = array('atemp' => array('name' => 'avgTemperature', 'type' => 'float'), 'hr' => array('name' => 'heartRate', 'type' => 'float'), 'cad' => array('name' => 'cadence', 'type' => 'float'))
+    private mixed $attributeMapper = array('atemp' => array('name' => 'aTemp', 'type' => 'float'), 'wtemp' => array('name' => 'wTemp', 'type' => 'float'), 'depth' => array('name' => 'depth', 'type' => 'float'), 'hr' => array('name' => 'hr', 'type' => 'float'), 'cad' => array('name' => 'cad', 'type' => 'float'), 'speed' => array('name' => 'speed', 'type' => 'float'), 'course' => array('name' => 'course', 'type' => 'int'), 'bearing' => array('name' => 'bearing', 'type' => 'int'))
 
 
 

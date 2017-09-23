@@ -22,7 +22,7 @@ Methods
 
 ### parse
 
-    array phpGPX\Parsers\WaypointParser::parse(\SimpleXMLElement $node)
+    array phpGPX\Parsers\WaypointParser::parse(\SimpleXMLElement $nodes)
 
 
 
@@ -33,6 +33,8 @@ Methods
 
 
 #### Arguments
-* $node **SimpleXMLElement**
+* $nodes **SimpleXMLElement** - &lt;ul&gt;
+&lt;li&gt;a non empty list of wpt elements&lt;/li&gt;
+&lt;/ul&gt;
 
 

@@ -2,7 +2,8 @@ phpGPX\Models\Extensions\TrackPointExtension
 ===============
 
 Class TrackPointExtension
-TODO: https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd
+Extension version: v2
+Based on namespace: http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
 
 
 
@@ -17,9 +18,25 @@ Constants
 ----------
 
 
+### EXTENSION_V1_NAMESPACE
+
+    const EXTENSION_V1_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'
+
+
+
+
+
+### EXTENSION_V1_NAMESPACE_XSD
+
+    const EXTENSION_V1_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd'
+
+
+
+
+
 ### EXTENSION_NAMESPACE
 
-    const EXTENSION_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'
+    const EXTENSION_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2'
 
 
 
@@ -27,7 +44,7 @@ Constants
 
 ### EXTENSION_NAMESPACE_XSD
 
-    const EXTENSION_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd'
+    const EXTENSION_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd'
 
 
 
@@ -53,11 +70,33 @@ Properties
 ----------
 
 
-### $speed
+### $aTemp
 
-    public float $speed
+    public float $aTemp
+
+Average temperature value measured in degrees Celsius.
 
 
+
+* Visibility: **public**
+
+
+### $wTemp
+
+    public float $wTemp
+
+
+
+
+
+* Visibility: **public**
+
+
+### $depth
+
+    public float $depth
+
+Depth in meters.
 
 
 
@@ -68,18 +107,18 @@ Properties
 
     public float $heartRate
 
-
+Heart rate in beats per minute.
 
 
 
 * Visibility: **public**
 
 
-### $avgTemperature
+### $hr
 
-    public float $avgTemperature
+    public float $hr
 
-
+Heart rate in beats per minute.
 
 
 
@@ -90,7 +129,29 @@ Properties
 
     public float $cadence
 
+Cadence in revolutions per minute.
 
+
+
+* Visibility: **public**
+
+
+### $cad
+
+    public float $cad
+
+Cadence in revolutions per minute.
+
+
+
+* Visibility: **public**
+
+
+### $speed
+
+    public float $speed
+
+Speed in meters per second.
 
 
 
@@ -99,9 +160,20 @@ Properties
 
 ### $course
 
-    public float $course
+    public integer $course
+
+Course. This type contains an angle measured in degrees in a clockwise direction from the true north line.
 
 
+
+* Visibility: **public**
+
+
+### $bearing
+
+    public integer $bearing
+
+Bearing. This type contains an angle measured in degrees in a clockwise direction from the true north line.
 
 
 

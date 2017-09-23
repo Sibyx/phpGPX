@@ -1,7 +1,7 @@
 phpGPX\phpGPX
 ===============
 
-
+Class phpGPX
 
 
 
@@ -41,7 +41,7 @@ Constants
 
 ### VERSION
 
-    const VERSION = '1.0-RC1'
+    const VERSION = '1.0'
 
 
 
@@ -119,7 +119,7 @@ Methods
 
     \phpGPX\Models\GpxFile phpGPX\phpGPX::load($path)
 
-
+Load GPX file.
 
 
 
@@ -129,6 +129,23 @@ Methods
 
 #### Arguments
 * $path **mixed**
+
+
+
+### parse
+
+    \phpGPX\Models\GpxFile phpGPX\phpGPX::parse($xml)
+
+Parse GPX data string.
+
+
+
+* Visibility: **public**
+* This method is **static**.
+
+
+#### Arguments
+* $xml **mixed**
 
 
 

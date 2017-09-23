@@ -54,6 +54,7 @@ Returns float or null.
 * $value **mixed**
 
 
+
 ### stringOrNull
 
     null|string phpGPX\Helpers\SerializationHelper::stringOrNull($value)

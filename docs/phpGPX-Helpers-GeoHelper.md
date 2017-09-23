@@ -19,7 +19,7 @@ Constants
 
 ### EARTH_RADIUS
 
-    const EARTH_RADIUS = 6372795.477598
+    const EARTH_RADIUS = 6371000
 
 
 
