@@ -34,9 +34,9 @@ class Person implements Summarizable
 	/**
 	 * Link to Web site or other external information about person.
 	 * An original GPX 1.1 attribute.
-	 * @var Link|null
+	 * @var Link[]
 	 */
-	public $link;
+	public $links;
 
 	/**
 	 * Person constructor.
@@ -45,7 +45,7 @@ class Person implements Summarizable
 	{
 		$this->name = null;
 		$this->email = null;
-		$this->link = null;
+		$this->links = null;
 	}
 
 
@@ -58,7 +58,7 @@ class Person implements Summarizable
 		return [
 			'name' => (string) $this->name,
 			'email' => SerializationHelper::serialize($this->email),
-			'link' => SerializationHelper::serialize($this->link)
+			'links' => SerializationHelper::serialize($this->links)
 		];
 	}
 }

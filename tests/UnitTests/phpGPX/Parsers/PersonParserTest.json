@@ -1,0 +1,14 @@
+{
+	"name": "Jakub Dubec",
+	"email": {
+		"id": "jakub.dubec",
+		"domain": "gmail.com"
+	},
+	"links": [
+		{
+			"href": "https://jakubdubec.me",
+			"text": "Portfolio",
+			"type": "text/html"
+		}
+	]
+}

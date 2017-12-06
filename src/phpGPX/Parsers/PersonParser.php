@@ -25,9 +25,9 @@ abstract class PersonParser
 	{
 		$person = new Person();
 
-		$person->name = isset($node->name) ? (string) $node->name : null;
+		$person->name = isset($node->name) ? ((string) $node->name) : null;
 		$person->email = isset($node->email) ? EmailParser::parse($node->email) : null;
-		$person->link = isset($node->link) ? LinkParser::parse($node->link) : null;
+		$person->links = isset($node->link) ? LinkParser::parse($node->link) : null;
 
 		return $person;
 	}
@@ -48,9 +48,9 @@ abstract class PersonParser
 			$node->appendChild($child);
 		}
 
-		if (!empty($person->link))
+		foreach ($person->links as $link)
 		{
-			$child = LinkParser::toXML($person->link, $document);
+			$child = LinkParser::toXML($link, $document);
 			$node->appendChild($child);
 		}
 
