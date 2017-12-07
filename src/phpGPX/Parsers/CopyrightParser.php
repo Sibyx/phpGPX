@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Copyright;
 
 /**
@@ -23,8 +22,9 @@ abstract class CopyrightParser
 	 */
 	public static function parse(\SimpleXMLElement $node)
 	{
-		if ($node->getName() != self::$tagName)
+		if ($node->getName() != self::$tagName) {
 			return null;
+		}
 
 		$copyright = new Copyright();
 
@@ -46,19 +46,16 @@ abstract class CopyrightParser
 
 		$node->setAttribute('author', $copyright->author);
 
-		if (!empty($copyright->year))
-		{
+		if (!empty($copyright->year)) {
 			$child = $document->createElement('year', $copyright->year);
 			$node->appendChild($child);
 		}
 
-		if (!empty($copyright->license))
-		{
+		if (!empty($copyright->license)) {
 			$child = $document->createElement('license', $copyright->license);
 			$node->appendChild($child);
 		}
 
 		return $node;
 	}
-
 }

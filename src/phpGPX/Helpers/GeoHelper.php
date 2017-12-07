@@ -6,7 +6,6 @@
 
 namespace phpGPX\Helpers;
 
-
 use phpGPX\Models\Point;
 
 /**
@@ -16,7 +15,6 @@ use phpGPX\Models\Point;
  */
 abstract class GeoHelper
 {
-
 	const EARTH_RADIUS = 6371000;
 
 	/**
@@ -40,5 +38,4 @@ abstract class GeoHelper
 
 		return $angle * self::EARTH_RADIUS;
 	}
-
 }

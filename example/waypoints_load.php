@@ -22,8 +22,8 @@ $retcode = 0;
 system("diff $origFile $outFile", $retcode);
 // system("diff $origFile $outFile2", $retcode);
 
-if( $retcode != 0){
+if ($retcode != 0) {
 	throw new \Exception("wapoint file incorrect");
-}else{
+} else {
 	print "wapoint test successfull\n";
 }

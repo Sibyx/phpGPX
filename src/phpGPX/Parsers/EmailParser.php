@@ -14,7 +14,6 @@ use phpGPX\Models\Email;
  */
 abstract class EmailParser
 {
-
 	private static $tagName = 'email';
 
 	/**
@@ -41,17 +40,14 @@ abstract class EmailParser
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!empty($email->id))
-		{
+		if (!empty($email->id)) {
 			$node->setAttribute('id', $email->id);
 		}
 
-		if (!empty($email->domain))
-		{
+		if (!empty($email->domain)) {
 			$node->setAttribute('domain', $email->domain);
 		}
 
 		return $node;
 	}
-
 }

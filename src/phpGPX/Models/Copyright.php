@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\SerializationHelper;
 
 /**
@@ -51,7 +50,7 @@ class Copyright implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'author' => $this->author,

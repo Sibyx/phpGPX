@@ -6,3 +6,4 @@ composer.lock
 /bin/
 .DS_Store?
 *.DS_Store
+/.php_cs.cache

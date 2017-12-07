@@ -15,7 +15,6 @@ use phpGPX\phpGPX;
  */
 abstract class RouteParser
 {
-
 	public static $tagName = 'rte';
 
 	private static $attributeMapper = [
@@ -65,14 +64,11 @@ abstract class RouteParser
 	{
 		$routes = [];
 
-		foreach ($nodes as $node)
-		{
+		foreach ($nodes as $node) {
 			$route = new Route();
 
-			foreach (self::$attributeMapper as $key => $attribute)
-			{
-				switch ($key)
-				{
+			foreach (self::$attributeMapper as $key => $attribute) {
+				switch ($key) {
 					case 'link':
 						$route->links = isset($node->link) ? LinkParser::parse($node->link) : [];
 						break;
@@ -83,11 +79,9 @@ abstract class RouteParser
 						$route->points = isset($node->rtep) ? PointParser::parse($node->rtep) : [];
 						break;
 					default:
-						if (!in_array($attribute['type'], ['object', 'array']))
-						{
+						if (!in_array($attribute['type'], ['object', 'array'])) {
 							$route->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-							if (!is_null($route->{$attribute['name']}))
-							{
+							if (!is_null($route->{$attribute['name']})) {
 								settype($route->{$attribute['name']}, $attribute['type']);
 							}
 						}
@@ -95,8 +89,7 @@ abstract class RouteParser
 				}
 			}
 
-			if (phpGPX::$CALCULATE_STATS)
-			{
+			if (phpGPX::$CALCULATE_STATS) {
 				$route->recalculateStats();
 			}
 
@@ -115,13 +108,9 @@ abstract class RouteParser
 	{
 		$node = $document->createElement(self::$tagName);
 
-		foreach (self::$attributeMapper as $key => $attribute)
-		{
-			if (!is_null($route->{$attribute['name']}))
-			{
-
-				switch ($key)
-				{
+		foreach (self::$attributeMapper as $key => $attribute) {
+			if (!is_null($route->{$attribute['name']})) {
+				switch ($key) {
 					case 'link':
 						$child = LinkParser::toXMLArray($route->links, $document);
 						break;
@@ -138,15 +127,11 @@ abstract class RouteParser
 						break;
 				}
 
-				if (is_array($child))
-				{
-					foreach ($child as $item)
-					{
+				if (is_array($child)) {
+					foreach ($child as $item) {
 						$node->appendChild($item);
 					}
-				}
-				else
-				{
+				} else {
 					$node->appendChild($child);
 				}
 			}
@@ -164,8 +149,7 @@ abstract class RouteParser
 	{
 		$result = [];
 
-		foreach ($routes as $route)
-		{
+		foreach ($routes as $route) {
 			$result[] = self::toXML($route, $document);
 		}
 

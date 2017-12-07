@@ -13,8 +13,7 @@ use phpGPX\Models\Track;
 
 final class CreateWaypointTest extends TestCase
 {
-
-	function createWaypointFile()
+	public function createWaypointFile()
 	{
 		$sample_data = [
 			[
@@ -77,8 +76,7 @@ final class CreateWaypointTest extends TestCase
 		$track->source 					= sprintf("MySpecificGarminDevice");
 
 		$wp = [];
-		foreach ($sample_data as $sample_point)
-		{
+		foreach ($sample_data as $sample_point) {
 			// Creating trackpoint
 			$point 						= new Point(Point::WAYPOINT);
 			$point->latitude 			= $sample_point['latitude'];
@@ -94,20 +92,23 @@ final class CreateWaypointTest extends TestCase
 		$gpx_file->save($this->waypoint_created_file, \phpGPX\phpGPX::XML_FORMAT);
 	}
 
-    function setUp(){
+	public function setUp()
+	{
 		$this->waypoint_created_file = dirname(__FILE__)."/waypoint_test.gpx";
 		$this->waypoint_saved_file = dirname(__FILE__).'/output_waypoint_test.gpx';
 		// remove any test file hanging around
 		system("rm -f {$this->waypoint_created_file}");
 		// now create the test file
 		$this->createWaypointFile();
-    }
-    function tearDown(){
+	}
+	public function tearDown()
+	{
 		system("rm -f {$this->waypoint_created_file}");
-		system("rm -f {$this->waypoint_saved_file}");    	
-    }
-    function test_waypoints_load(){  
-	    $origFile = $this->waypoint_created_file;
+		system("rm -f {$this->waypoint_saved_file}");
+	}
+	public function test_waypoints_load()
+	{
+		$origFile = $this->waypoint_created_file;
 		$outFile = $this->waypoint_saved_file;
 
 		$gpx = new phpGPX();
@@ -120,7 +121,5 @@ final class CreateWaypointTest extends TestCase
 		system("diff $origFile $outFile", $retcode);
 		// system("diff $origFile $outFile2", $retcode);
 		$this->assertEquals($retcode, 0);
-
-    }
+	}
 }
-?>

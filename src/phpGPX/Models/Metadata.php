@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\SerializationHelper;
 
@@ -99,7 +98,7 @@ class Metadata implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'name' => SerializationHelper::stringOrNull($this->name),

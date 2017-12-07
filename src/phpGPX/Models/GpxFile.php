@@ -110,28 +110,23 @@ class GpxFile implements Summarizable
 
 		ExtensionParser::$usedNamespaces = [];
 
-		if (!empty($this->metadata))
-		{
+		if (!empty($this->metadata)) {
 			$gpx->appendChild(MetadataParser::toXML($this->metadata, $document));
 		}
 
-		foreach ($this->waypoints as $waypoint)
-		{
+		foreach ($this->waypoints as $waypoint) {
 			$gpx->appendChild(PointParser::toXML($waypoint, $document));
 		}
 
-		foreach ($this->routes as $route)
-		{
+		foreach ($this->routes as $route) {
 			$gpx->appendChild(RouteParser::toXML($route, $document));
 		}
 
-		foreach ($this->tracks as $track)
-		{
+		foreach ($this->tracks as $track) {
 			$gpx->appendChild(TrackParser::toXML($track, $document));
 		}
 
-		if (!empty($this->extensions))
-		{
+		if (!empty($this->extensions)) {
 			$gpx->appendChild(ExtensionParser::toXML($this->extensions, $document));
 		}
 
@@ -141,8 +136,7 @@ class GpxFile implements Summarizable
 			'http://www.topografix.com/GPX/1/1/gpx.xsd'
 		];
 
-		foreach (ExtensionParser::$usedNamespaces as $usedNamespace)
-		{
+		foreach (ExtensionParser::$usedNamespaces as $usedNamespace) {
 			$gpx->setAttributeNS(
 				"http://www.w3.org/2000/xmlns/",
 				sprintf("xmlns:%s", $usedNamespace['prefix']),
@@ -154,13 +148,14 @@ class GpxFile implements Summarizable
 		}
 
 		$gpx->setAttributeNS(
-			'http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', implode(" ", $schemaLocationArray)
+			'http://www.w3.org/2001/XMLSchema-instance',
+			'xsi:schemaLocation',
+			implode(" ", $schemaLocationArray)
 		);
 
 		$document->appendChild($gpx);
 
-		if (phpGPX::$PRETTY_PRINT)
-		{
+		if (phpGPX::$PRETTY_PRINT) {
 			$document->formatOutput = true;
 			$document->preserveWhiteSpace = true;
 		}
@@ -174,8 +169,7 @@ class GpxFile implements Summarizable
 	 */
 	public function save($path, $format)
 	{
-		switch ($format)
-		{
+		switch ($format) {
 			case phpGPX::XML_FORMAT:
 				$document = $this->toXML();
 				$document->save($path);

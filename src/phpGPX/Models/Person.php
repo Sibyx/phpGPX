@@ -8,7 +8,6 @@ namespace phpGPX\Models;
 
 use phpGPX\Helpers\SerializationHelper;
 
-
 /**
  * Class Person
  * A person or organisation
@@ -53,7 +52,7 @@ class Person implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'name' => (string) $this->name,

@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Segment;
 use phpGPX\phpGPX;
 
@@ -16,7 +15,6 @@ use phpGPX\phpGPX;
  */
 abstract class SegmentParser
 {
-
 	public static $tagName = 'trkseg';
 
 	/**
@@ -27,23 +25,19 @@ abstract class SegmentParser
 	{
 		$segments = [];
 
-		foreach ($nodes as $node)
-		{
+		foreach ($nodes as $node) {
 			$segment = new Segment();
 
-			if (isset($node->trkpt))
-			{
+			if (isset($node->trkpt)) {
 				$segment->points = [];
 
-				foreach ($node->trkpt as $point)
-				{
+				foreach ($node->trkpt as $point) {
 					$segment->points[] = PointParser::parse($point);
 				}
 			}
 			$segment->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
 
-			if (phpGPX::$CALCULATE_STATS)
-			{
+			if (phpGPX::$CALCULATE_STATS) {
 				$segment->recalculateStats();
 			}
 
@@ -62,13 +56,11 @@ abstract class SegmentParser
 	{
 		$node = $document->createElement(self::$tagName);
 
-		foreach ($segment->points as $point)
-		{
+		foreach ($segment->points as $point) {
 			$node->appendChild(PointParser::toXML($point, $document));
 		}
 
-		if (!empty($segment->extensions))
-		{
+		if (!empty($segment->extensions)) {
 			$node->appendChild(ExtensionParser::toXML($segment->extensions, $document));
 		}
 
@@ -84,12 +76,10 @@ abstract class SegmentParser
 	{
 		$result = [];
 
-		foreach ($segments as $segment)
-		{
+		foreach ($segments as $segment) {
 			$result[] = self::toXML($segment, $document);
 		}
 
 		return $result;
 	}
-
 }

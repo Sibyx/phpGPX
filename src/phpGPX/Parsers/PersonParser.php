@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Person;
 
 /**
@@ -36,25 +35,21 @@ abstract class PersonParser
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!empty($person->name))
-		{
+		if (!empty($person->name)) {
 			$child = $document->createElement('name', $person->name);
 			$node->appendChild($child);
 		}
 
-		if (!empty($person->email))
-		{
+		if (!empty($person->email)) {
 			$child = EmailParser::toXML($person->email, $document);
 			$node->appendChild($child);
 		}
 
-		foreach ($person->links as $link)
-		{
+		foreach ($person->links as $link) {
 			$child = LinkParser::toXML($link, $document);
 			$node->appendChild($child);
 		}
 
 		return $node;
 	}
-
 }

@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 class Bounds implements Summarizable
 {
 
@@ -50,7 +49,7 @@ class Bounds implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'minlat' => $this->minLatitude,

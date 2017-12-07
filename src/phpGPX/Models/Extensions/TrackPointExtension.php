@@ -5,6 +5,7 @@
  */
 
 namespace phpGPX\Models\Extensions;
+
 use phpGPX\Helpers\SerializationHelper;
 
 /**

@@ -95,5 +95,5 @@ abstract class Collection implements Summarizable, StatsCalculator
 	 * Return all points in collection.
 	 * @return Point[]
 	 */
-	abstract function getPoints();
+	abstract public function getPoints();
 }

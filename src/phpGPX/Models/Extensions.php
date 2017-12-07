@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\Models\Extensions\TrackPointExtension;
 
@@ -37,7 +36,7 @@ class Extensions implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'trackpoint' => SerializationHelper::serialize($this->trackPointExtension)

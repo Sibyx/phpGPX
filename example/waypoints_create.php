@@ -73,8 +73,7 @@ $track->type 					= 'RUN';
 $track->source 					= sprintf("MySpecificGarminDevice");
 
 $wp = [];
-foreach ($sample_data as $sample_point)
-{
+foreach ($sample_data as $sample_point) {
 	// Creating trackpoint
 	$point 						= new Point(Point::WAYPOINT);
 	$point->latitude 			= $sample_point['latitude'];
@@ -95,6 +94,3 @@ $gpx_file->waypoints = $wp;
 
 // GPX output
 $gpx_file->save('waypoint_test.gpx', \phpGPX\phpGPX::XML_FORMAT);
-
-
-

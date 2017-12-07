@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Track;
 use phpGPX\phpGPX;
 
@@ -16,7 +15,6 @@ use phpGPX\phpGPX;
  */
 abstract class TrackParser
 {
-
 	public static $tagName = 'trk';
 
 	private static $attributeMapper = [
@@ -66,14 +64,11 @@ abstract class TrackParser
 	{
 		$tracks = [];
 
-		foreach ($nodes as $node)
-		{
+		foreach ($nodes as $node) {
 			$track = new Track();
 
-			foreach (self::$attributeMapper as $key => $attribute)
-			{
-				switch ($key)
-				{
+			foreach (self::$attributeMapper as $key => $attribute) {
+				switch ($key) {
 					case 'link':
 						$track->links = isset($node->link) ? LinkParser::parse($node->link) : [];
 						break;
@@ -84,11 +79,9 @@ abstract class TrackParser
 						$track->segments = isset($node->trkseg) ? SegmentParser::parse($node->trkseg) : [];
 						break;
 					default:
-						if (!in_array($attribute['type'], ['object', 'array']))
-						{
+						if (!in_array($attribute['type'], ['object', 'array'])) {
 							$track->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-							if (!is_null($track->{$attribute['name']}))
-							{
+							if (!is_null($track->{$attribute['name']})) {
 								settype($track->{$attribute['name']}, $attribute['type']);
 							}
 						}
@@ -96,8 +89,7 @@ abstract class TrackParser
 				}
 			}
 
-			if (phpGPX::$CALCULATE_STATS)
-			{
+			if (phpGPX::$CALCULATE_STATS) {
 				$track->recalculateStats();
 			}
 
@@ -116,13 +108,9 @@ abstract class TrackParser
 	{
 		$node = $document->createElement(self::$tagName);
 
-		foreach (self::$attributeMapper as $key => $attribute)
-		{
-			if (!is_null($track->{$attribute['name']}))
-			{
-
-				switch ($key)
-				{
+		foreach (self::$attributeMapper as $key => $attribute) {
+			if (!is_null($track->{$attribute['name']})) {
+				switch ($key) {
 					case 'link':
 						$child = LinkParser::toXMLArray($track->links, $document);
 						break;
@@ -139,15 +127,11 @@ abstract class TrackParser
 						break;
 				}
 
-				if (is_array($child))
-				{
-					foreach ($child as $item)
-					{
+				if (is_array($child)) {
+					foreach ($child as $item) {
 						$node->appendChild($item);
 					}
-				}
-				else
-				{
+				} else {
 					$node->appendChild($child);
 				}
 			}
@@ -165,8 +149,7 @@ abstract class TrackParser
 	{
 		$result = [];
 
-		foreach ($tracks as $track)
-		{
+		foreach ($tracks as $track) {
 			$result[] = self::toXML($track, $document);
 		}
 

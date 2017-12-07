@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 interface StatsCalculator
 {
 
@@ -14,6 +13,5 @@ interface StatsCalculator
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	function recalculateStats();
-
+	public function recalculateStats();
 }

@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
 
@@ -64,18 +63,18 @@ class Segment implements Summarizable, StatsCalculator
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	function recalculateStats()
+	public function recalculateStats()
 	{
-		if (empty($this->stats))
-		{
+		if (empty($this->stats)) {
 			$this->stats = new Stats();
 		}
 
 		$count = count($this->points);
 		$this->stats->reset();
 
-		if (empty($this->points))
+		if (empty($this->points)) {
 			return;
+		}
 
 		$firstPoint = &$this->points[0];
 		$lastPoint = end($this->points);
@@ -84,35 +83,28 @@ class Segment implements Summarizable, StatsCalculator
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
-		for ($i = 0; $i < $count; $i++)
-		{
-			if ($i > 0)
-			{
+		for ($i = 0; $i < $count; $i++) {
+			if ($i > 0) {
 				$this->stats->distance += GeoHelper::getDistance($this->points[$i-1], $this->points[$i]);
 			}
 
-			if ($this->stats->maxAltitude < $this->points[$i]->elevation)
-			{
+			if ($this->stats->maxAltitude < $this->points[$i]->elevation) {
 				$this->stats->maxAltitude = $this->points[$i]->elevation;
 			}
 
-			if ($this->stats->minAltitude > $this->points[$i]->elevation)
-			{
+			if ($this->stats->minAltitude > $this->points[$i]->elevation) {
 				$this->stats->minAltitude = $this->points[$i]->elevation;
 			}
 		}
 
-		if (isset($firstPoint->time) && $firstPoint->time instanceof \DateTime)
-		{
+		if (isset($firstPoint->time) && $firstPoint->time instanceof \DateTime) {
 			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
 
-			if ($this->stats->duration != 0)
-			{
+			if ($this->stats->duration != 0) {
 				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;
 			}
 
-			if ($this->stats->distance != 0)
-			{
+			if ($this->stats->distance != 0) {
 				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
 			}
 		}
