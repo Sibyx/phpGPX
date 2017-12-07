@@ -18,19 +18,9 @@ class Extensions implements Summarizable
 {
 
 	/**
-	 * GPX Garmin TrackPointExtension v1
-	 * @see 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'
-	 * @var TrackPointExtension
+	 * @var []
 	 */
-	public $trackPointExtension;
-
-	/**
-	 * Extensions constructor.
-	 */
-	public function __construct()
-	{
-		$this->trackPointExtension = null;
-	}
+	public $elements = [];
 
 	/**
 	 * Serialize object to array
@@ -38,8 +28,6 @@ class Extensions implements Summarizable
 	 */
 	public function toArray()
 	{
-		return [
-			'trackpoint' => SerializationHelper::serialize($this->trackPointExtension)
-		];
+		return $this->elements;
 	}
 }

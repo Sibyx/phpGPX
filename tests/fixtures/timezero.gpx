@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="49.3636333333086" lon="0.0800866666666667">
+    <time>2014-12-13T16:32:51.88Z</time>
+    <name>Event 0000</name>
+    <cmt />
+    <extensions>
+      <MxTimeZeroSymbol>10</MxTimeZeroSymbol>
+      <color>-16744448</color>
+    </extensions>
+  </wpt>
+  <wpt lat="49.3636333333086" lon="0.0800866666666667">
+    <time>2014-12-13T16:32:52.69Z</time>
+    <name>Event 0001</name>
+    <cmt />
+    <extensions>
+      <MxTimeZeroSymbol>10</MxTimeZeroSymbol>
+      <color>-16744448</color>
+    </extensions>
+  </wpt>
+  <trk>
+    <name>Ownship</name>
+    <extensions>
+      <guid>201</guid>
+    </extensions>
+    <trkseg>
+      <trkpt lat="49.3635449998312" lon="0.0801483333364938">
+        <time>2010-01-01T14:48:37.5195429Z</time>
+      </trkpt>
+      <trkpt lat="49.3635350651798" lon="0.0801416666698513">
+        <time>2010-01-01T14:48:40.5417475Z</time>
+      </trkpt>
+      <trkpt lat="49.3635266991555" lon="0.0801333333365323">
+        <time>2010-01-01T14:48:46.5634698Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>Ownship</name>
+    <extensions>
+      <guid>102</guid>
+    </extensions>
+    <trkseg>
+      <trkpt lat="49.4574117319429" lon="0.0343682156842231">
+        <time>2016-04-03T14:13:09.7087007Z</time>
+      </trkpt>
+      <trkpt lat="49.4573966992346" lon="0.0343466078409025">
+        <time>2016-04-03T14:13:10.8286333Z</time>
+      </trkpt>
+      <trkpt lat="49.4573700325059" lon="0.0342948235267376">
+        <time>2016-04-03T14:13:12.6759358Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

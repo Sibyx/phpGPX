@@ -36,9 +36,13 @@ abstract class ExtensionParser
 				case TrackPointExtension::EXTENSION_V1_NAMESPACE:
 					$extension = $nodes->children($namespace)->{TrackPointExtension::EXTENSION_NAME};
 					if (!empty($extension)) {
-						$extensions->trackPointExtension = TrackPointExtensionParser::parse($extension);
+						$extensions->elements['trackpoint'] = TrackPointExtensionParser::parse($extension);
 					}
 					break;
+				default:
+					foreach ($nodes->children() as $key => $value) {
+						$extensions->elements[$key] = (string) $value;
+					}
 			}
 		}
 
@@ -55,11 +59,18 @@ abstract class ExtensionParser
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!empty($extensions->trackPointExtension)) {
-			$child = TrackPointExtensionParser::toXML($extensions->trackPointExtension, $document);
-			$node->appendChild($child);
+		if (!empty($extensions->elements)) {
+			foreach ($extensions->elements as $key => $value) {
+				if ('trackpoint' === $key) {
+					$child = TrackPointExtensionParser::toXML($extensions->trackPointExtension, $document);
+				} else {
+					$child = $document->createElement($key, $value);
+				}
+
+				$node->appendChild($child);
+			}
 		}
 
-		return $node->hasChildNodes() ? $node : null;
+		return $node;
 	}
 }
