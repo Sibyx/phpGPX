@@ -10,7 +10,6 @@ use phpGPX\Parsers\BoundsParser;
 
 class BoundsParserTest extends AbstractParserTest
 {
-
 	protected $testModelClass = Bounds::class;
 	protected $testParserClass = BoundsParser::class;
 

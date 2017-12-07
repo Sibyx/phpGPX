@@ -10,7 +10,6 @@ use phpGPX\Parsers\PersonParser;
 
 class PersonParserTest extends AbstractParserTest
 {
-
 	protected $testModelClass = Person::class;
 	protected $testParserClass = PersonParser::class;
 

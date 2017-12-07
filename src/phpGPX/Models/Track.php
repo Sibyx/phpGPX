@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
@@ -44,13 +43,11 @@ class Track extends Collection
 		/** @var Point[] $points */
 		$points = [];
 
-		foreach ($this->segments as $segment)
-		{
+		foreach ($this->segments as $segment) {
 			$points = array_merge($points, $segment->points);
 		}
 
-		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points))
-		{
+		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points)) {
 			usort($points, array(DateTimeHelper::class, 'comparePointsByTimestamp'));
 		}
 
@@ -81,15 +78,17 @@ class Track extends Collection
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	function recalculateStats()
+	public function recalculateStats()
 	{
-		if (empty($this->stats))
+		if (empty($this->stats)) {
 			$this->stats = new Stats();
+		}
 
 		$this->stats->reset();
 
-		if (empty($this->segments) || empty($this->segments[0]->points))
+		if (empty($this->segments) || empty($this->segments[0]->points)) {
 			return;
+		}
 
 		$firstSegment = &$this->segments[0];
 		$firstPoint = &$this->segments[0]->points[0];
@@ -102,59 +101,46 @@ class Track extends Collection
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
-		for ($s = 0; $s < $segmentsCount; $s++)
-		{
+		for ($s = 0; $s < $segmentsCount; $s++) {
 			$this->segments[$s]->recalculateStats();
 			$pointCount = count($this->segments[$s]->points);
-			for ($p = 0; $p <$pointCount; $p++)
-			{
-				if (($p == 0) && ($s > 0))
-				{
+			for ($p = 0; $p <$pointCount; $p++) {
+				if (($p == 0) && ($s > 0)) {
 					$this->segments[$s]->points[$p]->difference = GeoHelper::getDistance(end($this->segments[$s-1]->points), $this->segments[$s]->points[$p]);
-				}
-				elseif ($p > 0)
-				{
+				} elseif ($p > 0) {
 					$this->segments[$s]->points[$p]->difference = GeoHelper::getDistance($this->segments[$s]->points[$p-1], $this->segments[$s]->points[$p]);
 				}
 				$this->stats->distance += $this->segments[$s]->points[$p]->difference;
 				$this->segments[$s]->points[$p]->distance = $this->stats->distance;
 
-				if($this->stats->cumulativeElevationGain === null)
-				{
+				if ($this->stats->cumulativeElevationGain === null) {
 					$lastElevation = $firstPoint->elevation;
 					$this->stats->cumulativeElevationGain = 0;
-				}
-				else
-				{
+				} else {
 					$elevationDelta = $this->segments[$s]->points[$p]->elevation - $lastElevation;
-					$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;                     $lastElevation = $this->segments[$s]->points[$p]->elevation;
+					$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
+					$lastElevation = $this->segments[$s]->points[$p]->elevation;
 				}
 			}
-			if ($this->stats->minAltitude == null)
-			{
+			if ($this->stats->minAltitude == null) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
 			}
-			if ($this->stats->maxAltitude < $this->segments[$s]->stats->maxAltitude)
-			{
+			if ($this->stats->maxAltitude < $this->segments[$s]->stats->maxAltitude) {
 				$this->stats->maxAltitude = $this->segments[$s]->stats->maxAltitude;
 			}
-			if ($this->stats->minAltitude > $this->segments[$s]->stats->minAltitude)
-			{
+			if ($this->stats->minAltitude > $this->segments[$s]->stats->minAltitude) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
 			}
 		}
 
-		if (($firstPoint->time instanceof \DateTime) && ($lastPoint->time instanceof \DateTime))
-		{
+		if (($firstPoint->time instanceof \DateTime) && ($lastPoint->time instanceof \DateTime)) {
 			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
 
-			if ($this->stats->duration != 0)
-			{
+			if ($this->stats->duration != 0) {
 				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;
 			}
 
-			if ($this->stats->distance != 0)
-			{
+			if ($this->stats->distance != 0) {
 				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
 			}
 		}

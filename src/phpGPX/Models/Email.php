@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 /**
  * Class Email
  * An email address. Broken into two parts (id and domain) to help prevent email harvesting.
@@ -40,7 +39,7 @@ class Email implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'id' => (string) $this->id,

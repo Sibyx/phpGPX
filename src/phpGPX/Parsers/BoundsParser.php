@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Bounds;
 
 /**
@@ -24,8 +23,9 @@ abstract class BoundsParser
 	 */
 	public static function parse(\SimpleXMLElement $node)
 	{
-		if ($node->getName() != self::$tagName)
+		if ($node->getName() != self::$tagName) {
 			return null;
+		}
 
 		$bounds = new Bounds();
 
@@ -47,28 +47,22 @@ abstract class BoundsParser
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!is_null($bounds->minLatitude))
-		{
+		if (!is_null($bounds->minLatitude)) {
 			$node->setAttribute('minlat', $bounds->minLatitude);
 		}
 
-		if (!is_null($bounds->minLongitude))
-		{
+		if (!is_null($bounds->minLongitude)) {
 			$node->setAttribute('minlon', $bounds->minLongitude);
 		}
 
-		if (!is_null($bounds->maxLatitude))
-		{
+		if (!is_null($bounds->maxLatitude)) {
 			$node->setAttribute('maxlat', $bounds->maxLatitude);
 		}
 
-		if (!is_null($bounds->maxLongitude))
-		{
+		if (!is_null($bounds->maxLongitude)) {
 			$node->setAttribute('maxlon', $bounds->maxLongitude);
 		}
 
 		return $node;
 	}
-
-
 }

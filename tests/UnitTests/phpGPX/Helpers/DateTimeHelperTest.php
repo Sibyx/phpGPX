@@ -71,6 +71,4 @@ class DateTimeHelperTest extends TestCase
 	{
 		DateTimeHelper::parseDateTime("Invalid exception");
 	}
-
-
 }

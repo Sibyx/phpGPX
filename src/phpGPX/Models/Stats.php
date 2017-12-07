@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\phpGPX;
 
@@ -90,7 +89,7 @@ class Stats implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray()
+	public function toArray()
 	{
 		return [
 			'distance' => (float) $this->distance,

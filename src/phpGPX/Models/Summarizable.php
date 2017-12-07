@@ -17,6 +17,5 @@ interface Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	function toArray();
-
+	public function toArray();
 }

@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class SerializationHelperTest extends TestCase
 {
-
 	public function testIntegerOrNull()
 	{
 		$this->assertNull(SerializationHelper::integerOrNull(""));

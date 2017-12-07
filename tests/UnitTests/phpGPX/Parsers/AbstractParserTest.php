@@ -5,7 +5,6 @@
 
 namespace UnitTests\phpGPX\Parsers;
 
-
 use phpGPX\Models\Summarizable;
 use PHPUnit\Framework\TestCase;
 
@@ -75,6 +74,4 @@ abstract class AbstractParserTest extends TestCase
 			json_encode($this->testModelInstance->toArray())
 		);
 	}
-
-
 }

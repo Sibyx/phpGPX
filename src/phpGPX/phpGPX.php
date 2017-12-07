@@ -6,7 +6,6 @@
 
 namespace phpGPX;
 
-
 use phpGPX\Models\GpxFile;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\RouteParser;
@@ -66,7 +65,7 @@ class phpGPX
 	{
 		$xml = file_get_contents($path);
 
-		return self::parse($xml);		
+		return self::parse($xml);
 	}
 
 	/**
@@ -74,7 +73,7 @@ class phpGPX
 	 * @param $xml
 	 * @return GpxFile
 	 */
-	public static function parse($xml) 
+	public static function parse($xml)
 	{
 		$xml = simplexml_load_string($xml);
 
@@ -106,6 +105,4 @@ class phpGPX
 	{
 		return sprintf("%s/%s", self::PACKAGE_NAME, self::VERSION);
 	}
-
-
 }

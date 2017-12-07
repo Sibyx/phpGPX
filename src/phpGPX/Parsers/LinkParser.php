@@ -6,12 +6,10 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Link;
 
 abstract class LinkParser
 {
-
 	private static $tagName = 'link';
 
 	/**
@@ -21,8 +19,7 @@ abstract class LinkParser
 	public static function parse($nodes = [])
 	{
 		$links = [];
-		foreach ($nodes as $node)
-		{
+		foreach ($nodes as $node) {
 			$link = new Link();
 			$link->href = isset($node['href']) ? (string) $node['href'] : null;
 			$link->text = isset($node->text) ? (string) $node->text : null;
@@ -42,8 +39,7 @@ abstract class LinkParser
 	{
 		$result = [];
 
-		foreach ($links as $link)
-		{
+		foreach ($links as $link) {
 			$result[] = self::toXML($link, $document);
 		}
 
@@ -61,14 +57,12 @@ abstract class LinkParser
 
 		$node->setAttribute('href', $link->href);
 
-		if (!empty($link->text))
-		{
+		if (!empty($link->text)) {
 			$child = $document->createElement('text', $link->text);
 			$node->appendChild($child);
 		}
 
-		if (!empty($link->type))
-		{
+		if (!empty($link->type)) {
 			$child = $document->createElement('type', $link->type);
 			$node->appendChild($child);
 		}

@@ -33,6 +33,7 @@ class GeoHelperTest extends TestCase
 			856.97,
 			GeoHelper::getDistance($point1, $point2),
 			"Invalid distance between two points!",
-			1);
+			1
+		);
 	}
 }

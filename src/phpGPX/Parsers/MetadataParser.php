@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Models\Metadata;
 
@@ -16,7 +15,6 @@ use phpGPX\Models\Metadata;
  */
 abstract class MetadataParser
 {
-
 	private static $tagName = 'metadata';
 
 	private static $attributeMapper = [
@@ -66,10 +64,8 @@ abstract class MetadataParser
 	{
 		$metadata = new Metadata();
 
-		foreach (self::$attributeMapper as $key => $attribute)
-		{
-			switch ($key)
-			{
+		foreach (self::$attributeMapper as $key => $attribute) {
+			switch ($key) {
 				case 'author':
 					$metadata->author = isset($node->author) ? PersonParser::parse($node->author) : null;
 					break;
@@ -89,11 +85,9 @@ abstract class MetadataParser
 					$metadata->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
 					break;
 				default:
-					if (!in_array($attribute['type'], ['object', 'array']))
-					{
+					if (!in_array($attribute['type'], ['object', 'array'])) {
 						$metadata->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-						if (!is_null($metadata->{$attribute['name']}))
-						{
+						if (!is_null($metadata->{$attribute['name']})) {
 							settype($metadata->{$attribute['name']}, $attribute['type']);
 						}
 					}
@@ -108,13 +102,9 @@ abstract class MetadataParser
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		foreach (self::$attributeMapper as $key => $attribute)
-		{
-			if (!is_null($metadata->{$attribute['name']}))
-			{
-
-				switch ($key)
-				{
+		foreach (self::$attributeMapper as $key => $attribute) {
+			if (!is_null($metadata->{$attribute['name']})) {
+				switch ($key) {
 					case 'author':
 						$child = PersonParser::toXML($metadata->author, $document);
 						break;
@@ -140,15 +130,11 @@ abstract class MetadataParser
 						break;
 				}
 
-				if (is_array($child))
-				{
-					foreach ($child as $item)
-					{
+				if (is_array($child)) {
+					foreach ($child as $item) {
 						$node->appendChild($item);
 					}
-				}
-				else
-				{
+				} else {
 					$node->appendChild($child);
 				}
 			}
@@ -156,5 +142,4 @@ abstract class MetadataParser
 
 		return $node;
 	}
-
 }

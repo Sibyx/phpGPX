@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\phpGPX;

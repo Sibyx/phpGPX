@@ -10,7 +10,6 @@ use phpGPX\Parsers\CopyrightParser;
 
 class CopyrightParserTest extends AbstractParserTest
 {
-
 	protected $testModelClass = Copyright::class;
 	protected $testParserClass = CopyrightParser::class;
 

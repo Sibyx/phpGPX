@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models\Extensions;
 
-
 use phpGPX\Models\Summarizable;
 
 abstract class AbstractExtension implements Summarizable
@@ -34,6 +33,4 @@ abstract class AbstractExtension implements Summarizable
 		$this->namespace = $namespace;
 		$this->extensionName = $extensionName;
 	}
-
-
 }

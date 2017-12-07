@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
@@ -47,8 +46,7 @@ class Route extends Collection
 
 		$points = array_merge($points, $this->points);
 
-		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points))
-		{
+		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points)) {
 			usort($points, array(DateTimeHelper::class, 'comparePointsByTimestamp'));
 		}
 
@@ -79,15 +77,17 @@ class Route extends Collection
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	function recalculateStats()
+	public function recalculateStats()
 	{
-		if (empty($this->stats))
+		if (empty($this->stats)) {
 			$this->stats = new Stats();
+		}
 
 		$this->stats->reset();
 
-		if (empty($this->points))
+		if (empty($this->points)) {
 			return;
+		}
 
 		$pointCount = count($this->points);
 
@@ -98,14 +98,10 @@ class Route extends Collection
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
-		for ($p = 0; $p < $pointCount; $p++)
-		{
-			if ($p == 0)
-			{
+		for ($p = 0; $p < $pointCount; $p++) {
+			if ($p == 0) {
 				$this->points[$p]->difference = 0;
-			}
-			else
-			{
+			} else {
 				$this->points[$p]->difference = GeoHelper::getDistance($this->points[$p-1], $this->points[$p]);
 			}
 
@@ -113,44 +109,35 @@ class Route extends Collection
 			$this->points[$p] = $this->stats->distance;
 		}
 		
-		if($this->stats->cumulativeElevationGain === null)
-		{
+		if ($this->stats->cumulativeElevationGain === null) {
 			$lastElevation = $firstPoint->elevation;
 			$this->stats->cumulativeElevationGain = 0;
-		} 
-		else
-		{
+		} else {
 			$elevationDelta = $this->points[$p]->elevation - $lastElevation;
 			$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
 			$lastElevation = $this->points[$p]->elevation;
 		}
 
-		if ($this->stats->minAltitude == null)
-		{
+		if ($this->stats->minAltitude == null) {
 			$this->stats->minAltitude = $this->points[$p]->elevation;
 		}
 
-		if ($this->stats->maxAltitude < $this->points[$p]->elevation)
-		{
+		if ($this->stats->maxAltitude < $this->points[$p]->elevation) {
 			$this->stats->maxAltitude = $this->points[$p]->elevation;
 		}
 
-		if ($this->stats->minAltitude > $this->points[$p]->elevation)
-		{
+		if ($this->stats->minAltitude > $this->points[$p]->elevation) {
 			$this->stats->minAltitude = $this->points[$p]->elevation;
 		}
 
-		if (($firstPoint instanceof \DateTime) && ($lastPoint instanceof \DateTime))
-		{
+		if (($firstPoint instanceof \DateTime) && ($lastPoint instanceof \DateTime)) {
 			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
 
-			if ($this->stats->duration != 0)
-			{
+			if ($this->stats->duration != 0) {
 				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;
 			}
 
-			if ($this->stats->distance != 0)
-			{
+			if ($this->stats->distance != 0) {
 				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
 			}
 		}

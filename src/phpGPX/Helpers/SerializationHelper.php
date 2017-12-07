@@ -6,7 +6,6 @@
 
 namespace phpGPX\Helpers;
 
-
 use phpGPX\Models\Summarizable;
 
 /**
@@ -24,7 +23,7 @@ abstract class SerializationHelper
 	 */
 	public static function integerOrNull($value)
 	{
-			return is_int($value) ? (integer) $value : null;
+		return is_int($value) ? (integer) $value : null;
 	}
 
 	/**
@@ -52,19 +51,18 @@ abstract class SerializationHelper
 	 * @param Summarizable|Summarizable[] $object
 	 * @return array|null
 	 */
-	public static function serialize($object) {
+	public static function serialize($object)
+	{
 		if (is_array($object)) {
 			$result = [];
-			foreach  ($object as $record) {
+			foreach ($object as $record) {
 				$result[] = $record->toArray();
 				$record = null;
 			}
 			$object = null;
 			return $result;
-		}
-		else {
+		} else {
 			return $object != null ? $object->toArray() : null;
 		}
 	}
-
 }

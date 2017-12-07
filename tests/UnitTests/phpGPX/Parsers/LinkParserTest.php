@@ -10,7 +10,6 @@ use phpGPX\Parsers\LinkParser;
 
 class LinkParserTest extends AbstractParserTest
 {
-
 	protected $testModelClass = Link::class;
 	protected $testParserClass = LinkParser::class;
 

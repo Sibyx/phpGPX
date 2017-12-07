@@ -76,8 +76,7 @@ $track->source 					= sprintf("MySpecificGarminDevice");
 $segment 						= new Segment();
 
 
-foreach ($sample_data as $sample_point)
-{
+foreach ($sample_data as $sample_point) {
 	// Creating trackpoint
 	$point 						= new Point(Point::TRACKPOINT);
 	$point->latitude 			= $sample_point['latitude'];
@@ -107,4 +106,3 @@ header("Content-Disposition: attachment; filename=CreatingFileFromScratchExample
 
 echo $gpx_file->toXML()->saveXML();
 exit();
-

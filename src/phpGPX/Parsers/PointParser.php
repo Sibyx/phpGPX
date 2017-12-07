@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Models\Point;
 
@@ -99,18 +98,17 @@ abstract class PointParser
 
 	public static function parse(\SimpleXMLElement $node)
 	{
-		if (!array_key_exists($node->getName(), self::$typeMapper))
+		if (!array_key_exists($node->getName(), self::$typeMapper)) {
 			return null;
+		}
 
 		$point = new Point(self::$typeMapper[$node->getName()]);
 
 		$point->latitude = isset($node['lat']) ? ((float) $node['lat']) : null;
 		$point->longitude = isset($node['lon']) ? ((float) $node['lon']) : null;
 
-		foreach (self::$attributeMapper as $key => $attribute)
-		{
-			switch ($key)
-			{
+		foreach (self::$attributeMapper as $key => $attribute) {
+			switch ($key) {
 				case 'time':
 					$point->time = isset($node->time) ? DateTimeHelper::parseDateTime($node->time) : null;
 					break;
@@ -121,11 +119,9 @@ abstract class PointParser
 					$point->links = isset($node->link) ? LinkParser::parse($node->link) : [];
 					break;
 				default:
-					if (!in_array($attribute['type'], ['object', 'array']))
-					{
+					if (!in_array($attribute['type'], ['object', 'array'])) {
 						$point->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-						if (!is_null($point->{$attribute['name']}))
-						{
+						if (!is_null($point->{$attribute['name']})) {
 							settype($point->{$attribute['name']}, $attribute['type']);
 						}
 					}
@@ -148,13 +144,9 @@ abstract class PointParser
 		$node->setAttribute('lat', $point->latitude);
 		$node->setAttribute('lon', $point->longitude);
 
-		foreach (self::$attributeMapper as $key => $attribute)
-		{
-			if (!is_null($point->{$attribute['name']}))
-			{
-
-				switch ($key)
-				{
+		foreach (self::$attributeMapper as $key => $attribute) {
+			if (!is_null($point->{$attribute['name']})) {
+				switch ($key) {
 					case 'link':
 						$child = LinkParser::toXMLArray($point->links, $document);
 						break;
@@ -172,15 +164,11 @@ abstract class PointParser
 						break;
 				}
 
-				if (is_array($child))
-				{
-					foreach ($child as $item)
-					{
+				if (is_array($child)) {
+					foreach ($child as $item) {
 						$node->appendChild($item);
 					}
-				}
-				else
-				{
+				} else {
 					$node->appendChild($child);
 				}
 			}
@@ -198,12 +186,10 @@ abstract class PointParser
 	{
 		$result = [];
 
-		foreach ($points as $point)
-		{
+		foreach ($points as $point) {
 			$result[] = self::toXML($point, $document);
 		}
 
 		return $result;
 	}
-
 }

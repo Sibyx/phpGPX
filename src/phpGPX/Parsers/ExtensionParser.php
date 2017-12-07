@@ -6,7 +6,6 @@
 
 namespace phpGPX\Parsers;
 
-
 use phpGPX\Models\Extensions;
 use phpGPX\Models\Extensions\TrackPointExtension;
 use phpGPX\Parsers\Extensions\TrackPointExtensionParser;
@@ -17,7 +16,6 @@ use phpGPX\Parsers\Extensions\TrackPointExtensionParser;
  */
 abstract class ExtensionParser
 {
-
 	public static $tagName = 'extensions';
 
 	public static $usedNamespaces = [];
@@ -32,15 +30,14 @@ abstract class ExtensionParser
 
 		$nodeNamespaces = $nodes->getNamespaces(true);
 
-		foreach ($nodeNamespaces as $key => $namespace)
-		{
-			switch ($namespace)
-			{
+		foreach ($nodeNamespaces as $key => $namespace) {
+			switch ($namespace) {
 				case TrackPointExtension::EXTENSION_NAMESPACE:
 				case TrackPointExtension::EXTENSION_V1_NAMESPACE:
 					$extension = $nodes->children($namespace)->{TrackPointExtension::EXTENSION_NAME};
-					if (!empty($extension))
+					if (!empty($extension)) {
 						$extensions->trackPointExtension = TrackPointExtensionParser::parse($extension);
+					}
 					break;
 			}
 		}
@@ -58,14 +55,11 @@ abstract class ExtensionParser
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!empty($extensions->trackPointExtension))
-		{
+		if (!empty($extensions->trackPointExtension)) {
 			$child = TrackPointExtensionParser::toXML($extensions->trackPointExtension, $document);
 			$node->appendChild($child);
 		}
 
 		return $node->hasChildNodes() ? $node : null;
 	}
-
-
 }
