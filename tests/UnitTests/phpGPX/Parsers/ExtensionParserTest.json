@@ -1,0 +1,17 @@
+{
+	"trackpoint": {
+		"aTemp": 14,
+		"avgTemperature": 14,
+		"wTemp": null,
+		"depth": null,
+		"heartRate": 152,
+		"hr": 152,
+		"cadence": null,
+		"cad": null,
+		"speed": null,
+		"course": null,
+		"bearing": null,
+		"namespace": "http:\/\/www.garmin.com\/xmlschemas\/TrackPointExtension\/v2",
+		"extensionName": "TrackPointExtension"
+	}
+}
