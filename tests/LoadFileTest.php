@@ -42,8 +42,11 @@ class LoadFileTest extends TestCase
 					'difference' => null,
 					'distance' => null,
 					'extensions' => [
-						'MxTimeZeroSymbol' => 10,
-						'color' => -16744448,
+						'trackpoint' => null,
+						'unsupported' => [
+							'MxTimeZeroSymbol' => 10,
+							'color' => -16744448,
+						],
 					],
 				],
 				[
@@ -70,8 +73,11 @@ class LoadFileTest extends TestCase
 					'difference' => null,
 					'distance' => null,
 					'extensions' => [
-						'MxTimeZeroSymbol' => 10,
-						'color' => -16744448,
+						'trackpoint' => null,
+						'unsupported' => [
+							'MxTimeZeroSymbol' => 10,
+							'color' => -16744448,
+							],
 					],
 				],
 			],
@@ -86,7 +92,10 @@ class LoadFileTest extends TestCase
 					'number' => null,
 					'type' => null,
 					'extensions' => [
-						'guid' => 201,
+						'trackpoint' => null,
+						'unsupported' => [
+							'guid' => 201,
+						],
 					],
 					'trkseg' => [
 						[
@@ -202,7 +211,10 @@ class LoadFileTest extends TestCase
 					'number' => null,
 					'type' => null,
 					'extensions' => [
-						'guid' => 102,
+						'trackpoint' => null,
+						'unsupported' => [
+							'guid' => 102,
+						],
 					],
 					'trkseg' => [
 						[

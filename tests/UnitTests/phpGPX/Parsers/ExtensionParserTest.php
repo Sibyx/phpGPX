@@ -28,7 +28,7 @@ class ExtensionParserTest extends AbstractParserTest
 		$trackpoint->heartRate = (float) 152;
 
 		$extensions = new Extensions();
-		$extensions->elements['trackpoint'] = $trackpoint;
+		$extensions->trackPointExtension = $trackpoint;
 
 		return $extensions;
 	}
@@ -44,7 +44,8 @@ class ExtensionParserTest extends AbstractParserTest
 	{
 		$extensions = ExtensionParser::parse($this->testXmlFile->extensions);
 
-		$this->assertEquals($this->testModelInstance->elements, $extensions->elements);
+		$this->assertEquals($this->testModelInstance->unsupported, $extensions->unsupported);
+		$this->assertEquals($this->testModelInstance->trackPointExtension, $extensions->trackPointExtension);
 
 		$this->assertEquals($this->testModelInstance->toArray(), $extensions->toArray());
 	}

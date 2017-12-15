@@ -16,11 +16,17 @@ use phpGPX\Models\Extensions\TrackPointExtension;
  */
 class Extensions implements Summarizable
 {
+	/**
+	 * GPX Garmin TrackPointExtension v1
+	 * @see 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'
+	 * @var TrackPointExtension
+	 */
+	public $trackPointExtension;
 
 	/**
 	 * @var []
 	 */
-	public $elements = [];
+	public $unsupported = [];
 
 	/**
 	 * Serialize object to array
@@ -28,6 +34,9 @@ class Extensions implements Summarizable
 	 */
 	public function toArray()
 	{
-		return $this->elements;
+		return [
+				'trackpoint' => SerializationHelper::serialize($this->trackPointExtension),
+				'unsupported' => $this->unsupported,
+			];
 	}
 }
