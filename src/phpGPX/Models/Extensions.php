@@ -16,7 +16,6 @@ use phpGPX\Models\Extensions\TrackPointExtension;
  */
 class Extensions implements Summarizable
 {
-
 	/**
 	 * GPX Garmin TrackPointExtension v1
 	 * @see 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'
@@ -25,12 +24,9 @@ class Extensions implements Summarizable
 	public $trackPointExtension;
 
 	/**
-	 * Extensions constructor.
+	 * @var []
 	 */
-	public function __construct()
-	{
-		$this->trackPointExtension = null;
-	}
+	public $unsupported = [];
 
 	/**
 	 * Serialize object to array
@@ -39,7 +35,8 @@ class Extensions implements Summarizable
 	public function toArray()
 	{
 		return [
-			'trackpoint' => SerializationHelper::serialize($this->trackPointExtension)
-		];
+				'trackpoint' => SerializationHelper::serialize($this->trackPointExtension),
+				'unsupported' => $this->unsupported,
+			];
 	}
 }

@@ -22,5 +22,8 @@
     },
     "autoload": {
         "psr-4": { "phpGPX\\": "src/phpGPX/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "phpGPX\\Tests\\": "tests/" }
     }
 }
