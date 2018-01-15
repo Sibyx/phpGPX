@@ -2,6 +2,7 @@
 
 ## 1.0-RC4
 
+ - **Change:** [Change the way to deal with extensions ](https://github.com/Sibyx/phpGPX/pull/19) 
  - **Bugfix:** [RoutePoints and TripExtensions WIP](https://github.com/Sibyx/phpGPX/issues/22)
  - **Bugfix:** [Route point rtep versus rtept](https://github.com/Sibyx/phpGPX/issues/21)
  - **Bugfix:** [Empty array on load route](https://github.com/Sibyx/phpGPX/issues/20)
