@@ -120,7 +120,7 @@ class Route extends Collection
 				$lastElevation = $this->points[$p]->elevation;
 			}
 
-			if ($this->stats->minAltitude == null) {
+			if ($this->stats->minAltitude === null) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
 			}
 

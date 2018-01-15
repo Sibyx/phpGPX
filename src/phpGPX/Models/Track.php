@@ -124,7 +124,7 @@ class Track extends Collection
 					$lastElevation = $this->segments[$s]->points[$p]->elevation;
 				}
 			}
-			if ($this->stats->minAltitude == null) {
+			if ($this->stats->minAltitude === null) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
 			}
 			if ($this->stats->maxAltitude < $this->segments[$s]->stats->maxAltitude) {

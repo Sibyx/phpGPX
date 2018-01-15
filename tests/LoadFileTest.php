@@ -7,14 +7,22 @@ use PHPUnit\Framework\TestCase;
 
 class LoadFileTest extends TestCase
 {
-	public function test_load_xml_file_generated_by_timezero()
+	public function testLoadXmlFileGeneratedByTimezero()
 	{
 		$file = __DIR__.'/fixtures/timezero.gpx';
 
 		$gpx = new phpGpx();
 		$gpxFile = $gpx->load($file);
 
-		$expectedArray = [
+		$this->assertEquals($this->createExpectedArray(), $gpxFile->toArray(), "", 0.0001);
+
+		// Check XML generation
+		$gpxFile->toXML()->saveXML();
+	}
+
+	private function createExpectedArray()
+	{
+		return [
 			'creator' => null,
 			'metadata' => null,
 			'waypoints' => [
@@ -77,7 +85,7 @@ class LoadFileTest extends TestCase
 						'unsupported' => [
 							'MxTimeZeroSymbol' => 10,
 							'color' => -16744448,
-							],
+						],
 					],
 				],
 			],
@@ -324,10 +332,5 @@ class LoadFileTest extends TestCase
 			],
 			'extensions' => null,
 		];
-
-		$this->assertEquals($expectedArray, $gpxFile->toArray());
-
-		// Check XML generation
-		$gpxFile->toXML()->saveXML();
 	}
 }

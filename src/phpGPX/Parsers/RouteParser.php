@@ -34,7 +34,7 @@ abstract class RouteParser
 			'name' => 'source',
 			'type' => 'string'
 		],
-		'link' => [
+		'links' => [
 			'name' => 'links',
 			'type' => 'array'
 		],
@@ -119,13 +119,13 @@ abstract class RouteParser
 		foreach (self::$attributeMapper as $key => $attribute) {
 			if (!is_null($route->{$attribute['name']})) {
 				switch ($key) {
-					case 'link':
+					case 'links':
 						$child = LinkParser::toXMLArray($route->links, $document);
 						break;
 					case 'extensions':
 						$child = ExtensionParser::toXML($route->extensions, $document);
 						break;
-					case 'rtep':
+					case 'rtept':
 						$child = PointParser::toXMLArray($route->points, $document);
 						break;
 					default:
