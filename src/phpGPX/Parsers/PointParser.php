@@ -93,7 +93,7 @@ abstract class PointParser
 	private static $typeMapper = [
 		'trkpt' => Point::TRACKPOINT,
 		'wpt' => Point::WAYPOINT,
-		'rtp' => Point::ROUTEPOINT
+		'rtept' => Point::ROUTEPOINT
 	];
 
 	public static function parse(\SimpleXMLElement $node)

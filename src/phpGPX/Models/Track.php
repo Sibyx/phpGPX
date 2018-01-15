@@ -101,10 +101,12 @@ class Track extends Collection
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
+		$lastElevation = null;
+
 		for ($s = 0; $s < $segmentsCount; $s++) {
 			$this->segments[$s]->recalculateStats();
 			$pointCount = count($this->segments[$s]->points);
-			for ($p = 0; $p <$pointCount; $p++) {
+			for ($p = 0; $p < $pointCount; $p++) {
 				if (($p == 0) && ($s > 0)) {
 					$this->segments[$s]->points[$p]->difference = GeoHelper::getDistance(end($this->segments[$s-1]->points), $this->segments[$s]->points[$p]);
 				} elseif ($p > 0) {

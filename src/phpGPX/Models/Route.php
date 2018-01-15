@@ -98,7 +98,10 @@ class Route extends Collection
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
+		$lastElevation = null;
+
 		for ($p = 0; $p < $pointCount; $p++) {
+
 			if ($p == 0) {
 				$this->points[$p]->difference = 0;
 			} else {
@@ -106,31 +109,31 @@ class Route extends Collection
 			}
 
 			$this->stats->distance += $this->points[$p]->difference;
-			$this->points[$p] = $this->stats->distance;
-		}
-		
-		if ($this->stats->cumulativeElevationGain === null) {
-			$lastElevation = $firstPoint->elevation;
-			$this->stats->cumulativeElevationGain = 0;
-		} else {
-			$elevationDelta = $this->points[$p]->elevation - $lastElevation;
-			$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
-			$lastElevation = $this->points[$p]->elevation;
+			$this->points[$p]->distance = $this->stats->distance;
+
+			if ($this->stats->cumulativeElevationGain === null) {
+				$lastElevation = $firstPoint->elevation;
+				$this->stats->cumulativeElevationGain = 0;
+			} else {
+				$elevationDelta = $this->points[$p]->elevation - $lastElevation;
+				$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
+				$lastElevation = $this->points[$p]->elevation;
+			}
+
+			if ($this->stats->minAltitude == null) {
+				$this->stats->minAltitude = $this->points[$p]->elevation;
+			}
+
+			if ($this->stats->maxAltitude < $this->points[$p]->elevation) {
+				$this->stats->maxAltitude = $this->points[$p]->elevation;
+			}
+
+			if ($this->stats->minAltitude > $this->points[$p]->elevation) {
+				$this->stats->minAltitude = $this->points[$p]->elevation;
+			}
 		}
 
-		if ($this->stats->minAltitude == null) {
-			$this->stats->minAltitude = $this->points[$p]->elevation;
-		}
-
-		if ($this->stats->maxAltitude < $this->points[$p]->elevation) {
-			$this->stats->maxAltitude = $this->points[$p]->elevation;
-		}
-
-		if ($this->stats->minAltitude > $this->points[$p]->elevation) {
-			$this->stats->minAltitude = $this->points[$p]->elevation;
-		}
-
-		if (($firstPoint instanceof \DateTime) && ($lastPoint instanceof \DateTime)) {
+		if (($firstPoint->time instanceof \DateTime) && ($lastPoint->time instanceof \DateTime)) {
 			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
 
 			if ($this->stats->duration != 0) {

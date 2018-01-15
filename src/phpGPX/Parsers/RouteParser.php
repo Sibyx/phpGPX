@@ -50,7 +50,7 @@ abstract class RouteParser
 			'name' => 'extensions',
 			'type' => 'object'
 		],
-		'rtep' => [
+		'rtept' => [
 			'name' => 'points',
 			'type' => 'array'
 		],
@@ -75,8 +75,16 @@ abstract class RouteParser
 					case 'extensions':
 						$route->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
 						break;
-					case 'rtep':
-						$route->points = isset($node->rtep) ? PointParser::parse($node->rtep) : [];
+					case 'rtept':
+						$route->points = [];
+
+						if (isset($node->rtept))
+						{
+							foreach ($node->rtept as $point)
+							{
+								$route->points[] = PointParser::parse($point);
+							}
+						}
 						break;
 					default:
 						if (!in_array($attribute['type'], ['object', 'array'])) {
