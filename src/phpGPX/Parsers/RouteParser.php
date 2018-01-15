@@ -78,10 +78,8 @@ abstract class RouteParser
 					case 'rtept':
 						$route->points = [];
 
-						if (isset($node->rtept))
-						{
-							foreach ($node->rtept as $point)
-							{
+						if (isset($node->rtept)) {
+							foreach ($node->rtept as $point) {
 								$route->points[] = PointParser::parse($point);
 							}
 						}

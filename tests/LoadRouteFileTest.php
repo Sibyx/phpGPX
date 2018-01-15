@@ -292,5 +292,4 @@ class LoadRouteFileTest extends TestCase
 			'extensions' => null
 		];
 	}
-
 }

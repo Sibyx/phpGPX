@@ -101,7 +101,6 @@ class Route extends Collection
 		$lastElevation = null;
 
 		for ($p = 0; $p < $pointCount; $p++) {
-
 			if ($p == 0) {
 				$this->points[$p]->difference = 0;
 			} else {
