@@ -1,29 +1,29 @@
 {
-    "name": "sibyx/phpgpx",
-    "type": "library",
-    "version": "1.0-RC4",
-    "description": "A simple PHP library for GPX import/export",
-    "minimum-stability": "stable",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jakub Dubec",
-            "email": "jakub.dubec@gmail.com",
-            "homepage": "https://jakubdubec.me"
-        }
-    ],
-    "require": {
-        "php": ">=5.4",
-        "lib-libxml": "*",
-        "phpunit/phpunit": "^6.5"
-    },
-    "require-dev": {
-        "evert/phpdoc-md" : "~0.2.0"
-    },
-    "autoload": {
-        "psr-4": { "phpGPX\\": "src/phpGPX/" }
-    },
-    "autoload-dev": {
-        "psr-4": { "phpGPX\\Tests\\": "tests/" }
-    }
+	"name": "sibyx/phpgpx",
+	"type": "library",
+	"version": "1.0-RC4",
+	"description": "A simple PHP library for GPX import/export",
+	"minimum-stability": "stable",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jakub Dubec",
+			"email": "jakub.dubec@gmail.com",
+			"homepage": "https://jakubdubec.me"
+		}
+	],
+	"require": {
+		"php": ">=5.4",
+		"lib-libxml": "*"
+	},
+	"require-dev": {
+		"evert/phpdoc-md" : "~0.2.0",
+		"phpunit/phpunit": "^6.5"
+	},
+	"autoload": {
+		"psr-4": { "phpGPX\\": "src/phpGPX/" }
+	},
+	"autoload-dev": {
+		"psr-4": { "phpGPX\\Tests\\": "tests/" }
+	}
 }
