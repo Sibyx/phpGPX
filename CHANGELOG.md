@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0-RC5
+
+- **Change:** Moved PHPUnit to development dependencies. 
+
 ## 1.0-RC4
 
  - **Change:** [Change the way to deal with extensions ](https://github.com/Sibyx/phpGPX/pull/19) 
