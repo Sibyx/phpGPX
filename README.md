@@ -1,6 +1,5 @@
 # phpGPX
 
-[![MIT License](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/Sibyx/phpGPX/blob/master/LICENSE)
 [![Code Climate](https://codeclimate.com/github/Sibyx/phpGPX/badges/gpa.svg)](https://codeclimate.com/github/Sibyx/phpGPX)
 [![Latest development](https://img.shields.io/packagist/vpre/sibyx/phpgpx.svg)](https://packagist.org/packages/sibyx/phpgpx)
 [![Packagist downloads](https://img.shields.io/packagist/dm/sibyx/phpgpx.svg)](https://packagist.org/packages/sibyx/phpgpx)
