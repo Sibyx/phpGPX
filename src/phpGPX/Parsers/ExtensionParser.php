@@ -40,6 +40,7 @@ abstract class ExtensionParser
 					}
 					break;
 				default:
+					// FIXME: check this out,
 					foreach ($nodes->children() as $key => $value) {
 						$extensions->unsupported[$key] = (string) $value;
 					}

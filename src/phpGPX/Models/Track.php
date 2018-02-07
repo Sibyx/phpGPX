@@ -48,7 +48,7 @@ class Track extends Collection
 		}
 
 		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points)) {
-			usort($points, array(DateTimeHelper::class, 'comparePointsByTimestamp'));
+			usort($points, array('phpGPX\Helpers\DateTimeHelper', 'comparePointsByTimestamp'));
 		}
 
 		return $points;

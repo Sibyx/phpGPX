@@ -21,7 +21,7 @@ abstract class WaypointParser
 	{
 		$points = [];
 
-		// foreach ($nodes->wpt as $item) this was incorrect, the ->wpt was alreadu done in the caller
+		// foreach ($nodes->wpt as $item) this was incorrect, the ->wpt was already done in the caller
 		foreach ($nodes as $item) {
 			$point = PointParser::parse($item);
 

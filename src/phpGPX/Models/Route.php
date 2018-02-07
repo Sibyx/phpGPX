@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\phpGPX;
@@ -47,7 +46,7 @@ class Route extends Collection
 		$points = array_merge($points, $this->points);
 
 		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points)) {
-			usort($points, array(DateTimeHelper::class, 'comparePointsByTimestamp'));
+			usort($points, array('phpGPX\Helpers\DateTimeHelper', 'comparePointsByTimestamp'));
 		}
 
 		return $points;
