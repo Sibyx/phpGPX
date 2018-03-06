@@ -97,7 +97,7 @@ class Segment implements Summarizable, StatsCalculator
 			}
 		}
 
-		if (isset($firstPoint->time) && $firstPoint->time instanceof \DateTime) {
+		if (isset($firstPoint->time) && isset($lastPoint->time) && $firstPoint->time instanceof \DateTime && $lastPoint->time instanceof \DateTime) {
 			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
 
 			if ($this->stats->duration != 0) {
