@@ -99,7 +99,7 @@ class Track extends Collection
 		for ($s = 0; $s < $segmentsCount; $s++) {
 			$pointCount = count($this->segments[$s]->points);
 			for ($p = 0; $p < $pointCount; $p++) {
-				if(is_null($firstPoint)) {
+				if (is_null($firstPoint)) {
 					$firstPoint = &$this->segments[$s]->points[$p];
 					$firstSegment = &$this->segments[$s];
 					break;
@@ -149,7 +149,7 @@ class Track extends Collection
 
 		$allPoints = $this->getPoints();
 		$allPtsCnt = count($allPoints);
-		if ($allPtsCnt > 0 ) {
+		if ($allPtsCnt > 0) {
 			for ($p = 1; $p < $allPtsCnt; $p++) {
 				// skipping first point
 				$allPoints[$p]->difference = GeoHelper::getDistance($allPoints[$p-1], $allPoints[$p]);
