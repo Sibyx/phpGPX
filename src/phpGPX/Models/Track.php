@@ -86,16 +86,33 @@ class Track extends Collection
 
 		$this->stats->reset();
 
-		if (empty($this->segments) || empty($this->segments[0]->points)) {
+		if (empty($this->segments)) {
 			return;
 		}
 
-		$firstSegment = &$this->segments[0];
-		$firstPoint = &$this->segments[0]->points[0];
+		$segmentsCount = count($this->segments);
+
+		$firstSegment = null;
+		$firstPoint = null;
+		
+		// Identify first Segment/Point
+		for ($s = 0; $s < $segmentsCount; $s++) {
+			$pointCount = count($this->segments[$s]->points);
+			for ($p = 0; $p < $pointCount; $p++) {
+				if (is_null($firstPoint)) {
+					$firstPoint = &$this->segments[$s]->points[$p];
+					$firstSegment = &$this->segments[$s];
+					break;
+				}
+			}
+		}
+
+		if (empty($firstPoint)) {
+			return;
+		}
+
 		$lastSegment = end($this->segments);
 		$lastPoint = end(end($this->segments)->points);
-
-		$segmentsCount = count($this->segments);
 
 		$this->stats->startedAt = $firstPoint->time;
 		$this->stats->finishedAt = $lastPoint->time;
@@ -107,14 +124,7 @@ class Track extends Collection
 			$this->segments[$s]->recalculateStats();
 			$pointCount = count($this->segments[$s]->points);
 			for ($p = 0; $p < $pointCount; $p++) {
-				if (($p == 0) && ($s > 0)) {
-					$this->segments[$s]->points[$p]->difference = GeoHelper::getDistance(end($this->segments[$s-1]->points), $this->segments[$s]->points[$p]);
-				} elseif ($p > 0) {
-					$this->segments[$s]->points[$p]->difference = GeoHelper::getDistance($this->segments[$s]->points[$p-1], $this->segments[$s]->points[$p]);
-				}
-				$this->stats->distance += $this->segments[$s]->points[$p]->difference;
-				$this->segments[$s]->points[$p]->distance = $this->stats->distance;
-
+				// removed distance calculation -joebiker/Apr/2018
 				if ($this->segments[$s]->points[$p]->elevation !== null) {
 					if ($this->stats->cumulativeElevationGain === null) {
 						$lastElevation = $this->segments[$s]->points[$p]->elevation;
@@ -134,6 +144,18 @@ class Track extends Collection
 			}
 			if ($this->stats->minAltitude > $this->segments[$s]->stats->minAltitude) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
+			}
+		}
+
+		$allPoints = $this->getPoints();
+		$allPtsCnt = count($allPoints);
+		if ($allPtsCnt > 0) {
+			for ($p = 1; $p < $allPtsCnt; $p++) {
+				// skipping first point
+				$allPoints[$p]->difference = GeoHelper::getDistance($allPoints[$p-1], $allPoints[$p]);
+				
+				$this->stats->distance += $allPoints[$p]->difference;
+				$allPoints[$p]->distance = $this->stats->distance;
 			}
 		}
 
