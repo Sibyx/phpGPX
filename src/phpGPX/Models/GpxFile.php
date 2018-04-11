@@ -106,7 +106,7 @@ class GpxFile implements Summarizable
 
 		$gpx = $document->createElementNS("http://www.topografix.com/GPX/1/1", "gpx");
 		$gpx->setAttribute("version", "1.1");
-		$gpx->setAttribute("creator", phpGPX::getSignature());
+		$gpx->setAttribute("creator", $this->creator ? $this->creator : phpGPX::getSignature());
 
 		ExtensionParser::$usedNamespaces = [];
 
