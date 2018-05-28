@@ -105,6 +105,17 @@ $track->segments[] 				= $segment;
 // Add track to file
 $gpx_file->tracks[] 			= $track;
 
+// Create waypoint
+$point 							= new Point(Point::WAYPOINT);
+$point->name 					= 'Example Waypoint';
+$point->latitude 				= $sample_point['latitude'];
+$point->longitude 				= $sample_point['longitude'];
+$point->elevation 				= $sample_point['elevation'];
+$point->time 					= $sample_point['time'];
+
+// Add waypoint to file
+$gpx_file->waypoints[] 			= $point;
+
 // GPX output
 $gpx_file->save('CreateFileFromScratchExample.gpx', \phpGPX\phpGPX::XML_FORMAT);
 
