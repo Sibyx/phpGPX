@@ -9,6 +9,8 @@ use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
+use phpGPX\Models\Extensions;
+use phpGPX\Models\Extensions\TrackPointExtension;
 
 require_once '../vendor/autoload.php';
 
@@ -17,24 +19,28 @@ $sample_data = [
 		'longitude' => 9.860624216140083,
 		'latitude' => 54.9328621088893,
 		'elevation' => 0,
+		'aTemp' => 22,
 		'time' => new \DateTime("+ 1 MINUTE")
 	],
 	[
 		'latitude' => 54.83293237320851,
 		'longitude' => 9.76092208681491,
 		'elevation' => 10.0,
+		'aTemp' => 23,
 		'time' => new \DateTime("+ 2 MINUTE")
 	],
 	[
 		'latitude' => 54.73327743521187,
 		'longitude' => 9.66187816543752,
 		'elevation' => 42.42,
+		'aTemp' => 24,
 		'time' => new \DateTime("+ 3 MINUTE")
 	],
 	[
 		'latitude' => 54.63342326167919,
 		'longitude' => 9.562439849679859,
 		'elevation' => 12,
+		'aTemp' => 25,
 		'time' => new \DateTime("+ 4 MINUTE")
 	]
 ];
@@ -84,6 +90,12 @@ foreach ($sample_data as $sample_point) {
 	$point->elevation 			= $sample_point['elevation'];
 	$point->time 				= $sample_point['time'];
 
+	// Creating trackpoint extension
+	$point->extensions 			= new Extensions();
+	$trackPointExtension 		= new TrackPointExtension();
+	$trackPointExtension->aTemp = $sample_point['aTemp'];
+	$point->extensions->trackPointExtension = $trackPointExtension;
+
 	$segment->points[] 			= $point;
 }
 
@@ -92,6 +104,17 @@ $track->segments[] 				= $segment;
 
 // Add track to file
 $gpx_file->tracks[] 			= $track;
+
+// Create waypoint
+$point 							= new Point(Point::WAYPOINT);
+$point->name 					= 'Example Waypoint';
+$point->latitude 				= $sample_point['latitude'];
+$point->longitude 				= $sample_point['longitude'];
+$point->elevation 				= $sample_point['elevation'];
+$point->time 					= $sample_point['time'];
+
+// Add waypoint to file
+$gpx_file->waypoints[] 			= $point;
 
 // GPX output
 $gpx_file->save('CreateFileFromScratchExample.gpx', \phpGPX\phpGPX::XML_FORMAT);
