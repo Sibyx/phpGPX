@@ -158,7 +158,7 @@ class LoadRouteFileTest extends TestCase
 						'minAltitude' => 0.0,
 						'maxAltitude' => 3.0,
 						'cumulativeElevationGain' => 3.0,
-                        'cumulativeElevationLoss' => 0.0,
+						'cumulativeElevationLoss' => 0.0,
 						'startedAt' => null,
 						'finishedAt' => null,
 						'duration' => 0.0
@@ -282,8 +282,8 @@ class LoadRouteFileTest extends TestCase
 						'minAltitude' => 0.0,
 						'maxAltitude' => 3.0,
 						'cumulativeElevationGain' => 3.0,
-                        'cumulativeElevationLoss' => 0.0,
-                        'startedAt' => null,
+						'cumulativeElevationLoss' => 0.0,
+						'startedAt' => null,
 						'finishedAt' => null,
 						'duration' => 0.0
 					]

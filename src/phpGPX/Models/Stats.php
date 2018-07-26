@@ -52,11 +52,11 @@ class Stats implements Summarizable
 	 */
 	public $cumulativeElevationGain = null;
 
-    /**
-     * Cumulative elevation loss in meters (m)
-     * @var int
-     */
-    public $cumulativeElevationLoss = null;
+	/**
+	* Cumulative elevation loss in meters (m)
+	* @var int
+	*/
+	public $cumulativeElevationLoss = null;
 
     /**
 	 * Started time
@@ -87,7 +87,7 @@ class Stats implements Summarizable
 		$this->minAltitude = null;
 		$this->maxAltitude = null;
 		$this->cumulativeElevationGain = null;
-        $this->cumulativeElevationLoss = null;
+		$this->cumulativeElevationLoss = null;
 		$this->startedAt = null;
 		$this->finishedAt = null;
 	}
@@ -105,7 +105,7 @@ class Stats implements Summarizable
 			'minAltitude' => (float) $this->minAltitude,
 			'maxAltitude' => (float) $this->maxAltitude,
 			'cumulativeElevationGain' => (float) $this->cumulativeElevationGain,
-            'cumulativeElevationLoss' => (float) $this->cumulativeElevationLoss,
+			'cumulativeElevationLoss' => (float) $this->cumulativeElevationLoss,
 			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'duration' => (float) $this->duration

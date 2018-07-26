@@ -86,14 +86,14 @@ class Segment implements Summarizable, StatsCalculator
 
 		for ($i = 0; $i < $count; $i++) {
 			if ($i > 0) {
-				$this->stats->distance += GeoHelper::getDistance($this->points[$i-1], $this->points[$i]);
+				$this->stats->distance += GeoHelper::getDistance($this->points[$i - 1], $this->points[$i]);
 			}
 
 			if ($this->stats->maxAltitude < $this->points[$i]->elevation) {
 				$this->stats->maxAltitude = $this->points[$i]->elevation;
 			}
 
-			if ((phpGPX::$IGNORE_ELEVATION_0 === false  || $this->points[$i]->elevation > 0) && $this->stats->minAltitude > $this->points[$i]->elevation) {
+			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$i]->elevation > 0) && $this->stats->minAltitude > $this->points[$i]->elevation) {
 				$this->stats->minAltitude = $this->points[$i]->elevation;
 			}
 		}
