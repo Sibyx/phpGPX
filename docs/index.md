@@ -16,10 +16,11 @@ Contribution and feedback is welcome! Please check the issues for TODO. I will b
  
 ### Stats calculation
 
- - Distance (m)
+ - (Smoothed) Distance (m)
  - Average speed (m/s)
  - Average pace  (s/km)
  - Min / max altitude (m)
+ - (Smoothed) Elevation gain / loss (m)
  - Start / end (DateTime object)
  - Duration (seconds)
  

@@ -8,6 +8,7 @@ namespace phpGPX\Models;
 
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
+use phpGPX\phpGPX;
 
 /**
  * Class Segment
@@ -92,9 +93,7 @@ class Segment implements Summarizable, StatsCalculator
 				$this->stats->maxAltitude = $this->points[$i]->elevation;
 			}
 
-			// some tools generate track points with an elevation of 0 -- this is usually an error
-            // we don't use this points in the minAltitude calculation
-			if ($this->points[$i]->elevation > 0 && $this->stats->minAltitude > $this->points[$i]->elevation) {
+			if ((phpGPX::$IGNORE_ELEVATION_0 === false  || $this->points[$i]->elevation > 0) && $this->stats->minAltitude > $this->points[$i]->elevation) {
 				$this->stats->minAltitude = $this->points[$i]->elevation;
 			}
 		}
