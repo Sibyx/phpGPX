@@ -9,7 +9,7 @@ class LoadFileTest extends TestCase
 {
 	public function testLoadXmlFileGeneratedByTimezero()
 	{
-		$file = __DIR__.'/fixtures/timezero.gpx';
+		$file = __DIR__ . '/fixtures/timezero.gpx';
 
 		$gpx = new phpGpx();
 		$gpxFile = $gpx->load($file);
@@ -192,7 +192,7 @@ class LoadFileTest extends TestCase
 								'minAltitude' => 0.0,
 								'maxAltitude' => 0.0,
 								'cumulativeElevationGain' => 0.0,
-                                'cumulativeElevationLoss' => 0.0,
+								'cumulativeElevationLoss' => 0.0,
 								'startedAt' => '2010-01-01T14:48:37+00:00',
 								'finishedAt' => '2010-01-01T14:48:46+00:00',
 								'duration' => 9.0,
@@ -206,7 +206,7 @@ class LoadFileTest extends TestCase
 						'minAltitude' => 0.0,
 						'maxAltitude' => 0.0,
 						'cumulativeElevationGain' => 0.0,
-                        'cumulativeElevationLoss' => 0.0,
+						'cumulativeElevationLoss' => 0.0,
 						'startedAt' => '2010-01-01T14:48:37+00:00',
 						'finishedAt' => '2010-01-01T14:48:46+00:00',
 						'duration' => 9.0,
@@ -313,7 +313,7 @@ class LoadFileTest extends TestCase
 								'minAltitude' => 0.0,
 								'maxAltitude' => 0.0,
 								'cumulativeElevationGain' => 0.0,
-                                'cumulativeElevationLoss' => 0.0,
+								'cumulativeElevationLoss' => 0.0,
 								'startedAt' => '2016-04-03T14:13:09+00:00',
 								'finishedAt' => '2016-04-03T14:13:12+00:00',
 								'duration' => 3.0,
@@ -327,7 +327,7 @@ class LoadFileTest extends TestCase
 						'minAltitude' => 0.0,
 						'maxAltitude' => 0.0,
 						'cumulativeElevationGain' => 0.0,
-                        'cumulativeElevationLoss' => 0.0,
+						'cumulativeElevationLoss' => 0.0,
 						'startedAt' => '2016-04-03T14:13:09+00:00',
 						'finishedAt' => '2016-04-03T14:13:12+00:00',
 						'duration' => 3.0,
