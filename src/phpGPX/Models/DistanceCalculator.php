@@ -8,7 +8,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\phpGPX;
 
@@ -27,7 +26,6 @@ class DistanceCalculator
 		$lastConsideredPoint = null;
 
 		for ($p = 0; $p < $pointCount; $p++) {
-
 			$curPoint = $points[$p];
 
 			// skip the first point
@@ -41,7 +39,6 @@ class DistanceCalculator
 
 			// if smoothing is applied we only consider points with a delta above the threshold (e.g. 2 meters)
 			if (phpGPX::$APPLY_DISTANCE_SMOOTHING) {
-
 				$differenceFromLastConsideredPoint = GeoHelper::getDistance($curPoint, $lastConsideredPoint);
 
 				if ($differenceFromLastConsideredPoint > phpGPX::$DISTANCE_SMOOTHING_THRESHOLD) {

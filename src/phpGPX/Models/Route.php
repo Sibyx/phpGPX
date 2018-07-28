@@ -103,7 +103,6 @@ class Route extends Collection
 		$this->stats->distance = DistanceCalculator::calculate($this->getPoints());
 
 		for ($p = 0; $p < $pointCount; $p++) {
-
 			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$p]->elevation > 0) && $this->stats->minAltitude > $this->points[$p]->elevation) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
 			}

@@ -42,7 +42,6 @@ class LoadRouteFileTest extends TestCase
 		$gpxFile = $gpx->load($file);
 
 		$this->assertEquals(6.12, number_format($gpxFile->tracks[0]->stats->cumulativeElevationGain, 2));
-
 	}
 
 	private function createExpectedArray()

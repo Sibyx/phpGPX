@@ -8,7 +8,6 @@
 
 namespace phpGPX\Models;
 
-
 use phpGPX\phpGPX;
 
 class ElevationGainLossCalculator
@@ -27,7 +26,6 @@ class ElevationGainLossCalculator
 		$lastConsideredElevation = 0;
 
 		for ($p = 0; $p < $pointCount; $p++) {
-
 			$curElevation = $points[$p]->elevation;
 
 			// skip points with empty elevation
@@ -66,7 +64,6 @@ class ElevationGainLossCalculator
 
 				$lastConsideredElevation = $curElevation;
 			}
-
 		}
 
 		return [$cumulativeElevationGain, $cumulativeElevationLoss];
