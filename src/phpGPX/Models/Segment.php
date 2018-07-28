@@ -61,6 +61,14 @@ class Segment implements Summarizable, StatsCalculator
 	}
 
 	/**
+	 * @return array|Point[]
+	 */
+	public function getPoints()
+	{
+		return $this->points;
+	}
+
+	/**
 	 * Recalculate stats objects.
 	 * @return void
 	 */
@@ -84,11 +92,12 @@ class Segment implements Summarizable, StatsCalculator
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
-		for ($i = 0; $i < $count; $i++) {
-			if ($i > 0) {
-				$this->stats->distance += GeoHelper::getDistance($this->points[$i - 1], $this->points[$i]);
-			}
+		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
+			ElevationGainLossCalculator::calculate($this->getPoints());
 
+		$this->stats->distance = DistanceCalculator::calculate($this->getPoints());
+
+		for ($i = 0; $i < $count; $i++) {
 			if ($this->stats->maxAltitude < $this->points[$i]->elevation) {
 				$this->stats->maxAltitude = $this->points[$i]->elevation;
 			}

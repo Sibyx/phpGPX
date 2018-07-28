@@ -120,7 +120,11 @@ class Track extends Collection
 
 		for ($s = 0; $s < $segmentsCount; $s++) {
 			$this->segments[$s]->recalculateStats();
-			$this->calculateElevationGainAndLoss($this->segments[$s]);
+
+			$this->stats->cumulativeElevationGain += $this->segments[$s]->stats->cumulativeElevationGain;
+			$this->stats->cumulativeElevationLoss += $this->segments[$s]->stats->cumulativeElevationLoss;
+
+			$this->stats->distance += $this->segments[$s]->stats->distance;
 
 			if ($this->stats->minAltitude === null) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
@@ -130,27 +134,6 @@ class Track extends Collection
 			}
 			if ($this->stats->minAltitude > $this->segments[$s]->stats->minAltitude) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
-			}
-		}
-
-		$allPoints = $this->getPoints();
-		$allPtsCnt = count($allPoints);
-		if ($allPtsCnt > 0) {
-			$lastConsideredPoint = $allPoints[0];
-			for ($p = 1; $p < $allPtsCnt; $p++) {
-				// skipping first point
-				$allPoints[$p]->difference = GeoHelper::getDistance($allPoints[$p - 1], $allPoints[$p]);
-
-				if (phpGPX::$APPLY_DISTANCE_SMOOTHING) {
-					$differenceFromLastConsideredPoint = GeoHelper::getDistance($allPoints[$p], $lastConsideredPoint);
-					if ($differenceFromLastConsideredPoint > phpGPX::$DISTANCE_SMOOTHING_THRESHOLD) {
-						$lastConsideredPoint = $allPoints[$p];
-						$this->stats->distance += $differenceFromLastConsideredPoint;
-					}
-				} else {
-					$this->stats->distance += $allPoints[$p]->difference;
-				}
-				$allPoints[$p]->distance = $this->stats->distance;
 			}
 		}
 
@@ -165,49 +148,5 @@ class Track extends Collection
 				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
 			}
 		}
-	}
-
-	/**
-	 * @param Segment $segment
-	 * @return void
-	 */
-	private function calculateElevationGainAndLoss(Segment $segment)
-	{
-		$lastConsideredElevation = 0;
-		$pointCount = count($segment->points);
-		for ($p = 0; $p < $pointCount; $p++) {
-			if ($segment->points[$p]->elevation !== null) {
-				if ($this->stats->cumulativeElevationGain === null) {
-					$lastConsideredElevation = $segment->points[$p]->elevation;
-					$this->stats->cumulativeElevationGain = 0;
-					$this->stats->cumulativeElevationLoss = 0;
-				} else {
-					$curElevation = $segment->points[$p]->elevation;
-					if ($curElevation != 0) {
-						if (phpGPX::$APPLY_ELEVATION_SMOOTHING &&
-							abs($curElevation - $lastConsideredElevation) > phpGPX::$ELEVATION_SMOOTHING_THRESHOLD) {
-							$this->addElevationDelta($curElevation - $lastConsideredElevation);
-							$lastConsideredElevation = $curElevation;
-						} elseif (!phpGPX::$APPLY_ELEVATION_SMOOTHING) {
-							$this->addElevationDelta($curElevation - $lastConsideredElevation);
-							$lastConsideredElevation = $segment->points[$p]->elevation;
-						}
-					}
-				}
-			}
-		}
-	}
-
-
-	/**
-	 * @param float $elevationDelta
-	 * @return mixed
-	 */
-	private function addElevationDelta($elevationDelta)
-	{
-		$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
-		$this->stats->cumulativeElevationLoss += ($elevationDelta < 0) ? abs($elevationDelta) : 0;
-
-		return $elevationDelta;
 	}
 }

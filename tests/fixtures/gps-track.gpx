@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<gpx version="1.1" creator="Test Data" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.cluetrust.com/XML/GPXDATA/1/0 http://www.cluetrust.com/Schemas/gpxdata10.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd" xmlns:gpxdata="http://www.cluetrust.com/XML/GPXDATA/1/0" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>GPS-Track</name>
+    <trkseg>
+      <trkpt lat="46.571948" lon="8.414757">
+        <ele>2419</ele>
+        <time>2017-08-13T07:10:41.000Z</time>
+      </trkpt>
+      <trkpt lat="46.572016" lon="8.414866">
+        <ele>2418.8833883882</ele>
+        <time>2017-08-13T07:10:54.000Z</time>
+      </trkpt>
+      <trkpt lat="46.572088" lon="8.414911">
+        <ele>2419.8999900064</ele>
+        <time>2017-08-13T07:11:56.000Z</time>
+      </trkpt>
+      <trkpt lat="46.572069" lon="8.414912">
+        <ele>2422</ele>
+        <time>2017-08-13T07:12:15.000Z</time>
+      </trkpt>
+      <trkpt lat="46.572054" lon="8.414888">
+        <ele>2425</ele>
+        <time>2017-08-13T07:12:18.000Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

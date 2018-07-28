@@ -97,30 +97,14 @@ class Route extends Collection
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
-		$lastElevation = null;
+		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
+			ElevationGainLossCalculator::calculate($this->getPoints());
+
+		$this->stats->distance = DistanceCalculator::calculate($this->getPoints());
 
 		for ($p = 0; $p < $pointCount; $p++) {
-			if ($p == 0) {
-				$this->points[$p]->difference = 0;
-			} else {
-				$this->points[$p]->difference = GeoHelper::getDistance($this->points[$p-1], $this->points[$p]);
-			}
 
-			$this->stats->distance += $this->points[$p]->difference;
-			$this->points[$p]->distance = $this->stats->distance;
-
-			if ($this->points[$p]->elevation !== null) {
-				if ($this->stats->cumulativeElevationGain === null) {
-					$lastElevation = $this->points[$p]->elevation;
-					$this->stats->cumulativeElevationGain = 0;
-				} else {
-					$elevationDelta = $this->points[$p]->elevation - $lastElevation;
-					$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
-					$lastElevation = $this->points[$p]->elevation;
-				}
-			}
-
-			if ($this->stats->minAltitude === null) {
+			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$p]->elevation > 0) && $this->stats->minAltitude > $this->points[$p]->elevation) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
 			}
 

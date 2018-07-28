@@ -267,6 +267,7 @@ public static $DISTANCE_SMOOTHING_THRESHOLD = 2;
  - [Jakub Dubec](https://github.com/Sibyx) - Initial works, maintenance
  - [Lukasz Lewandowski](https://github.com/luklewluk)
  - [Robert Blackwell](https://github.com/robertblackwell)
+ - [Jens hassler](https://github.com/lukey78)
   
 I wrote this library as part of my job in [Backbone s.r.o.](https://www.backbone.sk/en/).
 
