@@ -2,13 +2,14 @@
 /**
  * DistanceCalculator.php
  *
- * @author Jens Hassler / IWF AG / Web Solutions
+ * @author Jens Hassler
  * @since  07/2018
  */
 
-namespace phpGPX\Models;
+namespace phpGPX\Helpers;
 
 use phpGPX\Helpers\GeoHelper;
+use phpGPX\Models\Point;
 use phpGPX\phpGPX;
 
 class DistanceCalculator

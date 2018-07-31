@@ -6,6 +6,8 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Helpers\DistanceCalculator;
+use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\phpGPX;
