@@ -57,6 +57,42 @@ class phpGPX
 	public static $PRETTY_PRINT = true;
 
 	/**
+	 * In stats elevation calculation: ignore points with an elevation of 0
+	 * This can happen with some GPS software adding a point with 0 elevation
+	 *
+	 * @var bool
+	 */
+	public static $IGNORE_ELEVATION_0 = true;
+
+	/**
+	 * Apply elevation gain/loss smoothing? If true, the threshold in
+	 * ELEVATION_SMOOTHING_THRESHOLD applies
+	 * @var bool
+	 */
+	public static $APPLY_ELEVATION_SMOOTHING = false;
+
+	/**
+	 * if APPLY_ELEVATION_SMOOTHING is true
+	 * the minimum elevation difference between considered points in meters
+	 * @var int
+	 */
+	public static $ELEVATION_SMOOTHING_THRESHOLD = 2;
+
+	/**
+	 * Apply distance calculation smoothing? If true, the threshold in
+	 * DISTANCE_SMOOTHING_THRESHOLD applies
+	 * @var bool
+	 */
+	public static $APPLY_DISTANCE_SMOOTHING = false;
+
+	/**
+	 * if APPLY_DISTANCE_SMOOTHING is true
+	 * the minimum distance between considered points in meters
+	 * @var int
+	 */
+	public static $DISTANCE_SMOOTHING_THRESHOLD = 2;
+
+	/**
 	 * Load GPX file.
 	 * @param $path
 	 * @return GpxFile
@@ -80,7 +116,7 @@ class phpGPX
 		$gpx = new GpxFile();
 
 		// Parse creator
-		$gpx->creator = isset($xml['creator']) ? (string) $xml['creator'] : null;
+		$gpx->creator = isset($xml['creator']) ? (string)$xml['creator'] : null;
 
 		// Parse metadata
 		$gpx->metadata = isset($xml->metadata) ? MetadataParser::parse($xml->metadata) : null;

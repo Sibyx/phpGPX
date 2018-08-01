@@ -94,7 +94,7 @@ class Track extends Collection
 
 		$firstSegment = null;
 		$firstPoint = null;
-		
+
 		// Identify first Segment/Point
 		for ($s = 0; $s < $segmentsCount; $s++) {
 			$pointCount = count($this->segments[$s]->points);
@@ -118,24 +118,14 @@ class Track extends Collection
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
 
-		$lastElevation = null;
-
 		for ($s = 0; $s < $segmentsCount; $s++) {
 			$this->segments[$s]->recalculateStats();
-			$pointCount = count($this->segments[$s]->points);
-			for ($p = 0; $p < $pointCount; $p++) {
-				// removed distance calculation -joebiker/Apr/2018
-				if ($this->segments[$s]->points[$p]->elevation !== null) {
-					if ($this->stats->cumulativeElevationGain === null) {
-						$lastElevation = $this->segments[$s]->points[$p]->elevation;
-						$this->stats->cumulativeElevationGain = 0;
-					} else {
-						$elevationDelta = $this->segments[$s]->points[$p]->elevation - $lastElevation;
-						$this->stats->cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
-						$lastElevation = $this->segments[$s]->points[$p]->elevation;
-					}
-				}
-			}
+
+			$this->stats->cumulativeElevationGain += $this->segments[$s]->stats->cumulativeElevationGain;
+			$this->stats->cumulativeElevationLoss += $this->segments[$s]->stats->cumulativeElevationLoss;
+
+			$this->stats->distance += $this->segments[$s]->stats->distance;
+
 			if ($this->stats->minAltitude === null) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
 			}
@@ -144,18 +134,6 @@ class Track extends Collection
 			}
 			if ($this->stats->minAltitude > $this->segments[$s]->stats->minAltitude) {
 				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
-			}
-		}
-
-		$allPoints = $this->getPoints();
-		$allPtsCnt = count($allPoints);
-		if ($allPtsCnt > 0) {
-			for ($p = 1; $p < $allPtsCnt; $p++) {
-				// skipping first point
-				$allPoints[$p]->difference = GeoHelper::getDistance($allPoints[$p-1], $allPoints[$p]);
-				
-				$this->stats->distance += $allPoints[$p]->difference;
-				$allPoints[$p]->distance = $this->stats->distance;
 			}
 		}
 

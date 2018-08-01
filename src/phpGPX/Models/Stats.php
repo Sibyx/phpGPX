@@ -45,12 +45,18 @@ class Stats implements Summarizable
 	 * @var int
 	 */
 	public $maxAltitude = null;
-	
+
 	/**
 	 * Cumulative elevation gain in meters (m)
 	 * @var int
 	 */
 	public $cumulativeElevationGain = null;
+
+	/**
+	 * Cumulative elevation loss in meters (m)
+	 * @var int
+	 */
+	public $cumulativeElevationLoss = null;
 
 	/**
 	 * Started time
@@ -81,6 +87,7 @@ class Stats implements Summarizable
 		$this->minAltitude = null;
 		$this->maxAltitude = null;
 		$this->cumulativeElevationGain = null;
+		$this->cumulativeElevationLoss = null;
 		$this->startedAt = null;
 		$this->finishedAt = null;
 	}
@@ -92,15 +99,16 @@ class Stats implements Summarizable
 	public function toArray()
 	{
 		return [
-			'distance' => (float) $this->distance,
-			'avgSpeed' => (float) $this->averageSpeed,
-			'avgPace' => (float) $this->averagePace,
-			'minAltitude' => (float) $this->minAltitude,
-			'maxAltitude' => (float) $this->maxAltitude,
-			'cumulativeElevationGain' => (float) $this->cumulativeElevationGain,
+			'distance' => (float)$this->distance,
+			'avgSpeed' => (float)$this->averageSpeed,
+			'avgPace' => (float)$this->averagePace,
+			'minAltitude' => (float)$this->minAltitude,
+			'maxAltitude' => (float)$this->maxAltitude,
+			'cumulativeElevationGain' => (float)$this->cumulativeElevationGain,
+			'cumulativeElevationLoss' => (float)$this->cumulativeElevationLoss,
 			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
-			'duration' => (float) $this->duration
+			'duration' => (float)$this->duration
 		];
 	}
 }

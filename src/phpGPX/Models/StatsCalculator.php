@@ -14,4 +14,10 @@ interface StatsCalculator
 	 * @return void
 	 */
 	public function recalculateStats();
+
+	/**
+	 * Return all points in collection.
+	 * @return Point[]
+	 */
+	public function getPoints();
 }

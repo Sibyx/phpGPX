@@ -24,6 +24,26 @@ class LoadRouteFileTest extends TestCase
 		$gpxFile->toXML()->saveXML();
 	}
 
+	public function testRouteFileWithSmoothedStats()
+	{
+		$file = __DIR__ . '/fixtures/gps-track.gpx';
+
+		$gpx = new phpGpx();
+		$gpx::$APPLY_ELEVATION_SMOOTHING = true;
+		$gpx::$APPLY_DISTANCE_SMOOTHING = true;
+		$gpxFile = $gpx->load($file);
+
+		$this->assertEquals(6, $gpxFile->tracks[0]->stats->cumulativeElevationGain);
+
+
+		// this should give a higher number for the elevation
+		$gpx::$APPLY_ELEVATION_SMOOTHING = false;
+		$gpx::$APPLY_DISTANCE_SMOOTHING = false;
+		$gpxFile = $gpx->load($file);
+
+		$this->assertEquals(6.12, number_format($gpxFile->tracks[0]->stats->cumulativeElevationGain, 2));
+	}
+
 	private function createExpectedArray()
 	{
 		return [
@@ -158,6 +178,7 @@ class LoadRouteFileTest extends TestCase
 						'minAltitude' => 0.0,
 						'maxAltitude' => 3.0,
 						'cumulativeElevationGain' => 3.0,
+						'cumulativeElevationLoss' => 0.0,
 						'startedAt' => null,
 						'finishedAt' => null,
 						'duration' => 0.0
@@ -281,6 +302,7 @@ class LoadRouteFileTest extends TestCase
 						'minAltitude' => 0.0,
 						'maxAltitude' => 3.0,
 						'cumulativeElevationGain' => 3.0,
+						'cumulativeElevationLoss' => 0.0,
 						'startedAt' => null,
 						'finishedAt' => null,
 						'duration' => 0.0
