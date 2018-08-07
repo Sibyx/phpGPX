@@ -203,7 +203,7 @@ composer require sibyx/phpgpx:@RC
 
 Use the static constants in phpGPX to modify behaviour.
 
-```
+```php
 /**
  * Create Stats object for each track, segment and route
  */
