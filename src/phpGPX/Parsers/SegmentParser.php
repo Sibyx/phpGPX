@@ -28,6 +28,10 @@ abstract class SegmentParser
 		foreach ($nodes as $node) {
 			$segment = new Segment();
 
+			if (!$node->count()) {
+			    continue;
+            }
+
 			if (isset($node->trkpt)) {
 				$segment->points = [];
 
