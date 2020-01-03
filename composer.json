@@ -14,7 +14,9 @@
 	],
 	"require": {
 		"php": ">=5.4",
-		"lib-libxml": "*"
+		"lib-libxml": "*",
+		"ext-simplexml": "*",
+		"ext-dom": "*"
 	},
 	"require-dev": {
 		"evert/phpdoc-md" : "~0.2.0",
