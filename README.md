@@ -196,7 +196,7 @@ Currently supported output formats:
 You can easily install phpGPX library with composer. There is no stable release yet, so please use release candidates.
 
 ```
-composer require sibyx/phpgpx:@RC
+composer require sibyx/phpgpx:@1.0
 ```
  
 ## Configuration
