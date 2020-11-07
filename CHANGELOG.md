@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0
+
+I am not very proud of idea having a major release in such terrible state. This release is just freeze from 2017 
+compatible API and behaviour with some bugfixies. It looks like some people use the library and I want to perform some
+radical refactoring. See you in `2.x`. 
+
+- **Fix**: Do not return extra `:` while parsing unsupported extensions if there is no namespace for child element
+- **Fix**: Fixed Copyright test
+
 ## 1.0-RC5
 
 - **Change:** Moved PHPUnit to development dependencies. 

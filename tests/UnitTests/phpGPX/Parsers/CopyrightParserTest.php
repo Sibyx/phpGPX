@@ -3,10 +3,11 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace UnitTests\phpGPX\Parsers;
+namespace phpGPX\Tests\UnitTests\phpGPX\Parsers;
 
 use phpGPX\Models\Copyright;
 use phpGPX\Parsers\CopyrightParser;
+use UnitTests\phpGPX\Parsers\AbstractParserTest;
 
 class CopyrightParserTest extends AbstractParserTest
 {
@@ -24,7 +25,7 @@ class CopyrightParserTest extends AbstractParserTest
 
 		$copyright->author = "Jakub Dubec";
 		$copyright->license = "https://github.com/Sibyx/phpGPX/blob/master/LICENSE";
-		$copyright->year = 2017;
+		$copyright->year = '2017';
 
 		return $copyright;
 	}
