@@ -77,14 +77,14 @@ class GpxFile implements Summarizable
 	 */
 	public function toArray()
 	{
-		return [
+		return SerializationHelper::filterNotNull([
 			'creator' => SerializationHelper::stringOrNull($this->creator),
 			'metadata' => SerializationHelper::serialize($this->metadata),
 			'waypoints' => SerializationHelper::serialize($this->waypoints),
 			'routes' => SerializationHelper::serialize($this->routes),
 			'tracks' => SerializationHelper::serialize($this->tracks),
 			'extensions' => SerializationHelper::serialize($this->extensions)
-		];
+		]);
 	}
 
 	/**
