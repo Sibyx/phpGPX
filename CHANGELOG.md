@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- **Fix**: Fixed PersonParser::toXML() if there are no links provided 
+  [Error when $person->links is null #48](https://github.com/Sibyx/phpGPX/issues/48)
+
 ## 1.0
 
 I am not very proud of idea having a major release in such terrible state. This release is just freeze from 2017 
