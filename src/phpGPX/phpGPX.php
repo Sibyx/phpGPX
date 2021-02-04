@@ -78,6 +78,13 @@ class phpGPX
 	 */
 	public static $ELEVATION_SMOOTHING_THRESHOLD = 2;
 
+    	/**
+     	 * if APPLY_ELEVATION_SMOOTHING is true
+     	 * the maximum elevation difference between considered points in meters
+     	 * @var int|null
+     	*/
+    	public static $ELEVATION_SMOOTHING_SPIKES_THRESHOLD = null;
+	
 	/**
 	 * Apply distance calculation smoothing? If true, the threshold in
 	 * DISTANCE_SMOOTHING_THRESHOLD applies
