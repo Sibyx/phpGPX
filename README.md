@@ -27,7 +27,8 @@ Repository branches:
  - JSON & XML & PHP Array output.
 
 ### Supported Extensions
- - Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd): 
+ 
+- Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd): 
    http://www.garmin.com/xmlschemas/TrackPointExtension/v1
  
 ### Stats calculation
@@ -39,6 +40,15 @@ Repository branches:
  - (Smoothed) Elevation gain / loss (m)
  - Start / end (DateTime object)
  - Duration (seconds)
+
+## Installation
+
+You can easily install phpGPX library with [composer](https://getcomposer.org/). There is no stable release yet, so
+please use release candidates.
+
+```
+composer require sibyx/phpgpx:@1.1.0
+```
 
 ## Examples
 
@@ -197,14 +207,6 @@ Currently, supported output formats:
 
  - XML
  - JSON
-
-## Installation
-
-You can easily install phpGPX library with composer. There is no stable release yet, so please use release candidates.
-
-```
-composer require sibyx/phpgpx:@1.0
-```
  
 ## Configuration
 

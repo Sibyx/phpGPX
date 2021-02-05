@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 : 2021-02-05
+
+- **Feature**: [Limiting maximum elevation difference to protect from spikes](https://github.com/Sibyx/phpGPX/pull/49) 
+
 ## 1.0.1
 
 - **Fix**: Fixed PersonParser::toXML() if there are no links provided 
