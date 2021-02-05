@@ -66,20 +66,20 @@ abstract class SerializationHelper
 		}
 	}
 
-    public static function filterNotNull(array $array)
-    {
-        foreach ($array as &$item) {
-            if (!is_array($item)) {
-                continue;
-            }
-            
-            $item = self::filterNotNull($item);
-        }
+	public static function filterNotNull(array $array)
+	{
+		foreach ($array as &$item) {
+			if (!is_array($item)) {
+				continue;
+			}
+			
+			$item = self::filterNotNull($item);
+		}
 
-        $array = array_filter($array, function ($item) {
-            return $item !== null && (!is_array($item) || count($item));
-        });
+		$array = array_filter($array, function ($item) {
+			return $item !== null && (!is_array($item) || count($item));
+		});
 
-        return $array;
-    }
+		return $array;
+	}
 }
