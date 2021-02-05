@@ -246,7 +246,7 @@ public static $IGNORE_ELEVATION_0 = true;
 
 /**
  * Apply elevation gain/loss smoothing? If true, the threshold in
- * ELEVATION_SMOOTHING_THRESHOLD applies
+ * ELEVATION_SMOOTHING_THRESHOLD and ELEVATION_SMOOTHING_SPIKES_THRESHOLD (if not null) applies
  */
 public static $APPLY_ELEVATION_SMOOTHING = false;
 
@@ -255,6 +255,12 @@ public static $APPLY_ELEVATION_SMOOTHING = false;
  * the minimum elevation difference between considered points in meters
  */
 public static $ELEVATION_SMOOTHING_THRESHOLD = 2;
+
+/**
+ * if APPLY_ELEVATION_SMOOTHING is true
+ * the maximum elevation difference between considered points in meters
+ */
+public static $ELEVATION_SMOOTHING_SPIKES_THRESHOLD = null;
 
 /**
  * Apply distance calculation smoothing? If true, the threshold in
