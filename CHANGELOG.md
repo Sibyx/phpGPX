@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 : 2021-02-15
+
+- **Fix**: Fixed `VERSION` string in `phpGPX.php`
+
 ## 1.1.0 : 2021-02-05
 
 - **Feature**: [Limiting maximum elevation difference to protect from spikes](https://github.com/Sibyx/phpGPX/pull/49) 
