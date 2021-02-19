@@ -130,13 +130,13 @@ $gpx_file->metadata->links[] 	= $link;
 $track = new Track();
 
 // Name of track
-$track->name = sprintf("Some random points in logical order. Input array should be already ordered!");
+$track->name = "Some random points in logical order. Input array should be already ordered!";
 
 // Type of data stored in track
 $track->type = 'RUN';
 
 // Source of GPS coordinates
-$track->source = sprintf("MySpecificGarminDevice");
+$track->source = "MySpecificGarminDevice";
 
 // Creating Track segment
 $segment = new Segment();
