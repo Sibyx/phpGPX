@@ -20,7 +20,8 @@
 	},
 	"require-dev": {
 		"evert/phpdoc-md" : "~0.2.0",
-		"phpunit/phpunit": "^6.5"
+		"phpunit/phpunit": "^6.5",
+		"friendsofphp/php-cs-fixer": "^2.18"
 	},
 	"autoload": {
 		"psr-4": { "phpGPX\\": "src/phpGPX/" }
