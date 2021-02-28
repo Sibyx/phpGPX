@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2 : 2021-02-28
+
+- **Fix**: [do SORT_BY_TIMESTAMP only for tracks with timestamps #52](https://github.com/Sibyx/phpGPX/pull/52)
+
 ## 1.1.1 : 2021-02-15
 
 - **Fix**: Fixed `VERSION` string in `phpGPX.php`
