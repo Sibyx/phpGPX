@@ -47,7 +47,7 @@ class Route extends Collection
 
 		$points = array_merge($points, $this->points);
 
-		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points)) {
+		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points) && $points[0]->time !== null) {
 			usort($points, array('phpGPX\Helpers\DateTimeHelper', 'comparePointsByTimestamp'));
 		}
 
