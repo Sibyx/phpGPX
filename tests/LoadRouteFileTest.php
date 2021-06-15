@@ -88,6 +88,7 @@ class LoadRouteFileTest extends TestCase
 					],
 					'stats' => [
 						'distance' => 132.0785853,
+						'realDistance' => 132.0785853,
 						'avgSpeed' => 0.0,
 						'avgPace' => 0.0,
 						'minAltitude' => 0.0,
@@ -133,6 +134,7 @@ class LoadRouteFileTest extends TestCase
 					],
 					'stats' => [
 						'distance' => 132.0785853,
+						'realDistance' => 132.0785853,
 						'avgSpeed' => 0.0,
 						'avgPace' => 0.0,
 						'minAltitude' => 0.0,

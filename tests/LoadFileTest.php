@@ -84,6 +84,7 @@ class LoadFileTest extends TestCase
 							],
 							'stats' => [
 								'distance' => 2.314424561683643,
+								'realDistance' => 2.314424561683643,
 								'avgSpeed' => 0.2571582846315159,
 								'avgPace' => 3888.6555859279733,
 								'minAltitude' => 0.0,
@@ -98,6 +99,7 @@ class LoadFileTest extends TestCase
 					],
 					'stats' => [
 						'distance' => 2.314424561683643,
+						'realDistance' => 2.314424561683643,
 						'avgSpeed' => 0.2571582846315159,
 						'avgPace' => 3888.6555859279733,
 						'minAltitude' => 0.0,
@@ -141,6 +143,7 @@ class LoadFileTest extends TestCase
 							],
 							'stats' => [
 								'distance' => 7.062730302497254,
+								'realDistance' => 7.062730302497254,
 								'avgSpeed' => 2.354243434165751,
 								'avgPace' => 424.7649098167112,
 								'minAltitude' => 0.0,
@@ -155,6 +158,7 @@ class LoadFileTest extends TestCase
 					],
 					'stats' => [
 						'distance' => 7.062730302497254,
+						'realDistance' => 7.062730302497254,
 						'avgSpeed' => 2.354243434165751,
 						'avgPace' => 424.7649098167112,
 						'minAltitude' => 0.0,

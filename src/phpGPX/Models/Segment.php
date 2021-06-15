@@ -97,7 +97,9 @@ class Segment implements Summarizable, StatsCalculator
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
 			ElevationGainLossCalculator::calculate($this->getPoints());
 
-		$this->stats->distance = DistanceCalculator::calculate($this->getPoints());
+		$calculator = new DistanceCalculator($this->getPoints());
+		$this->stats->distance = $calculator->getRawDistance();
+		$this->stats->realDistance = $calculator->getRealDistance();
 
 		for ($i = 0; $i < $count; $i++) {
 			if ($this->stats->maxAltitude < $this->points[$i]->elevation) {
