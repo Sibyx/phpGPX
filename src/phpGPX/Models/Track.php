@@ -137,7 +137,7 @@ class Track extends Collection
 		}
 
 		if (($firstPoint->time instanceof \DateTime) && ($lastPoint->time instanceof \DateTime)) {
-			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
+			$this->stats->duration = abs($lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp());
 
 			if ($this->stats->duration != 0) {
 				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;
