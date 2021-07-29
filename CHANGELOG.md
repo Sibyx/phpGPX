@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3 : 2021-07-29
+
+- **Fix**: [Fix negative duration #58](https://github.com/Sibyx/phpGPX/pull/58) by [@neronmoon](https://github.com/neronmoon)
+
 ## 1.1.2 : 2021-02-28
 
 - **Fix**: [do SORT_BY_TIMESTAMP only for tracks with timestamps #52](https://github.com/Sibyx/phpGPX/pull/52)
