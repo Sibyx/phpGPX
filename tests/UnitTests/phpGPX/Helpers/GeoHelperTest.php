@@ -50,7 +50,7 @@ class GeoHelperTest extends TestCase
 		$point2 = new Point(Point::WAYPOINT);
 		$point2->latitude = 48.1644916381763;
 		$point2->longitude = 17.0591753907502;
-		$point1->elevation = 200;
+		$point2->elevation = 200;
 
 		$this->assertEquals(
 			856.97,
@@ -60,7 +60,7 @@ class GeoHelperTest extends TestCase
 		);
 
 		$this->assertEquals(
-			856.97,
+			862,
 			GeoHelper::getRealDistance($point1, $point2),
 			"Invalid real distance between two points!",
 			1
