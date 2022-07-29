@@ -44,12 +44,13 @@ You can easily install phpGPX library with [composer](https://getcomposer.org/).
 please use release candidates.
 
 ```
-composer require sibyx/phpgpx:@1.1.2
+composer require sibyx/phpgpx:1.1.3
 ```
 
 ## Examples
 
 ### Open GPX file and load basic stats
+
 ```php
 <?php
 use phpGPX\phpGPX;

@@ -18,7 +18,7 @@ before_install:
     - phpenv config-rm xdebug.ini || echo "xdebug not available"
 
 install:
-    - if [[ "$CHECK_PHP_SYNTAX" == "yes" ]]; then composer require --dev --no-update friendsofphp/php-cs-fixer; fi;
+    - if [[ "$CHECK_PHP_SYNTAX" == "yes" ]]; then composer require --dev --no-update friendsofphp/php-cs-fixer:2.19; fi;
     - composer update --prefer-dist --no-interaction --no-suggest --no-progress --ansi
 
 script:

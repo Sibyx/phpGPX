@@ -2,7 +2,11 @@
 
 ## 1.2.0 : 2021-04-30
 
-- **Feature**: Real distance calculation (DistanceCalculator refactor)
+- **Feature**: [Real distance calculation #37](https://github.com/Sibyx/phpGPX/issues/37) (DistanceCalculator refactor)
+
+## 1.1.3 : 2021-07-29
+
+- **Fix**: [Fix negative duration #58](https://github.com/Sibyx/phpGPX/pull/58) by [@neronmoon](https://github.com/neronmoon)
 
 ## 1.1.2 : 2021-02-28
 
