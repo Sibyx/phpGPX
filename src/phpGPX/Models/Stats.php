@@ -23,6 +23,12 @@ class Stats implements Summarizable
 	public $distance = 0;
 
 	/**
+	 * Distance in meters (m) including elevation loss/gain
+	 * @var float
+	 */
+	public $realDistance = 0;
+
+	/**
 	 * Average speed in meters per second (m/s)
 	 * @var float
 	 */
@@ -82,6 +88,7 @@ class Stats implements Summarizable
 	public function reset()
 	{
 		$this->distance = null;
+		$this->realDistance = null;
 		$this->averageSpeed = null;
 		$this->averagePace = null;
 		$this->minAltitude = null;
@@ -100,6 +107,7 @@ class Stats implements Summarizable
 	{
 		return [
 			'distance' => (float)$this->distance,
+			'realDistance' => (float)$this->realDistance,
 			'avgSpeed' => (float)$this->averageSpeed,
 			'avgPace' => (float)$this->averagePace,
 			'minAltitude' => (float)$this->minAltitude,

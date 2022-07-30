@@ -102,7 +102,9 @@ class Route extends Collection
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
 			ElevationGainLossCalculator::calculate($this->getPoints());
 
-		$this->stats->distance = DistanceCalculator::calculate($this->getPoints());
+		$calculator = new DistanceCalculator($this->getPoints());
+		$this->stats->distance = $calculator->getRawDistance();
+		$this->stats->realDistance = $calculator->getRealDistance();
 
 		for ($p = 0; $p < $pointCount; $p++) {
 			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$p]->elevation > 0) && $this->stats->minAltitude > $this->points[$p]->elevation) {
