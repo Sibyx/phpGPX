@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0 : 2021-04-30
+## 1.2.0 : 2022-07-30
 
 - **Feature**: [Real distance calculation #37](https://github.com/Sibyx/phpGPX/issues/37) (DistanceCalculator refactor)
 
