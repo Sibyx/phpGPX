@@ -93,6 +93,7 @@ class Segment implements Summarizable, StatsCalculator
 		$this->stats->startedAt = $firstPoint->time;
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
+		$this->stats->minAltitudeCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
 
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
 			ElevationGainLossCalculator::calculate($this->getPoints());
@@ -104,10 +105,12 @@ class Segment implements Summarizable, StatsCalculator
 		for ($i = 0; $i < $count; $i++) {
 			if ($this->stats->maxAltitude < $this->points[$i]->elevation) {
 				$this->stats->maxAltitude = $this->points[$i]->elevation;
+				$this->stats->maxAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
 			}
 
 			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$i]->elevation > 0) && $this->stats->minAltitude > $this->points[$i]->elevation) {
 				$this->stats->minAltitude = $this->points[$i]->elevation;
+				$this->stats->minAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
 			}
 		}
 

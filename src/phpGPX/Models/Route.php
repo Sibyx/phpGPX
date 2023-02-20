@@ -98,6 +98,7 @@ class Route extends Collection
 		$this->stats->startedAt = $firstPoint->time;
 		$this->stats->finishedAt = $lastPoint->time;
 		$this->stats->minAltitude = $firstPoint->elevation;
+		$this->stats->minAltitudeCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
 
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
 			ElevationGainLossCalculator::calculate($this->getPoints());
@@ -109,14 +110,17 @@ class Route extends Collection
 		for ($p = 0; $p < $pointCount; $p++) {
 			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$p]->elevation > 0) && $this->stats->minAltitude > $this->points[$p]->elevation) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
+				$this->stats->minAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
 			}
 
 			if ($this->stats->maxAltitude < $this->points[$p]->elevation) {
 				$this->stats->maxAltitude = $this->points[$p]->elevation;
+				$this->stats->maxAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
 			}
 
 			if ($this->stats->minAltitude > $this->points[$p]->elevation) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
+				$this->stats->minAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
 			}
 		}
 

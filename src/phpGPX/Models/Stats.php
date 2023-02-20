@@ -47,10 +47,22 @@ class Stats implements Summarizable
 	public $minAltitude = null;
 
 	/**
+	 * Minimal altitude coordinate
+	 * @var [float,float]
+	 */
+	public $minAltitudeCoords = null;
+
+	/**
 	 * Maximal altitude in meters (m)
 	 * @var int
 	 */
 	public $maxAltitude = null;
+
+	/**
+	 * Maximal altitude coordinate
+	 * @var [float,float]
+	 */
+	public $maxAltitudeCoords = null;
 
 	/**
 	 * Cumulative elevation gain in meters (m)
@@ -92,7 +104,9 @@ class Stats implements Summarizable
 		$this->averageSpeed = null;
 		$this->averagePace = null;
 		$this->minAltitude = null;
-		$this->maxAltitude = null;
+		$this->minAltitudeCoords = null;
+		$this->maxAltitude = null;		
+		$this->maxAltitudeCoords = null;
 		$this->cumulativeElevationGain = null;
 		$this->cumulativeElevationLoss = null;
 		$this->startedAt = null;
@@ -111,7 +125,9 @@ class Stats implements Summarizable
 			'avgSpeed' => (float)$this->averageSpeed,
 			'avgPace' => (float)$this->averagePace,
 			'minAltitude' => (float)$this->minAltitude,
+			'minAltitudeCoords' => $this->minAltitudeCoords,
 			'maxAltitude' => (float)$this->maxAltitude,
+			'maxAltitudeCoords' => $this->maxAltitudeCoords,
 			'cumulativeElevationGain' => (float)$this->cumulativeElevationGain,
 			'cumulativeElevationLoss' => (float)$this->cumulativeElevationLoss,
 			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
