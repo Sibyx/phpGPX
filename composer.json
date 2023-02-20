@@ -1,5 +1,5 @@
 {
-	"name": "sibyx/phpgpx",
+	"name": "nono303/phpgpx",
 	"type": "library",
 	"version": "1.2.1",
 	"description": "A simple PHP library for GPX import/export",
