@@ -83,10 +83,22 @@ class Stats implements Summarizable
 	public $startedAt = null;
 
 	/**
+	 * startedAt coordinate
+	 * @var [float,float]
+	 */
+	public $startedAtCoords = null;
+
+	/**
 	 * Ending time
 	 * @var \DateTime
 	 */
 	public $finishedAt = null;
+
+	/**
+	 * finishedAt coordinate
+	 * @var [float,float]
+	 */
+	public $finishedAtCoords = null;
 
 	/**
 	 * Duration is seconds
@@ -110,7 +122,9 @@ class Stats implements Summarizable
 		$this->cumulativeElevationGain = null;
 		$this->cumulativeElevationLoss = null;
 		$this->startedAt = null;
+		$this->startedAtCoords = null;
 		$this->finishedAt = null;
+		$this->finishedAtCoords = null;
 	}
 
 	/**
@@ -131,7 +145,9 @@ class Stats implements Summarizable
 			'cumulativeElevationGain' => (float)$this->cumulativeElevationGain,
 			'cumulativeElevationLoss' => (float)$this->cumulativeElevationLoss,
 			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'startedAtCoords' => $this->startedAtCoords,
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'finishedAtCoords' => $this->finishedAtCoords,
 			'duration' => (float)$this->duration
 		];
 	}

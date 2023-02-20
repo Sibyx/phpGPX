@@ -114,7 +114,9 @@ class Track extends Collection
 		$lastPoint = end(end($this->segments)->points);
 
 		$this->stats->startedAt = $firstPoint->time;
+		$this->stats->startedAtCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
 		$this->stats->finishedAt = $lastPoint->time;
+		$this->stats->finishedAtCoords = ["lat" => $lastPoint->latitude, "lng" => $lastPoint->longitude];
 		$this->stats->minAltitude = $firstPoint->elevation;
 		$this->stats->minAltitudeCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
 
