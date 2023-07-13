@@ -112,17 +112,17 @@ class Route extends Collection
 		for ($p = 0; $p < $pointCount; $p++) {
 			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$p]->elevation > 0) && $this->stats->minAltitude > $this->points[$p]->elevation) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
-				$this->stats->minAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+				$this->stats->minAltitudeCoords = ["lat" => $this->points[$p]->latitude, "lng" => $this->points[$p]->longitude];
 			}
 
 			if ($this->stats->maxAltitude < $this->points[$p]->elevation) {
 				$this->stats->maxAltitude = $this->points[$p]->elevation;
-				$this->stats->maxAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+				$this->stats->maxAltitudeCoords = ["lat" => $this->points[$p]->latitude, "lng" => $this->points[$p]->longitude];
 			}
 
 			if ($this->stats->minAltitude > $this->points[$p]->elevation) {
 				$this->stats->minAltitude = $this->points[$p]->elevation;
-				$this->stats->minAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+				$this->stats->minAltitudeCoords = ["lat" => $this->points[$p]->latitude, "lng" => $this->points[$p]->longitude];
 			}
 		}
 
