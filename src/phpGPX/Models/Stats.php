@@ -116,8 +116,8 @@ class Stats implements Summarizable
 		$this->averageSpeed = null;
 		$this->averagePace = null;
 		$this->minAltitude = null;
+		$this->maxAltitude = null;
 		$this->minAltitudeCoords = null;
-		$this->maxAltitude = null;		
 		$this->maxAltitudeCoords = null;
 		$this->cumulativeElevationGain = null;
 		$this->cumulativeElevationLoss = null;
