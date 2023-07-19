@@ -24,19 +24,21 @@ Repository branches:
  - JSON & XML & PHP Array output.
 
 ### Supported Extensions
- 
+
 - Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd): 
    http://www.garmin.com/xmlschemas/TrackPointExtension/v1
- 
+
 ### Stats calculation
 
- - (Smoothed) Distance (m)
- - Average speed (m/s)
- - Average pace  (s/km)
- - Min / max altitude (m)
- - (Smoothed) Elevation gain / loss (m)
- - Start / end (DateTime object)
- - Duration (seconds)
+- (Smoothed) Distance (m)
+- Average speed (m/s)
+- Average pace  (s/km)
+- Min / max altitude (m)
+- Min / max coordinates ([lat,lng])
+- (Smoothed) Elevation gain / loss (m)
+- Start / end (DateTime object)
+- Start / end coordinates ([lat,lng])
+- Duration (seconds)
 
 ## Installation
 
@@ -205,7 +207,7 @@ Currently, supported output formats:
 
  - XML
  - JSON
- 
+
 ## Configuration
 
 Use the static constants in phpGPX to modify behaviour.
@@ -273,7 +275,7 @@ public static $APPLY_DISTANCE_SMOOTHING = false;
  * the minimum distance between considered points in meters
  */
 public static $DISTANCE_SMOOTHING_THRESHOLD = 2;
-``` 
+```
 
 I wrote this library as part of my job in [Backbone s.r.o.](https://www.backbone.sk/en/).
 

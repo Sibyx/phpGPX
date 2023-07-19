@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 : 2023-07-19
+
+- **Added**: [Coordinates for remarqued statistic points](https://github.com/Sibyx/phpGPX/pull/64) (minAltitude, maxAltitude, startedAt, finishedAt)
+
 ## 1.2.1 : 2022-07-30
 
 - **Fixed**: Fixed `VERSION` string in `phpGPX.php`
