@@ -60,12 +60,32 @@ Minimal altitude in meters (m)
 
 * Visibility: **public**
 
+### $minAltitudeCoords
+
+    public [float,float] $minAltitudeCoords = null
+
+Minimal altitude coordinates in associative array with keys: "lat" for latitude & "lng" for longitude
+
+
+
+* Visibility: **public**
+
 
 ### $maxAltitude
 
     public integer $maxAltitude = null
 
 Maximal altitude in meters (m)
+
+
+
+* Visibility: **public**
+
+### $maxAltitudeCoords
+
+    public [float,float] $maxAltitudeCoords = null
+
+Maximal altitude coordinates in associative array with keys: "lat" for latitude & "lng" for longitude
 
 
 
@@ -93,12 +113,32 @@ Started time
 
 * Visibility: **public**
 
+### $startedAtCoords
+
+    public [float,float] $startedAtCoords = null
+
+Started coordinates in associative array with keys: "lat" for latitude & "lng" for longitude
+
+
+
+* Visibility: **public**
+
 
 ### $finishedAt
 
     public \DateTime $finishedAt = null
 
 Ending time
+
+
+
+* Visibility: **public**
+
+### $finishedAtCoords
+
+    public [float,float] $finishedAtCoords = null
+
+Ending coordinates in associative array with keys: "lat" for latitude & "lng" for longitude
 
 
 
