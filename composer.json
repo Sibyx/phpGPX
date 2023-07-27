@@ -13,14 +13,14 @@
 		}
 	],
 	"require": {
-		"php": ">=5.5",
+		"php": ">=7.1",
 		"lib-libxml": "*",
 		"ext-simplexml": "*",
 		"ext-dom": "*"
 	},
 	"require-dev": {
 		"evert/phpdoc-md" : "~0.2.0",
-		"phpunit/phpunit": "^6.5",
+		"phpunit/phpunit": "^9",
 		"friendsofphp/php-cs-fixer": "^2.18"
 	},
 	"autoload": {

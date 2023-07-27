@@ -28,8 +28,8 @@ class EmailParserTest extends AbstractParserTest
 		return $email;
 	}
 
-	protected function setUp()
-	{
+	protected function setUp(): void
+    {
 		parent::setUp();
 
 		$this->testModelInstance = self::createTestInstance();

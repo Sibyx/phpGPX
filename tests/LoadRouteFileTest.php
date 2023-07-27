@@ -18,7 +18,7 @@ class LoadRouteFileTest extends TestCase
 		$gpx = new phpGpx();
 		$gpxFile = $gpx->load($file);
 
-		$this->assertEquals($this->createExpectedArray(), $gpxFile->toArray(), "", 0.1);
+		$this->assertEqualsWithDelta($this->createExpectedArray(), $gpxFile->toArray(),0.1);
 
 		// Check XML generation
 		$gpxFile->toXML()->saveXML();
@@ -92,10 +92,26 @@ class LoadRouteFileTest extends TestCase
 						'avgSpeed' => 0.0,
 						'avgPace' => 0.0,
 						'minAltitude' => 0.0,
+                        'minAltitudeCoords' => [
+                            'lat' => 54.9328621088893,
+                            'lng' => 9.860624216140083
+                        ],
 						'maxAltitude' => 3.0,
+                        'maxAltitudeCoords' => [
+                            'lat' => 54.93342326167919,
+                            'lng' => 9.862439849679859
+                        ],
 						'cumulativeElevationGain' => 3.0,
 						'cumulativeElevationLoss' => 0.0,
-						'duration' => 0.0
+						'duration' => 0.0,
+                        'startedAtCoords' => [
+                            'lat' => 54.9328621088893,
+                            'lng' => 9.860624216140083
+                        ],
+                        'finishedAtCoords' => [
+                            'lat' => 54.93342326167919,
+                            'lng' => 9.862439849679859
+                        ]
 					]
 				],
 				[
@@ -138,10 +154,26 @@ class LoadRouteFileTest extends TestCase
 						'avgSpeed' => 0.0,
 						'avgPace' => 0.0,
 						'minAltitude' => 0.0,
+                        'minAltitudeCoords' => [
+                            'lat' => 54.9328621088893,
+                            'lng' => 9.860624216140083
+                        ],
 						'maxAltitude' => 3.0,
+                        'maxAltitudeCoords' => [
+                            'lat' => 54.93342326167919,
+                            'lng' => 9.862439849679859
+                        ],
 						'cumulativeElevationGain' => 3.0,
 						'cumulativeElevationLoss' => 0.0,
-						'duration' => 0.0
+						'duration' => 0.0,
+                        'startedAtCoords' => [
+                            'lat' => 54.9328621088893,
+                            'lng' => 9.860624216140083
+                        ],
+                        'finishedAtCoords' => [
+                            'lat' => 54.93342326167919,
+                            'lng' => 9.862439849679859
+                        ]
 					]
 				]
 			],

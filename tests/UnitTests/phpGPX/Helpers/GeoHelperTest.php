@@ -29,11 +29,11 @@ class GeoHelperTest extends TestCase
 		$point2->latitude = 48.1644916381763;
 		$point2->longitude = 17.0591753907502;
 
-		$this->assertEquals(
+		$this->assertEqualsWithDelta(
 			856.97,
 			GeoHelper::getRawDistance($point1, $point2),
-			"Invalid distance between two points!",
-			1
+			1,
+            "Invalid distance between two points!"
 		);
 	}
 
@@ -52,18 +52,18 @@ class GeoHelperTest extends TestCase
 		$point2->longitude = 17.0591753907502;
 		$point2->elevation = 200;
 
-		$this->assertEquals(
+		$this->assertEqualsWithDelta(
 			856.97,
 			GeoHelper::getRawDistance($point1, $point2),
-			"Invalid distance between two points!",
-			1
+            1,
+			"Invalid distance between two points!"
 		);
 
-		$this->assertEquals(
+		$this->assertEqualsWithDelta(
 			862,
 			GeoHelper::getRealDistance($point1, $point2),
-			"Invalid real distance between two points!",
-			1
+            1,
+			"Invalid real distance between two points!"
 		);
 	}
 }

@@ -51,7 +51,7 @@ class DateTimeHelper
 	 * @param string $timezone
 	 * @return \DateTime
 	 */
-	public static function parseDateTime($value, $timezone = 'UTC')
+	public static function parseDateTime($value, $timezone = 'Europe/London')
 	{
 		$timezone = new \DateTimeZone($timezone);
 		$datetime = new \DateTime($value, $timezone);

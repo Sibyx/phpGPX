@@ -64,11 +64,9 @@ class DateTimeHelperTest extends TestCase
 		);
 	}
 
-	/**
-	 * @expectedException \Exception
-	 */
 	public function testParseDateTimeInvalidInput()
 	{
+        $this->expectException("Exception");
 		DateTimeHelper::parseDateTime("Invalid exception");
 	}
 }

@@ -2,6 +2,9 @@
 
 ## 1.3.0 : 2023-07-19
 
+Changed minimal PHP version to `^7.1` in `composer.json`. Library still should work with PHP5.5+, if you have troubles
+while installing check the `--ignore-platform-reqs` attribute of [compose](https://getcomposer.org/doc/03-cli.md).
+
 - **Added**: [Coordinates for remarqued statistic points](https://github.com/Sibyx/phpGPX/pull/64) (minAltitude, maxAltitude, startedAt, finishedAt)
 
 ## 1.2.1 : 2022-07-30

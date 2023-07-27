@@ -30,8 +30,8 @@ class BoundsParserTest extends AbstractParserTest
 		return $bounds;
 	}
 
-	protected function setUp()
-	{
+	protected function setUp(): void
+    {
 		parent::setUp();
 
 		$this->testModelInstance = self::createTestInstance();

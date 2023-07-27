@@ -15,8 +15,8 @@ class SerializationHelperTest extends TestCase
 		$this->assertNull(SerializationHelper::integerOrNull(""));
 		$this->assertNull(SerializationHelper::integerOrNull(null));
 		$this->assertNull(SerializationHelper::integerOrNull("BLA"));
-		$this->assertInternalType("int", SerializationHelper::integerOrNull(5));
-		$this->assertInternalType("int", SerializationHelper::integerOrNull("5"));
+		$this->assertIsInt(SerializationHelper::integerOrNull(5));
+		$this->assertIsInt(SerializationHelper::integerOrNull("5"));
 	}
 
 	public function testFloatOrNull()
@@ -24,17 +24,17 @@ class SerializationHelperTest extends TestCase
 		$this->assertNull(SerializationHelper::floatOrNull(""));
 		$this->assertNull(SerializationHelper::floatOrNull(null));
 		$this->assertNull(SerializationHelper::floatOrNull("BLA"));
-		$this->assertInternalType("float", SerializationHelper::floatOrNull(5.6));
-		$this->assertInternalType("float", SerializationHelper::floatOrNull(5));
-		$this->assertInternalType("float", SerializationHelper::floatOrNull("5.6"));
-		$this->assertInternalType("float", SerializationHelper::floatOrNull("5"));
+		$this->assertIsFloat(SerializationHelper::floatOrNull(5.6));
+		$this->assertIsFloat(SerializationHelper::floatOrNull(5));
+		$this->assertIsFloat(SerializationHelper::floatOrNull("5.6"));
+		$this->assertIsFloat(SerializationHelper::floatOrNull("5"));
 	}
 
 	public function testStringOrNull()
 	{
 		$this->assertNull(SerializationHelper::stringOrNull(null));
-		$this->assertInternalType("string", SerializationHelper::stringOrNull(""));
-		$this->assertInternalType("string", SerializationHelper::stringOrNull("Bla bla"));
+		$this->assertIsString(SerializationHelper::stringOrNull(""));
+		$this->assertIsString(SerializationHelper::stringOrNull("Bla bla"));
 	}
 
 	/**

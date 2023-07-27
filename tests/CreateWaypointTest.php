@@ -91,8 +91,8 @@ final class CreateWaypointTest extends TestCase
 		$gpx_file->save($this->waypoint_created_file, \phpGPX\phpGPX::XML_FORMAT);
 	}
 
-	public function setUp()
-	{
+	public function setUp(): void
+    {
 		$this->waypoint_created_file = dirname(__FILE__)."/waypoint_test.gpx";
 		$this->waypoint_saved_file = dirname(__FILE__).'/output_waypoint_test.gpx';
 		// remove any test file hanging around
@@ -100,8 +100,8 @@ final class CreateWaypointTest extends TestCase
 		// now create the test file
 		$this->createWaypointFile();
 	}
-	public function tearDown()
-	{
+	public function tearDown(): void
+    {
 		system("rm -f {$this->waypoint_created_file}");
 		system("rm -f {$this->waypoint_saved_file}");
 	}
