@@ -1,0 +1,21 @@
+name: PHPUnit
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        php-version: ['7.1', '7.4', '8.0', '8.1']
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: php-actions/composer@v6
+      name: Install dependencies
+      with:
+        php_version: ${{ matrix.php-version }}
+        version: 2
+    - name: Running PHPUnit
+      run: php vendor/bin/phpunit --configuration phpunit.xml
