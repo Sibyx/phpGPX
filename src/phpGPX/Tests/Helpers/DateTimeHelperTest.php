@@ -3,7 +3,7 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace UnitTests\phpGPX\Helpers;
+namespace phpGPX\Tests\Helpers;
 
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Models\Point;
@@ -11,6 +11,12 @@ use PHPUnit\Framework\TestCase;
 
 class DateTimeHelperTest extends TestCase
 {
+    /**
+     * @covers \phpGPX\Helpers\DateTimeHelper
+     * @covers \phpGPX\Models\Point
+     * @return void
+     * @throws \Exception
+     */
 	public function testComparePointsByTimestamp()
 	{
 		// 2017-08-12T20:16:29+00:00
@@ -26,7 +32,11 @@ class DateTimeHelperTest extends TestCase
 		$this->assertTrue(($time1 > $time2) && DateTimeHelper::comparePointsByTimestamp($point1, $point2));
 	}
 
-	public function testFormatDateTime()
+    /**
+     * @covers \phpGPX\Helpers\DateTimeHelper::formatDateTime
+     * @return void
+     */
+    public function testFormatDateTime()
 	{
 		// 1. Basic test
 		$datetime = new \DateTime("2017-08-12T20:16:29+00:00");
@@ -55,6 +65,10 @@ class DateTimeHelperTest extends TestCase
 		);
 	}
 
+    /**
+     * @covers \phpGPX\Helpers\DateTimeHelper::parseDateTime
+     * @return void
+     */
 	public function testParseDateTime()
 	{
 		// 1. Valid string
@@ -64,7 +78,11 @@ class DateTimeHelperTest extends TestCase
 		);
 	}
 
-	public function testParseDateTimeInvalidInput()
+    /**
+     * @covers \phpGPX\Helpers\DateTimeHelper::parseDateTime
+     * @return void
+     */
+    public function testParseDateTimeInvalidInput()
 	{
         $this->expectException("Exception");
 		DateTimeHelper::parseDateTime("Invalid exception");

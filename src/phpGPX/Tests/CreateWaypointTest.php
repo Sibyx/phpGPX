@@ -1,14 +1,13 @@
 <?php
+namespace phpGPX\Tests;
 
-use PHPUnit\Framework\TestCase;
-
-use phpGPX\phpGPX;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Link;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
-use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
+use phpGPX\phpGPX;
+use PHPUnit\Framework\TestCase;
 
 final class CreateWaypointTest extends TestCase
 {
@@ -105,6 +104,11 @@ final class CreateWaypointTest extends TestCase
 		system("rm -f {$this->waypoint_created_file}");
 		system("rm -f {$this->waypoint_saved_file}");
 	}
+
+    /**
+     * @covers \phpGPX
+     * @return void
+     */
 	public function test_waypoints_load()
 	{
 		$origFile = $this->waypoint_created_file;
