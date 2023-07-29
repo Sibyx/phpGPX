@@ -3,13 +3,17 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace UnitTests\phpGPX\Helpers;
+namespace phpGPX\Tests\Helpers;
 
 use phpGPX\Helpers\SerializationHelper;
 use PHPUnit\Framework\TestCase;
 
 class SerializationHelperTest extends TestCase
 {
+    /**
+     * @covers \phpGPX\Helpers\SerializationHelper
+     * @return void
+     */
 	public function testIntegerOrNull()
 	{
 		$this->assertNull(SerializationHelper::integerOrNull(""));
@@ -19,6 +23,10 @@ class SerializationHelperTest extends TestCase
 		$this->assertIsInt(SerializationHelper::integerOrNull("5"));
 	}
 
+    /**
+     * @covers \phpGPX\Helpers\SerializationHelper
+     * @return void
+     */
 	public function testFloatOrNull()
 	{
 		$this->assertNull(SerializationHelper::floatOrNull(""));
@@ -30,6 +38,10 @@ class SerializationHelperTest extends TestCase
 		$this->assertIsFloat(SerializationHelper::floatOrNull("5"));
 	}
 
+    /**
+     * @covers \phpGPX\Helpers\SerializationHelper
+     * @return void
+     */
 	public function testStringOrNull()
 	{
 		$this->assertNull(SerializationHelper::stringOrNull(null));
@@ -38,6 +50,7 @@ class SerializationHelperTest extends TestCase
 	}
 
 	/**
+     * @covers \phpGPX\Helpers\SerializationHelper
 	 * @dataProvider dataProviderFilterNotNull
 	 */
 	public function testFilterNotNull($expected, $actual)

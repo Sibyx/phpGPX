@@ -11,7 +11,11 @@ use PHPUnit\Framework\TestCase;
 
 class LoadRouteFileTest extends TestCase
 {
-	public function testRouteFile()
+    /**
+     * @covers \phpGPX
+     * @return void
+     */
+    public function testRouteFile()
 	{
 		$file = __DIR__ . '/fixtures/route.gpx';
 
@@ -24,7 +28,11 @@ class LoadRouteFileTest extends TestCase
 		$gpxFile->toXML()->saveXML();
 	}
 
-	public function testRouteFileWithSmoothedStats()
+    /**
+     * @covers \phpGPX
+     * @return void
+     */
+    public function testRouteFileWithSmoothedStats()
 	{
 		$file = __DIR__ . '/fixtures/gps-track.gpx';
 

@@ -44,7 +44,6 @@ class Bounds implements Summarizable
 		$this->maxLatitude = null;
 	}
 
-
 	/**
 	 * Serialize object to array
 	 * @return array

@@ -3,7 +3,7 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace UnitTests\phpGPX\Helpers;
+namespace phpGPX\Tests\Helpers;
 
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Models\Point;
@@ -18,6 +18,8 @@ class GeoHelperTest extends TestCase
 	 * Input points:
 	 *  - 48.1573923225717 17.0547121910204
 	 *  - 48.1644916381763 17.0591753907502
+     * @covers \phpGPX\Helpers\GeoHelper
+     * @covers \phpGPX\Models\Point
 	 */
 	public function testGetDistance()
 	{
@@ -38,6 +40,8 @@ class GeoHelperTest extends TestCase
 	}
 
 	/**
+     * @covers \phpGPX\Helpers\GeoHelper
+     * @covers \phpGPX\Models\Point
 	 * @link http://cosinekitty.com/compass.html
 	 */
 	public function testRealDistance()

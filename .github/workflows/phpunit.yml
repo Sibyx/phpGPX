@@ -8,7 +8,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        php-version: ['7.3', '8.0', '8.1']
+        php-version: ['8.1', '8.2']
 
     steps:
     - uses: actions/checkout@v3

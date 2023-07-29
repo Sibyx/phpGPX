@@ -7,7 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 class LoadFileTest extends TestCase
 {
-	public function testLoadXmlFileGeneratedByTimezero()
+    /**
+     * @covers \phpGPX
+     * @return void
+     */
+    public function testLoadXmlFileGeneratedByTimezero()
 	{
 		$file = __DIR__ . '/fixtures/timezero.gpx';
 
