@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class LoadFileTest extends TestCase
 {
     /**
-     * @covers \phpGPX
+     * @coversNothing
      * @return void
      */
     public function testLoadXmlFileGeneratedByTimezero()

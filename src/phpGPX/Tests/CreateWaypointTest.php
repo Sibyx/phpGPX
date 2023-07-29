@@ -106,7 +106,7 @@ final class CreateWaypointTest extends TestCase
 	}
 
     /**
-     * @covers \phpGPX
+     * @coversNothing
      * @return void
      */
 	public function test_waypoints_load()

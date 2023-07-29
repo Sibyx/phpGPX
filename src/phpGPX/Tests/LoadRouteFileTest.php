@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class LoadRouteFileTest extends TestCase
 {
     /**
-     * @covers \phpGPX
+     * @coversNothing
      * @return void
      */
     public function testRouteFile()
@@ -29,7 +29,7 @@ class LoadRouteFileTest extends TestCase
 	}
 
     /**
-     * @covers \phpGPX
+     * @coversNothing
      * @return void
      */
     public function testRouteFileWithSmoothedStats()

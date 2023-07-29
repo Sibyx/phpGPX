@@ -28,8 +28,8 @@ class BoundsParserTest extends TestCase
 	}
 
     /**
-     * @covers \phpGPX
-     * @codeCoverageIgnore
+     * @covers \phpGPX\Parsers\BoundsParser
+     * @covers \phpGPX\Models\Bounds
      * @return void
      */
     public function testParse()

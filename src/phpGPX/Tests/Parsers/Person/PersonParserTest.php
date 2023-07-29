@@ -38,7 +38,13 @@ class PersonParserTest extends TestCase
 	}
 
     /**
-     * @covers \phpGPX
+     * @covers \phpGPX\Models\Person
+     * @covers \phpGPX\Models\Link
+     * @covers \phpGPX\Models\Email
+     * @covers \phpGPX\Parsers\EmailParser
+     * @covers \phpGPX\Parsers\LinkParser
+     * @covers \phpGPX\Parsers\PersonParser
+     * @covers \phpGPX\Helpers\SerializationHelper
      * @return void
      */
     public function testParse()
@@ -67,7 +73,7 @@ class PersonParserTest extends TestCase
 	}
 
 	/**
-     * @covers \phpGPX
+     * @coversNothing
 	 * @url https://github.com/Sibyx/phpGPX/issues/48
 	 */
 	public function testEmptyLinks()
