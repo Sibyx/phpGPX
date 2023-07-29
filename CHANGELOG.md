@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 : TBD
+
+- **Changed** Support for PHP 8.1+ only
+
 ## 1.3.0 : 2023-07-19
 
 Changed minimal PHP version to `^7.1` in `composer.json`. Library still should work with PHP5.5+, if you have troubles
