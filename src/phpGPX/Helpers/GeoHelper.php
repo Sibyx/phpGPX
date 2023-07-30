@@ -24,8 +24,8 @@ abstract class GeoHelper
 	 * @param Point $point2
 	 * @return float
 	 */
-	public static function getRawDistance(Point $point1, Point $point2)
-	{
+	public static function getRawDistance(Point $point1, Point $point2): float
+    {
 		$latFrom = deg2rad($point1->latitude);
 		$lonFrom = deg2rad($point1->longitude);
 		$latTo = deg2rad($point2->latitude);
@@ -45,8 +45,8 @@ abstract class GeoHelper
 	 * @param Point $point2
 	 * @return float
 	 */
-	public static function getRealDistance(Point $point1, Point $point2)
-	{
+	public static function getRealDistance(Point $point1, Point $point2): float
+    {
 		$distance = self::getRawDistance($point1, $point2);
 
 		$elevation1 = $point1->elevation != null ? $point1->elevation : 0;

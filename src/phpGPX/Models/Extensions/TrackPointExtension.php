@@ -6,8 +6,6 @@
 
 namespace phpGPX\Models\Extensions;
 
-use phpGPX\Helpers\SerializationHelper;
-
 /**
  * Class TrackPointExtension
  * Extension version: v2
@@ -27,75 +25,51 @@ class TrackPointExtension extends AbstractExtension
 
 	/**
 	 * Average temperature value measured in degrees Celsius.
-	 * @var float
-	 */
-	public $aTemp;
+	 * @var float|null
+     */
+	public ?float $aTemp;
 
 	/**
-	 * Average temperature value measured in degrees Celsius.
-	 * @deprecated use TrackPointExtension::$aTemp instead. Will be removed in v1.0
-	 * @see TrackPointExtension::$aTemp
-	 * @var float
-	 */
-	public $avgTemperature;
-
-	/**
-	 * @var float
-	 */
-	public $wTemp;
+	 * @var float|null
+     */
+	public ?float $wTemp;
 
 	/**
 	 * Depth in meters.
-	 * @var float
-	 */
-	public $depth;
-
-	/**
-	 * Heart rate in beats per minute.
-	 * @deprecated since v1.0RC3, use attribute TrackPointExtension::$hr instead, will be removed in v1.0
-	 * @see TrackPointExtension::$hr
-	 * @var float
-	 */
-	public $heartRate;
+	 * @var float|null
+     */
+	public ?float $depth;
 
 	/**
 	 * Heart rate in beats per minute.
 	 * @since v1.0RC3
-	 * @var float
-	 */
-	public $hr;
+	 * @var float|null
+     */
+	public ?float $hr;
 
 	/**
 	 * Cadence in revolutions per minute.
-	 * @deprecated since v1.0RC3, use attribute TrackPointExtension::$cad instead, will be removed in v1.0
-	 * @see TrackPointExtension::$cad
-	 * @var float
-	 */
-	public $cadence;
-
-	/**
-	 * Cadence in revolutions per minute.
-	 * @var float
-	 */
-	public $cad;
+	 * @var float|null
+     */
+	public ?float $cad;
 
 	/**
 	 * Speed in meters per second.
-	 * @var float
+	 * @var float|null
 	 */
-	public $speed;
+	public ?float $speed;
 
 	/**
 	 * Course. This type contains an angle measured in degrees in a clockwise direction from the true north line.
-	 * @var int
-	 */
-	public $course;
+	 * @var int|null
+     */
+	public ?int $course;
 
 	/**
 	 * Bearing. This type contains an angle measured in degrees in a clockwise direction from the true north line.
-	 * @var int
+	 * @var int|null
 	 */
-	public $bearing;
+	public ?int $bearing;
 
 	/**
 	 * TrackPointExtension constructor.
@@ -109,17 +83,17 @@ class TrackPointExtension extends AbstractExtension
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
-	{
+	public function toArray(): array
+    {
 		return [
-			'aTemp' => SerializationHelper::floatOrNull($this->aTemp),
-			'wTemp' => SerializationHelper::floatOrNull($this->wTemp),
-			'depth' => SerializationHelper::floatOrNull($this->depth),
-			'hr' => SerializationHelper::floatOrNull($this->hr),
-			'cad' => SerializationHelper::floatOrNull($this->cad),
-			'speed' => SerializationHelper::floatOrNull($this->speed),
-			'course' => SerializationHelper::integerOrNull($this->course),
-			'bearing' => SerializationHelper::integerOrNull($this->bearing)
+			'aTemp' => $this->aTemp ?? null,
+			'wTemp' => $this->wTemp ?? null,
+			'depth' => $this->depth ?? null,
+			'hr' => $this->hr ?? null,
+			'cad' => $this->cad ?? null,
+			'speed' => $this->speed ?? null,
+			'course' => $this->course ?? null,
+			'bearing' => $this->bearing ?? null
 		];
 	}
 }

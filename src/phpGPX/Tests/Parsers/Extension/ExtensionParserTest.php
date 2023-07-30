@@ -15,10 +15,8 @@ class ExtensionParserTest extends TestCase
 	protected function setUp(): void
     {
         $trackpoint = new TrackPointExtension();
-        $trackpoint->aTemp = (float) 14;
-        $trackpoint->avgTemperature = (float) 14;
-        $trackpoint->hr = (float) 152;
-        $trackpoint->heartRate = (float) 152;
+        $trackpoint->aTemp = 14.0;
+        $trackpoint->hr = 152.0;
 
         $this->extensions = new Extensions();
         $this->extensions->trackPointExtension = $trackpoint;
@@ -39,10 +37,10 @@ class ExtensionParserTest extends TestCase
 	{
 		$extensions = ExtensionParser::parse($this->file->extensions);
 
-        $this->assertEquals($this->extensions, $extensions);
-
         $this->assertEquals($this->extensions->unsupported, $extensions->unsupported);
-		$this->assertEquals($this->extensions->trackPointExtension, $extensions->trackPointExtension);
+		$this->assertEquals(
+            $this->extensions->trackPointExtension->toArray(), $extensions->trackPointExtension->toArray()
+        );
 
 		$this->assertEquals($this->extensions->toArray(), $extensions->toArray());
 	}

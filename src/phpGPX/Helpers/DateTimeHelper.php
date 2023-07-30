@@ -20,22 +20,23 @@ class DateTimeHelper
 	 * @param Point $point2
 	 * @return bool|int
 	 */
-	public static function comparePointsByTimestamp(Point $point1, Point $point2)
-	{
+	public static function comparePointsByTimestamp(Point $point1, Point $point2): bool|int
+    {
 		if ($point1->time == $point2->time) {
 			return 0;
 		}
 		return $point1->time > $point2->time;
 	}
 
-	/**
-	 * @param $datetime
-	 * @param string $format
-	 * @param string $timezone
-	 * @return null|string
-	 */
-	public static function formatDateTime($datetime, $format = 'c', $timezone = 'UTC')
-	{
+    /**
+     * @param $datetime
+     * @param string $format
+     * @param string $timezone
+     * @return null|string
+     * @throws \Exception
+     */
+	public static function formatDateTime($datetime, string $format = 'c', string $timezone = 'UTC'): ?string
+    {
 		$formatted 				= null;
 
 		if ($datetime instanceof \DateTime) {
@@ -46,13 +47,14 @@ class DateTimeHelper
 		return $formatted;
 	}
 
-	/**
-	 * @param $value
-	 * @param string $timezone
-	 * @return \DateTime
-	 */
-	public static function parseDateTime($value, $timezone = 'Europe/London')
-	{
+    /**
+     * @param $value
+     * @param string $timezone
+     * @return \DateTime
+     * @throws \Exception
+     */
+	public static function parseDateTime($value, string $timezone = 'Europe/London'): \DateTime
+    {
 		$timezone = new \DateTimeZone($timezone);
 		$datetime = new \DateTime($value, $timezone);
 		$datetime->setTimezone(new \DateTimeZone(date_default_timezone_get()));

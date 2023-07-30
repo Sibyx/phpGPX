@@ -17,12 +17,12 @@ class BoundsParserTest extends TestCase
 	protected function setUp(): void
     {
         // Example object
-		$this->bounds = new Bounds();
-        $this->bounds->maxLatitude = 49.090543;
-        $this->bounds->maxLongitude = 18.886939;
-        $this->bounds->minLatitude = 49.072489;
-        $this->bounds->minLongitude = 18.814543;
-
+		$this->bounds = new Bounds(
+            49.072489,
+            18.814543,
+            49.090543,
+            18.886939
+        );
         // Input file
         $this->file = simplexml_load_file(sprintf("%s/bounds.xml", __DIR__));
 	}

@@ -55,25 +55,13 @@ class TrackPointExtensionParser
 		$extension = new TrackPointExtension();
 
 		foreach (self::$attributeMapper as $key => $attribute) {
-			$extension->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-			if (!is_null($extension->{$attribute['name']})) {
-				settype($extension->{$attribute['name']}, $attribute['type']);
-			}
+            $value = isset($node->$key) ? $node->$key : null;
 
-			// Remove in v1.0
-			if ($key == 'hr') {
-				$extension->heartRate = $extension->hr;
-			}
+            if (!is_null($value)) {
+                settype($value, $attribute['type']);
+            }
 
-			// Remove in v1.0
-			if ($key == 'cad') {
-				$extension->cadence = $extension->cad;
-			}
-
-			// Remove in v1.0
-			if ($key == 'atemp') {
-				$extension->avgTemperature = $extension->aTemp;
-			}
+            $extension->{$attribute['name']} = $value;
 		}
 
 		return $extension;
@@ -96,7 +84,7 @@ class TrackPointExtensionParser
 		];
 
 		foreach (self::$attributeMapper as $key => $attribute) {
-			if (!is_null($extension->{$attribute['name']})) {
+			if (isset($extension->{$attribute['name']})) {
 				$child = $document->createElement(
 					sprintf("%s:%s", TrackPointExtension::EXTENSION_NAMESPACE_PREFIX, $key),
 					$extension->{$attribute['name']}

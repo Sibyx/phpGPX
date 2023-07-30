@@ -13,43 +13,47 @@ class Bounds implements Summarizable
 	 * Minimal latitude in file.
 	 * @var float
 	 */
-	public $minLatitude;
+	public float $minLatitude;
 
 	/**
 	 * Minimal longitude in file.
 	 * @var float
 	 */
-	public $minLongitude;
+	public float $minLongitude;
 
 	/**
 	 * Maximal latitude in file.
 	 * @var float
 	 */
-	public $maxLatitude;
+	public float $maxLatitude;
 
 	/**
 	 * Maximal longitude in file.
 	 * @var float
 	 */
-	public $maxLongitude;
+	public float $maxLongitude;
 
-	/**
-	 * Bounds constructor.
-	 */
-	public function __construct()
-	{
-		$this->minLatitude = null;
-		$this->minLongitude = null;
-		$this->maxLongitude = null;
-		$this->maxLatitude = null;
-	}
+    /**
+     * @param float $minLatitude
+     * @param float $minLongitude
+     * @param float $maxLatitude
+     * @param float $maxLongitude
+     */
+    public function __construct(float $minLatitude, float $minLongitude, float $maxLatitude, float $maxLongitude)
+    {
+        $this->minLatitude = $minLatitude;
+        $this->minLongitude = $minLongitude;
+        $this->maxLatitude = $maxLatitude;
+        $this->maxLongitude = $maxLongitude;
+    }
 
-	/**
+
+    /**
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
-	{
+	public function toArray(): array
+    {
 		return [
 			'minlat' => $this->minLatitude,
 			'minlon' => $this->minLongitude,

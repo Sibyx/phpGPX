@@ -21,8 +21,8 @@ abstract class SerializationHelper
 	 * @param $value
 	 * @return int|null
 	 */
-	public static function integerOrNull($value)
-	{
+	public static function integerOrNull($value): ?int
+    {
 		return is_numeric($value) ? (integer) $value : null;
 	}
 
@@ -31,8 +31,8 @@ abstract class SerializationHelper
 	 * @param $value
 	 * @return float|null
 	 */
-	public static function floatOrNull($value)
-	{
+	public static function floatOrNull($value): ?float
+    {
 		return is_numeric($value) ? (float) $value : null;
 	}
 
@@ -41,8 +41,8 @@ abstract class SerializationHelper
 	 * @param $value
 	 * @return null|string
 	 */
-	public static function stringOrNull($value)
-	{
+	public static function stringOrNull($value): ?string
+    {
 		return is_string($value) ? $value : null;
 	}
 
@@ -51,8 +51,8 @@ abstract class SerializationHelper
 	 * @param Summarizable|Summarizable[] $object
 	 * @return array|null
 	 */
-	public static function serialize($object)
-	{
+	public static function serialize(Summarizable|array|null $object): ?array
+    {
 		if (is_array($object)) {
 			$result = [];
 			foreach ($object as $record) {
@@ -62,12 +62,12 @@ abstract class SerializationHelper
 			$object = null;
 			return $result;
 		} else {
-			return $object != null ? $object->toArray() : null;
+			return $object?->toArray();
 		}
 	}
 
-	public static function filterNotNull(array $array)
-	{
+	public static function filterNotNull(array $array): array
+    {
 		foreach ($array as &$item) {
 			if (!is_array($item)) {
 				continue;
@@ -76,10 +76,8 @@ abstract class SerializationHelper
 			$item = self::filterNotNull($item);
 		}
 
-		$array = array_filter($array, function ($item) {
+		return array_filter($array, function ($item) {
 			return $item !== null && (!is_array($item) || count($item));
 		});
-
-		return $array;
 	}
 }

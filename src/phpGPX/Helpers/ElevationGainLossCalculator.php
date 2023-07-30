@@ -14,11 +14,11 @@ use phpGPX\phpGPX;
 class ElevationGainLossCalculator
 {
 	/**
-	 * @param Point[]|array $points
+	 * @param Point[] $points
 	 * @return array
 	 */
-	public static function calculate(array $points)
-	{
+	public static function calculate(array $points): array
+    {
 		$cumulativeElevationGain = 0;
 		$cumulativeElevationLoss = 0;
 

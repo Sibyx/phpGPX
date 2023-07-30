@@ -18,7 +18,7 @@ class DistanceCalculator
 	/**
 	 * @var Point[]
 	 */
-	private $points;
+	private array $points;
 
 	/**
 	 * DistanceCalculator constructor.
@@ -29,22 +29,22 @@ class DistanceCalculator
 		$this->points = $points;
 	}
 
-	public function getRawDistance()
-	{
+	public function getRawDistance(): float
+    {
 		return $this->calculate([GeoHelper::class, 'getRawDistance']);
 	}
 
-	public function getRealDistance()
-	{
+	public function getRealDistance(): float
+    {
 		return $this->calculate([GeoHelper::class, 'getRealDistance']);
 	}
 
-	/**
-	 * @param Point[]|array $points
-	 * @return float
-	 */
-	private function calculate($strategy)
-	{
+    /**
+     * @param array $strategy
+     * @return float
+     */
+	private function calculate(array $strategy): float
+    {
 		$distance = 0;
 
 		$pointCount = count($this->points);

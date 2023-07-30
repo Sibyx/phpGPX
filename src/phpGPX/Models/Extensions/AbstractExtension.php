@@ -15,20 +15,20 @@ abstract class AbstractExtension implements Summarizable
 	 * XML namespace of extension
 	 * @var string
 	 */
-	public $namespace;
+	public string $namespace;
 
 	/**
 	 * Node name extension.
 	 * @var string
 	 */
-	public $extensionName;
+	public string $extensionName;
 
 	/**
 	 * AbstractExtension constructor.
 	 * @param string $namespace
 	 * @param string $extensionName
 	 */
-	public function __construct($namespace, $extensionName)
+	public function __construct(string $namespace, string $extensionName)
 	{
 		$this->namespace = $namespace;
 		$this->extensionName = $extensionName;

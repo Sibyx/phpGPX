@@ -27,14 +27,12 @@ abstract class BoundsParser
 			return null;
 		}
 
-		$bounds = new Bounds();
-
-		$bounds->minLatitude = isset($node['minlat']) ? (float) $node['minlat'] : null;
-		$bounds->minLongitude = isset($node['minlon']) ? (float) $node['minlon'] : null;
-		$bounds->maxLatitude = isset($node['maxlat']) ? (float) $node['maxlat'] : null;
-		$bounds->maxLongitude = isset($node['maxlon']) ? (float) $node['maxlon'] : null;
-
-		return $bounds;
+        return new Bounds(
+            (float) $node['minlat'],
+            (float) $node['minlon'],
+            (float) $node['maxlat'],
+            (float) $node['maxlon']
+        );
 	}
 
 	/**
