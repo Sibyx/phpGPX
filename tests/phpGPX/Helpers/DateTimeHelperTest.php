@@ -3,9 +3,8 @@
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-namespace phpGPX\Tests\Helpers;
+namespace phpGPX\Helpers;
 
-use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Models\Point;
 use PHPUnit\Framework\TestCase;
 

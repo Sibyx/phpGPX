@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="HIKING.SK Hikeplanner" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+	<metadata>
+		<bounds maxlat="49.18269" maxlon="18.86944" minlat="49.18269" minlon="18.86944"></bounds>
+	</metadata>
+	<trk>
+		<name>Trasa: Turčianske Kľačany → Strečno, stanica</name>
+		<trkseg>
+			<trkpt lat="49.11444" lon="18.95035" >
+				<ele>395</ele>
+			</trkpt>
+			<trkpt lat="49.11594" lon="18.95045" >
+				<ele>408</ele>
+			</trkpt>
+			<trkpt lat="49.11716" lon="18.95188" >
+				<ele>419</ele>
+			</trkpt>
+			<trkpt lat="49.12217" lon="18.95435" >
+				<ele>459</ele>
+			</trkpt>
+			<trkpt lat="49.12691" lon="18.95925" >
+				<ele>531</ele>
+			</trkpt>
+			<trkpt lat="49.13371" lon="18.95607" >
+				<ele>685</ele>
+			</trkpt>
+			<trkpt lat="49.13727" lon="18.95217" >
+				<ele>816</ele>
+			</trkpt>
+			<trkpt lat="49.14198" lon="18.95255" >
+				<ele>951</ele>
+			</trkpt>
+			<trkpt lat="49.14314" lon="18.95100" >
+				<ele>1002</ele>
+			</trkpt>
+			<trkpt lat="49.14483" lon="18.95149" >
+				<ele>1066</ele>
+			</trkpt>
+			<trkpt lat="49.14747" lon="18.95027" >
+				<ele>1123</ele>
+			</trkpt>
+			<trkpt lat="49.14798" lon="18.95096" >
+				<ele>1140</ele>
+			</trkpt>
+			<trkpt lat="49.14798" lon="18.95096" >
+				<ele>1140</ele>
+			</trkpt>
+			<trkpt lat="49.14991" lon="18.95130" >
+				<ele>1167</ele>
+			</trkpt>
+			<trkpt lat="49.15114" lon="18.95291" >
+				<ele>1174</ele>
+			</trkpt>
+			<trkpt lat="49.15212" lon="18.95649" >
+				<ele>1218</ele>
+			</trkpt>
+			<trkpt lat="49.15276" lon="18.95671" >
+				<ele>1225</ele>
+			</trkpt>
+			<trkpt lat="49.15527" lon="18.95498" >
+				<ele>1237</ele>
+			</trkpt>
+			<trkpt lat="49.15842" lon="18.95458" >
+				<ele>1252</ele>
+			</trkpt>
+			<trkpt lat="49.16080" lon="18.95294" >
+				<ele>1310</ele>
+			</trkpt>
+			<trkpt lat="49.16669" lon="18.95657" >
+				<ele>1315</ele>
+			</trkpt>
+			<trkpt lat="49.16830" lon="18.95619" >
+				<ele>1303</ele>
+			</trkpt>
+			<trkpt lat="49.16830" lon="18.95619" >
+				<ele>1303</ele>
+			</trkpt>
+			<trkpt lat="49.17042" lon="18.95539" >
+				<ele>1408</ele>
+			</trkpt>
+			<trkpt lat="49.17142" lon="18.95648" >
+				<ele>1468</ele>
+			</trkpt>
+			<trkpt lat="49.17142" lon="18.95648" >
+				<ele>1468</ele>
+			</trkpt>
+			<trkpt lat="49.17275" lon="18.95286" >
+				<ele>1300</ele>
+			</trkpt>
+			<trkpt lat="49.17435" lon="18.95110" >
+				<ele>1215</ele>
+			</trkpt>
+			<trkpt lat="49.17435" lon="18.95110" >
+				<ele>1215</ele>
+			</trkpt>
+			<trkpt lat="49.17589" lon="18.94644" >
+				<ele>1185</ele>
+			</trkpt>
+			<trkpt lat="49.17641" lon="18.93968" >
+				<ele>1160</ele>
+			</trkpt>
+			<trkpt lat="49.17788" lon="18.93731" >
+				<ele>1145</ele>
+			</trkpt>
+			<trkpt lat="49.17788" lon="18.93731" >
+				<ele>1145</ele>
+			</trkpt>
+			<trkpt lat="49.17663" lon="18.93506" >
+				<ele>1070</ele>
+			</trkpt>
+			<trkpt lat="49.17663" lon="18.93506" >
+				<ele>1070</ele>
+			</trkpt>
+			<trkpt lat="49.17647" lon="18.93235" >
+				<ele>1027</ele>
+			</trkpt>
+			<trkpt lat="49.17722" lon="18.93169" >
+				<ele>1018</ele>
+			</trkpt>
+			<trkpt lat="49.17654" lon="18.93052" >
+				<ele>999</ele>
+			</trkpt>
+			<trkpt lat="49.17713" lon="18.93002" >
+				<ele>975</ele>
+			</trkpt>
+			<trkpt lat="49.17806" lon="18.93065" >
+				<ele>964</ele>
+			</trkpt>
+			<trkpt lat="49.17645" lon="18.92600" >
+				<ele>882</ele>
+			</trkpt>
+			<trkpt lat="49.17647" lon="18.91804" >
+				<ele>749</ele>
+			</trkpt>
+			<trkpt lat="49.17937" lon="18.91296" >
+				<ele>646</ele>
+			</trkpt>
+			<trkpt lat="49.17995" lon="18.90596" >
+				<ele>567</ele>
+			</trkpt>
+			<trkpt lat="49.18165" lon="18.89916" >
+				<ele>507</ele>
+			</trkpt>
+			<trkpt lat="49.18128" lon="18.89624" >
+				<ele>479</ele>
+			</trkpt>
+			<trkpt lat="49.17991" lon="18.89289" >
+				<ele>425</ele>
+			</trkpt>
+			<trkpt lat="49.17991" lon="18.89289" >
+				<ele>425</ele>
+			</trkpt>
+			<trkpt lat="49.17793" lon="18.88729" >
+				<ele>403</ele>
+			</trkpt>
+			<trkpt lat="49.17644" lon="18.88548" >
+				<ele>385</ele>
+			</trkpt>
+			<trkpt lat="49.17467" lon="18.88558" >
+				<ele>372</ele>
+			</trkpt>
+			<trkpt lat="49.17319" lon="18.88256" >
+				<ele>371</ele>
+			</trkpt>
+			<trkpt lat="49.17281" lon="18.88025" >
+				<ele>371</ele>
+			</trkpt>
+			<trkpt lat="49.17511" lon="18.86847" >
+				<ele>371</ele>
+			</trkpt>
+			<trkpt lat="49.17628" lon="18.86732" >
+				<ele>361</ele>
+			</trkpt>
+			<trkpt lat="49.17815" lon="18.86717" >
+				<ele>358</ele>
+			</trkpt>
+			<trkpt lat="49.17840" lon="18.86569" >
+				<ele>356</ele>
+			</trkpt>
+			<trkpt lat="49.17937" lon="18.86595" >
+				<ele>355</ele>
+			</trkpt>
+			<trkpt lat="49.17937" lon="18.86595" >
+				<ele>355</ele>
+			</trkpt>
+			<trkpt lat="49.18269" lon="18.86944" >
+				<ele>360</ele>
+			</trkpt>
+		</trkseg>
+	</trk>
+
+
+</gpx>

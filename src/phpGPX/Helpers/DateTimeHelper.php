@@ -37,11 +37,11 @@ class DateTimeHelper
      */
 	public static function formatDateTime($datetime, string $format = 'c', string $timezone = 'UTC'): ?string
     {
-		$formatted 				= null;
+		$formatted = null;
 
 		if ($datetime instanceof \DateTime) {
 			$datetime->setTimezone(new \DateTimeZone($timezone));
-			$formatted 			= $datetime->format($format);
+			$formatted = $datetime->format($format);
 		}
 
 		return $formatted;

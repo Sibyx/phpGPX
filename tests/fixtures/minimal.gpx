@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1"
+	 xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd"
+	 xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+	 xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" version="1.1" creator="Sibyx">
+	<metadata>
+		<name>Minimal GPX Scenario</name>
+		<author>
+			<name>Jakub Dubec</name>
+			<link href="https://github.com/Sibyx"/>
+		</author>
+		<time>2023-12-29T15:02:41Z</time>
+	</metadata>
+
+	<rte>
+		<name>Patrick's Route</name>
+		<rtept lon="9.860624216140083" lat="54.9328621088893">
+			<ele>0.0</ele>
+			<name>Position 1</name>
+		</rtept>
+		<rtept lon="9.86092208681491" lat="54.93293237320851">
+			<ele>1.0</ele>
+			<name>Position 2</name>
+		</rtept>
+		<rtept lon="9.86187816543752" lat="54.93327743521187">
+			<ele>2.0</ele>
+			<name>Position 3</name>
+		</rtept>
+		<rtept lon="9.862439849679859" lat="54.93342326167919">
+			<ele>3.0</ele>
+			<name>Position 4</name>
+		</rtept>
+	</rte>
+
+	<trk>
+		<name>Hike</name>
+		<type>hiking</type>
+		<trkseg>
+			<trkpt lat="28.5553650" lon="-16.2489400">
+				<ele>215.4</ele>
+				<time>2022-08-14T15:03:12Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>126</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5553680" lon="-16.2489910">
+				<ele>214.3</ele>
+				<time>2022-08-14T15:03:16Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>126</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5553740" lon="-16.2490440">
+				<ele>213.2</ele>
+				<time>2022-08-14T15:03:21Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>126</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5553740" lon="-16.2490980">
+				<ele>212.1</ele>
+				<time>2022-08-14T15:03:26Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>126</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+		</trkseg>
+		<trkseg>
+			<trkpt lat="28.5643960" lon="-16.2530770">
+				<ele>117.8</ele>
+				<time>2022-08-14T15:49:09Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>142</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5644420" lon="-16.2530650">
+				<ele>117.4</ele>
+				<time>2022-08-14T15:49:16Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>142</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5645080" lon="-16.2530840">
+				<ele>116.5</ele>
+				<time>2022-08-14T15:49:50Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>142</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5645100" lon="-16.2530980">
+				<ele>116.4</ele>
+				<time>2022-08-14T15:49:51Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>129</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="28.5645050" lon="-16.2531120">
+				<ele>116.2</ele>
+				<time>2022-08-14T15:49:52Z</time>
+				<extensions>
+					<gpxtpx:TrackPointExtension>
+						<gpxtpx:hr>129</gpxtpx:hr>
+					</gpxtpx:TrackPointExtension>
+				</extensions>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>

@@ -2,7 +2,7 @@
 	"name": "sibyx/phpgpx",
 	"type": "library",
 	"version": "1.3.0",
-	"description": "A simple PHP library for GPX import/export",
+	"description": "A simple PHP library for GPX manipulation",
 	"minimum-stability": "stable",
 	"keywords": [
 		"gpx",
@@ -27,13 +27,13 @@
 		"ext-dom": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^10.2.6",
-		"friendsofphp/php-cs-fixer": "^v3.22.0"
+		"phpunit/phpunit": "^10.5.5",
+		"friendsofphp/php-cs-fixer": "^v3.43.1"
 	},
 	"autoload": {
-		"psr-4": { "phpGPX\\": "src/phpGPX/" }
+		"psr-4": { "phpGPX\\": "src/phpGPX" }
 	},
 	"autoload-dev": {
-		"psr-4": { "phpGPX\\Tests\\": "tests/" }
+		"psr-4": { "phpGPX\\": "tests/phpGPX" }
 	}
 }

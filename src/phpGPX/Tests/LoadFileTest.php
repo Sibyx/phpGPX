@@ -2,7 +2,7 @@
 
 namespace phpGPX\Tests;
 
-use phpGPX\phpGPX;
+use phpGPX\phpGpx;
 use PHPUnit\Framework\TestCase;
 
 class LoadFileTest extends TestCase

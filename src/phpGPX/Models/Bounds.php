@@ -6,40 +6,43 @@
 
 namespace phpGPX\Models;
 
-class Bounds implements Summarizable
+use phpGPX\GpxSerializable;
+
+class Bounds implements \JsonSerializable, GpxSerializable
 {
+    public const TAG_NAME = 'bounds';
 
 	/**
 	 * Minimal latitude in file.
-	 * @var float
+	 * @var float|null
 	 */
-	public float $minLatitude;
+	public ?float $minLatitude;
 
 	/**
 	 * Minimal longitude in file.
-	 * @var float
+	 * @var float|null
 	 */
-	public float $minLongitude;
+	public ?float $minLongitude;
 
 	/**
 	 * Maximal latitude in file.
-	 * @var float
+	 * @var float|null
 	 */
-	public float $maxLatitude;
+	public ?float $maxLatitude;
 
 	/**
 	 * Maximal longitude in file.
-	 * @var float
+	 * @var float|null
 	 */
-	public float $maxLongitude;
+	public ?float $maxLongitude;
 
     /**
-     * @param float $minLatitude
-     * @param float $minLongitude
-     * @param float $maxLatitude
-     * @param float $maxLongitude
+     * @param float|null $minLatitude
+     * @param float|null $minLongitude
+     * @param float|null $maxLatitude
+     * @param float|null $maxLongitude
      */
-    public function __construct(float $minLatitude, float $minLongitude, float $maxLatitude, float $maxLongitude)
+    public function __construct(?float $minLatitude, ?float $minLongitude, ?float $maxLatitude, ?float $maxLongitude)
     {
         $this->minLatitude = $minLatitude;
         $this->minLongitude = $minLongitude;
@@ -47,18 +50,26 @@ class Bounds implements Summarizable
         $this->maxLongitude = $maxLongitude;
     }
 
-
     /**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
+     * GeoJSON serializer
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
-		return [
-			'minlat' => $this->minLatitude,
-			'minlon' => $this->minLongitude,
-			'maxlat' => $this->maxLatitude,
-			'maxlon' => $this->maxLongitude
-		];
-	}
+        return [$this->minLongitude, $this->minLatitude, $this->maxLongitude, $this->maxLatitude];
+    }
+
+    public static function parse(\SimpleXMLElement $node): ?Bounds
+    {
+        if ($node->getName() != self::TAG_NAME) {
+            return null;
+        }
+
+        return new Bounds(
+            (float) $node['minlat'],
+            (float) $node['minlon'],
+            (float) $node['maxlat'],
+            (float) $node['maxlon']
+        );
+    }
 }

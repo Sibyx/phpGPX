@@ -23,6 +23,7 @@ class BoundsParserTest extends TestCase
             49.090543,
             18.886939
         );
+
         // Input file
         $this->file = simplexml_load_file(sprintf("%s/bounds.xml", __DIR__));
 	}
@@ -44,7 +45,7 @@ class BoundsParserTest extends TestCase
 		$this->assertEquals($this->bounds->minLatitude, $bounds->minLatitude);
 		$this->assertEquals($this->bounds->minLongitude, $bounds->minLongitude);
 
-		$this->assertEquals($this->bounds->toArray(), $bounds->toArray());
+		$this->assertEquals($this->bounds->jsonSerialize(), $bounds->jsonSerialize());
 	}
 
     /**
@@ -63,16 +64,5 @@ class BoundsParserTest extends TestCase
         $document->appendChild($root);
 
         $this->assertXmlStringEqualsXmlString($this->file->asXML(), $document->saveXML());
-    }
-
-    /**
-     * @covers \phpGPX\Models\Bounds
-     * @return void
-     */
-    public function testToJSON()
-    {
-        $this->assertJsonStringEqualsJsonFile(
-            sprintf("%s/bounds.json", __DIR__), json_encode($this->bounds->toArray())
-        );
     }
 }

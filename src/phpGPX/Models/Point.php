@@ -10,6 +10,13 @@ use phpGPX\Helpers\SerializationHelper;
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\phpGPX;
 
+enum PointType: string
+{
+    case waypoint = 'wpt';
+    case trackpoint = 'trkpt';
+    case routepoint = 'rtept';
+}
+
 /**
  * Class Point
  * GPX point representation according to GPX 1.1 specification.
