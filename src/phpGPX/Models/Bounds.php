@@ -34,12 +34,12 @@ class Bounds implements Summarizable
 	public $maxLongitude;
 
     /**
-     * @param float $minLatitude
-     * @param float $minLongitude
-     * @param float $maxLatitude
-     * @param float $maxLongitude
+     * @param ?float $minLatitude
+     * @param ?float $minLongitude
+     * @param ?float $maxLatitude
+     * @param ?float $maxLongitude
      */
-    public function __construct(float $minLatitude, float $minLongitude, float $maxLatitude, float $maxLongitude)
+    public function __construct(?float $minLatitude, ?float $minLongitude, ?float $maxLatitude, ?float $maxLongitude)
     {
         $this->minLatitude = $minLatitude;
         $this->minLongitude = $minLongitude;

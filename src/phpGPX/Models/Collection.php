@@ -18,62 +18,62 @@ abstract class Collection implements Summarizable, StatsCalculator
 	 * An original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public ?string $name;
+	public $name;
 
 	/**
 	 * GPS comment for route.
 	 * An original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public ?string $comment;
+	public $comment;
 
 	/**
 	 * Text description of route/track for user. Not sent to GPS.
 	 * An original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public ?string $description;
+	public $description;
 
 	/**
 	 * Source of data. Included to give user some idea of reliability and accuracy of data.
 	 * An original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public ?string $source;
+	public $source;
 
 	/**
 	 * Links to external information about the route/track.
 	 * An original GPX 1.1 attribute.
 	 * @var Link[]
 	 */
-	public array $links;
+	public $links;
 
 	/**
 	 * GPS route/track number.
 	 * An original GPX 1.1 attribute.
 	 * @var int|null
 	 */
-	public ?int $number;
+	public $number;
 
 	/**
 	 * Type (classification) of route/track.
 	 * An original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public ?string $type;
+	public $type;
 
 	/**
 	 * You can add extend GPX by adding your own elements from another schema here.
 	 * An original GPX 1.1 attribute.
 	 * @var Extensions|null
 	 */
-	public ?Extensions $extensions;
+	public $extensions;
 
 	/**
 	 * Objects contains calculated statistics for collection.
 	 * @var Stats|null
 	 */
-	public ?Stats $stats;
+	public $stats;
 
 	/**
 	 * Collection constructor.
