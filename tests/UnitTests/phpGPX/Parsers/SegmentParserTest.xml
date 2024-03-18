@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<trkseg>
+		<trkpt lat="46.571948" lon="8.414757">
+			<ele>2419</ele>
+			<time>2017-08-13T07:10:41+00:00</time>
+		</trkpt>
+		<trkpt lat="46.572016" lon="8.414866">
+			<ele>2418.8833883882</ele>
+			<time>2017-08-13T07:10:54+00:00</time>
+		</trkpt>
+		<trkpt lat="46.572088" lon="8.414911">
+			<ele>2419.8999900064</ele>
+			<time>2017-08-13T07:11:56+00:00</time>
+		</trkpt>
+		<trkpt lat="46.572069" lon="8.414912">
+			<ele>2422</ele>
+			<time>2017-08-13T07:12:15+00:00</time>
+		</trkpt>
+		<trkpt lat="46.572054" lon="8.414888">
+			<ele>2425</ele>
+			<time>2017-08-13T07:12:18+00:00</time>
+		</trkpt>
+	</trkseg>
+</document>
