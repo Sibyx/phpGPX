@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Helpers\BoundsCalculator;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\GeoHelper;
@@ -127,5 +128,8 @@ class Segment implements Summarizable, StatsCalculator
 				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
 			}
 		}
+
+		list($northWest, $southEast) = BoundsCalculator::calculate($this->getPoints());
+		$this->stats->bounds = [$northWest, $southEast];
 	}
 }

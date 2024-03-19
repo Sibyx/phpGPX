@@ -7,7 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 class LoadFileTest extends TestCase
 {
-	public function testLoadXmlFileGeneratedByTimezero()
+    /**
+     * @coversNothing
+     * @return void
+     */
+    public function testLoadXmlFileGeneratedByTimezero()
 	{
 		$file = __DIR__ . '/fixtures/timezero.gpx';
 
@@ -106,6 +110,16 @@ class LoadFileTest extends TestCase
                                     'lng' => 0.0801333333365323
                                 ],
 								'duration' => 9.0,
+								'bounds' => [
+									[
+										'lat' => 49.3635449998312,
+										'lng' => 0.0801333333365323
+									],
+									[
+										'lat' => 49.3635266991555,
+										'lng' => 0.0801483333364938
+									],
+								]
 							],
 						],
 					],
@@ -133,6 +147,16 @@ class LoadFileTest extends TestCase
                             'lng' => 0.0801333333365323
                         ],
 						'duration' => 9.0,
+						'bounds' => [
+							[
+								'lat' => 49.4574117319429,
+								'lng' => 0.0342948235267376
+							],
+							[
+								'lat' => 49.4573700325059,
+								'lng' => 0.0343682156842231
+							],
+						]
 					],
 				],
 				[
@@ -189,6 +213,16 @@ class LoadFileTest extends TestCase
                                     'lng' => 0.0342948235267376
                                 ],
 								'duration' => 3.0,
+								'bounds' => [
+									[
+										'lat' => 49.4574117319429,
+										'lng' => 0.0342948235267376
+									],
+									[
+										'lat' => 49.4573700325059,
+										'lng' => 0.0343682156842231
+									],
+								]
 							],
 						],
 					],
@@ -216,6 +250,16 @@ class LoadFileTest extends TestCase
                             'lng' => 0.0342948235267376
                         ],
 						'duration' => 3.0,
+						'bounds' => [
+							[
+								'lat' => 49.4574117319429,
+								'lng' => 0.0342948235267376
+							],
+							[
+								'lat' => 49.4573700325059,
+								'lng' => 0.0343682156842231
+							],
+						]
 					],
 				],
 			],

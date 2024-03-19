@@ -20,14 +20,7 @@ class BoundsParserTest extends AbstractParserTest
 
 	public static function createTestInstance()
 	{
-		$bounds = new Bounds();
-
-		$bounds->maxLatitude = 49.090543;
-		$bounds->maxLongitude = 18.886939;
-		$bounds->minLatitude = 49.072489;
-		$bounds->minLongitude = 18.814543;
-
-		return $bounds;
+		return new Bounds(49.072489, 18.814543, 49.090543, 18.886939);
 	}
 
 	protected function setUp(): void

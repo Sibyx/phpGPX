@@ -107,6 +107,14 @@ class Stats implements Summarizable
 	public $duration = null;
 
 	/**
+	 * An array of two points representing
+	 * the most northwestern and the most
+	 * southeastern points of a segment
+	 * @var array
+	 */
+	public $bounds = array();
+
+	/**
 	 * Reset all stats
 	 */
 	public function reset()
@@ -125,6 +133,7 @@ class Stats implements Summarizable
 		$this->startedAtCoords = null;
 		$this->finishedAt = null;
 		$this->finishedAtCoords = null;
+		$this->bounds = null;
 	}
 
 	/**
@@ -148,7 +157,8 @@ class Stats implements Summarizable
 			'startedAtCoords' => $this->startedAtCoords,
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
 			'finishedAtCoords' => $this->finishedAtCoords,
-			'duration' => (float)$this->duration
+			'duration' => (float)$this->duration,
+			'bounds' => $this->bounds
 		];
 	}
 }

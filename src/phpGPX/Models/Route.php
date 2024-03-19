@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Helpers\BoundsCalculator;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\GeoHelper;
@@ -40,8 +41,8 @@ class Route extends Collection
 	 * Return all points in collection.
 	 * @return Point[]
 	 */
-	public function getPoints()
-	{
+	public function getPoints(): array
+    {
 		/** @var Point[] $points */
 		$points = [];
 
