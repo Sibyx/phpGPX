@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Helpers\BoundsCalculator;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\phpGPX;
@@ -37,8 +38,8 @@ class Track extends Collection
 	 * Return all points in collection.
 	 * @return Point[]
 	 */
-	public function getPoints()
-	{
+	public function getPoints(): array
+    {
 		/** @var Point[] $points */
 		$points = [];
 
@@ -154,5 +155,8 @@ class Track extends Collection
 				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
 			}
 		}
+
+		list($northWest, $southEast) = BoundsCalculator::calculate($this->getPoints());
+		$this->stats->bounds = [$northWest, $southEast];
 	}
 }
