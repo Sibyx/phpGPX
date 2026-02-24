@@ -34,7 +34,7 @@ class ExtensionParserTest extends AbstractParserTest
 	}
 
 	protected function setUp(): void
-    {
+	{
 		parent::setUp();
 
 		$this->testModelInstance = self::createTestInstance();

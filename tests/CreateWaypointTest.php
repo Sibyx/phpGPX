@@ -92,7 +92,7 @@ final class CreateWaypointTest extends TestCase
 	}
 
 	public function setUp(): void
-    {
+	{
 		$this->waypoint_created_file = dirname(__FILE__)."/waypoint_test.gpx";
 		$this->waypoint_saved_file = dirname(__FILE__).'/output_waypoint_test.gpx';
 		// remove any test file hanging around
@@ -100,11 +100,13 @@ final class CreateWaypointTest extends TestCase
 		// now create the test file
 		$this->createWaypointFile();
 	}
+
 	public function tearDown(): void
-    {
+	{
 		system("rm -f {$this->waypoint_created_file}");
 		system("rm -f {$this->waypoint_saved_file}");
 	}
+
 	public function test_waypoints_load()
 	{
 		$origFile = $this->waypoint_created_file;
