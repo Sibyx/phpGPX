@@ -11,11 +11,24 @@ jobs:
         php-version: ['7.3', '8.0', '8.1']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - name: Configure phpunit matchers
+      #uses: mheap/phpunit-matcher-action@v1
+      # TODO(Peter): Simplify/revert once https://github.com/mheap/phpunit-matcher-action/pull/28 is merged and released...
+      uses: peternewman/phpunit-matcher-action@php-native-matches
+      with:
+        base_path: /app
     - uses: php-actions/composer@v6
       name: Install dependencies
       with:
         php_version: ${{ matrix.php-version }}
         version: 2
     - name: Running PHPUnit
-      run: php vendor/bin/phpunit --configuration phpunit.xml
+      uses: php-actions/phpunit@v4
+      with:
+        version: 9.6
+        #configuration: phpunit.xml
+        args:  --teamcity
+        #args: --coverage-text
