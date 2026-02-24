@@ -33,27 +33,26 @@ class Bounds implements Summarizable
 	 */
 	public $maxLongitude;
 
-    /**
-     * @param ?float $minLatitude
-     * @param ?float $minLongitude
-     * @param ?float $maxLatitude
-     * @param ?float $maxLongitude
-     */
-    public function __construct(?float $minLatitude, ?float $minLongitude, ?float $maxLatitude, ?float $maxLongitude)
-    {
-        $this->minLatitude = $minLatitude;
-        $this->minLongitude = $minLongitude;
-        $this->maxLatitude = $maxLatitude;
-        $this->maxLongitude = $maxLongitude;
-    }
+	/**
+	 * @param ?float $minLatitude
+	 * @param ?float $minLongitude
+	 * @param ?float $maxLatitude
+	 * @param ?float $maxLongitude
+	 */
+	public function __construct(?float $minLatitude, ?float $minLongitude, ?float $maxLatitude, ?float $maxLongitude)
+	{
+		$this->minLatitude = $minLatitude;
+		$this->minLongitude = $minLongitude;
+		$this->maxLatitude = $maxLatitude;
+		$this->maxLongitude = $maxLongitude;
+	}
 
-
-    /**
+	/**
 	 * Serialize object to array
 	 * @return array
 	 */
 	public function toArray(): array
-    {
+	{
 		return [
 			'minlat' => $this->minLatitude,
 			'minlon' => $this->minLongitude,

@@ -42,7 +42,7 @@ class Route extends Collection
 	 * @return Point[]
 	 */
 	public function getPoints(): array
-    {
+	{
 		/** @var Point[] $points */
 		$points = [];
 
