@@ -19,7 +19,6 @@
 		"ext-dom": "*"
 	},
 	"require-dev": {
-		"evert/phpdoc-md" : "~0.2.0",
 		"phpunit/phpunit": "^9",
 		"friendsofphp/php-cs-fixer": "^2.18"
 	},
