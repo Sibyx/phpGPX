@@ -37,7 +37,7 @@ abstract class AbstractParserTest extends TestCase
 	protected $testParserClass;
 
 	protected function setUp(): void
-    {
+	{
 		$reflection = new \ReflectionClass($this->testParserClass);
 
 		$this->testXmlFile = simplexml_load_file(sprintf("%s/%sTest.xml", __DIR__, $reflection->getShortName()));
