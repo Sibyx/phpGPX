@@ -7,6 +7,7 @@
 namespace phpGPX\Models;
 
 use phpGPX\Helpers\SerializationHelper;
+use phpGPX\Models\Extensions\StyleExtension;
 use phpGPX\Models\Extensions\TrackPointExtension;
 
 /**
@@ -24,6 +25,13 @@ class Extensions implements Summarizable
 	public $trackPointExtension;
 
 	/**
+	 * GPX Style Extension v2
+	 * @see 'http://www.topografix.com/GPX/gpx_style/0/2/'
+	 * @var StyleExtension
+	 */
+	public $styleExtension;
+
+	/**
 	 * @var []
 	 */
 	public $unsupported = [];
@@ -36,6 +44,7 @@ class Extensions implements Summarizable
 	{
 		return [
 				'trackpoint' => SerializationHelper::serialize($this->trackPointExtension),
+				'line' => SerializationHelper::serialize($this->styleExtension),
 				'unsupported' => $this->unsupported,
 			];
 	}
