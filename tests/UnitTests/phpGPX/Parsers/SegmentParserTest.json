@@ -81,8 +81,8 @@
 			"cmt": null,
 			"desc": null,
 			"dgpsid": null,
-			"difference": 2.979832475456357,
-			"distance": 23.004670723788976,
+			"difference": 2.9798324749548644,
+			"distance": 23.004670723287482,
 			"ele": 2422,
 			"extensions": null,
 			"fix": null,
@@ -106,8 +106,8 @@
 			"cmt": null,
 			"desc": null,
 			"dgpsid": null,
-			"difference": 3.8919896350020755,
-			"distance": 26.896660358791053,
+            "difference": 3.891989635305201,
+            "distance": 26.896660358592683,
 			"ele": 2425,
 			"extensions": null,
 			"fix": null,
@@ -128,8 +128,8 @@
 		}
 	],
 	"stats": {
-		"avgPace": 3949.728409446995,
-		"avgSpeed": 0.2531819650202255,
+        "avgPace": 3949.728409484153,
+        "avgSpeed": 0.2531819650178436,
 		"bounds": [
 			{
 				"lat": 46.572088,
@@ -142,7 +142,7 @@
 		],
 		"cumulativeElevationGain": 6.116611611800181,
 		"cumulativeElevationLoss": 0.11661161180018098,
-		"distance": 24.558650606961873,
+		"distance": 24.558650606730833,
 		"duration": 97,
 		"finishedAt": "2017-08-13T07:12:18+00:00",
 		"finishedAtCoords": {
@@ -159,7 +159,7 @@
 			"lat": 46.572016,
 			"lng": 8.414866
 		},
-		"realDistance": 26.896660358791053,
+		"realDistance": 26.896660358592683,
 		"startedAt": "2017-08-13T07:10:41+00:00",
 		"startedAtCoords": {
 			"lat": 46.571948,
