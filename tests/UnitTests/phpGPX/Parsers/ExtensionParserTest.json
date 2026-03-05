@@ -9,5 +9,11 @@
 		"course": null,
 		"bearing": null
 	},
+	"line": {
+		"color": "FF0000",
+		"opacity": 0.5,
+		"width": 1,
+		"linecap": "square"
+	},
 	"unsupported": []
 }
