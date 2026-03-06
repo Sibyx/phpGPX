@@ -1,0 +1,7 @@
+services:
+  php:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - XDEBUG_MODE=debug,coverage

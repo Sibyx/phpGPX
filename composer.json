@@ -35,5 +35,10 @@
 	},
 	"autoload-dev": {
 		"psr-4": { "phpGPX\\Tests\\": "tests" }
+	},
+	"scripts": {
+		"test": "phpunit",
+		"test:unit": "phpunit --testsuite unit",
+		"test:integration": "phpunit --testsuite integration"
 	}
 }
