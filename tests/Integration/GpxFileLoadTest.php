@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class GpxFileLoadTest extends TestCase
 {
-	private const FIXTURES_DIR = __DIR__ . '/../fixtures';
+	private const FIXTURES_DIR = __DIR__ . '/../Fixtures';
 
 	public function testLoadTimezeroGpx(): void
 	{

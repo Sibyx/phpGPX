@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class GeoJsonOutputTest extends TestCase
 {
-	private const FIXTURES_DIR = __DIR__ . '/../fixtures';
+	private const FIXTURES_DIR = __DIR__ . '/../Fixtures';
 
 	public function testGpxFileJsonSerializeIsFeatureCollection(): void
 	{

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class XmlRoundTripTest extends TestCase
 {
-	private const FIXTURES_DIR = __DIR__ . '/../fixtures';
+	private const FIXTURES_DIR = __DIR__ . '/../Fixtures';
 
 	/**
 	 * Load a GPX file, serialize to XML, parse again, and verify key data is preserved.
