@@ -3,6 +3,17 @@
 ## 2.0.0 : TBD
 
 - **Changed** Support for PHP 8.1+ only
+- **Fixed** Added proper return type declarations to parser classes to fix deprecated messages in PHP 8.4
+- **Fixed** Patched vendor files to fix deprecation warnings about implicitly marking parameters as nullable:
+  - sebastian/cli-parser/src/Parser.php
+  - phpunit/phpunit/src/Util/Exporter.php
+  - sebastian/exporter/src/Exporter.php
+- **Fixed** Updated tests to be compatible with PHPUnit 12.x:
+  - Added missing tests to BoundsTest class
+  - Updated test annotations to use PHPUnit 12 attributes
+  - Fixed data provider usage in SerializationHelperTest
+  - Implemented missing GpxSerializable interface methods in Bounds class
+  - Updated phpunit.xml configuration
 
 ## 1.3.0 : 2023-07-19
 

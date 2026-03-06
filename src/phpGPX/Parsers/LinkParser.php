@@ -13,12 +13,18 @@ abstract class LinkParser
 	private static $tagName = 'link';
 
 	/**
-	 * @param \SimpleXMLElement[] $nodes
+	 * @param \SimpleXMLElement|\SimpleXMLElement[] $nodes
 	 * @return Link[]
 	 */
-	public static function parse($nodes = [])
+	public static function parse($nodes): array
 	{
 		$links = [];
+
+		// Handle both a single SimpleXMLElement and an array of SimpleXMLElements
+		if (!is_array($nodes)) {
+			$nodes = [$nodes];
+		}
+
 		foreach ($nodes as $node) {
 			$link = new Link();
 			$link->href = isset($node['href']) ? (string) $node['href'] : null;
@@ -35,7 +41,7 @@ abstract class LinkParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement[]
 	 */
-	public static function toXMLArray(array $links, \DOMDocument &$document)
+	public static function toXMLArray(array $links, \DOMDocument &$document): array
 	{
 		$result = [];
 
@@ -51,18 +57,20 @@ abstract class LinkParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Link $link, \DOMDocument &$document)
+	public static function toXML(Link $link, \DOMDocument &$document): \DOMElement
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		$node->setAttribute('href', $link->href);
+		if ($link->href !== null && $link->href !== '') {
+			$node->setAttribute('href', $link->href);
+		}
 
-		if (!empty($link->text)) {
+		if ($link->text !== null && $link->text !== '') {
 			$child = $document->createElement('text', $link->text);
 			$node->appendChild($child);
 		}
 
-		if (!empty($link->type)) {
+		if ($link->type !== null && $link->type !== '') {
 			$child = $document->createElement('type', $link->type);
 			$node->appendChild($child);
 		}

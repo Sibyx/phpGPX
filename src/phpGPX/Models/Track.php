@@ -14,14 +14,14 @@ use phpGPX\phpGPX;
  * Class Track
  * @package phpGPX\Models
  */
-class Track extends Collection
+class Track extends Collection implements \phpGPX\GpxSerializable
 {
 
 	/**
 	 * Array of Track segments
 	 * @var Segment[]
 	 */
-	public $segments;
+	public array $segments;
 
 	/**
 	 * Track constructor.
@@ -54,10 +54,89 @@ class Track extends Collection
 	}
 
 	/**
+	 * Serialize object to array for JSON encoding
+	 * Always returns GeoJSON format
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		// GeoJSON MultiLineString feature
+		$segmentCoordinates = [];
+		$properties = [
+			'name' => SerializationHelper::stringOrNull($this->name),
+			'cmt' => SerializationHelper::stringOrNull($this->comment),
+			'desc' => SerializationHelper::stringOrNull($this->description),
+			'src' => SerializationHelper::stringOrNull($this->source),
+			'link' => SerializationHelper::serialize($this->links),
+			'number' => SerializationHelper::integerOrNull($this->number),
+			'type' => SerializationHelper::stringOrNull($this->type),
+			'extensions' => SerializationHelper::serialize($this->extensions)
+		];
+
+		// Filter out null values
+		$properties = array_filter($properties, function ($value) {
+			return $value !== null;
+		});
+
+		// Add stats if available
+		if ($this->stats) {
+			$properties['stats'] = $this->stats->jsonSerialize();
+		}
+
+		// Collect coordinates from track segments
+		foreach ($this->segments as $segment) {
+			$coordinates = [];
+
+			foreach ($segment->points as $point) {
+				$coordinates[] = [
+					(float) $point->longitude,
+					(float) $point->latitude,
+					SerializationHelper::floatOrNull($point->elevation)
+				];
+			}
+
+			$segmentCoordinates[] = $coordinates;
+		}
+
+		return [
+			'type' => 'Feature',
+			'geometry' => [
+				'type' => 'MultiLineString',
+				'coordinates' => $segmentCoordinates
+			],
+			'properties' => $properties
+		];
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+		// This method would be called to serialize a Track to GPX XML
+		// Since TrackParser already handles this, this method can be empty
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
+		// This method would be called to deserialize GPX XML to a Track
+		// Since TrackParser already handles this, this method can be empty
+	}
+
+	/**
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'name' => SerializationHelper::stringOrNull($this->name),
@@ -77,7 +156,7 @@ class Track extends Collection
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats()
+	public function recalculateStats(): void
 	{
 		if (empty($this->stats)) {
 			$this->stats = new Stats();

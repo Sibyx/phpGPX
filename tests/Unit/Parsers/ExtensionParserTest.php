@@ -1,6 +1,6 @@
 <?php
 
-namespace phpGPX\Tests\Parsers\Extension;
+namespace phpGPX\Tests\Unit\Parsers;
 
 use phpGPX\Models\Extensions;
 use phpGPX\Models\Extensions\TrackPointExtension;
@@ -10,51 +10,35 @@ use PHPUnit\Framework\TestCase;
 class ExtensionParserTest extends TestCase
 {
 	protected Extensions $extensions;
-    protected \SimpleXMLElement $file;
+	protected \SimpleXMLElement $file;
+
+	private const FIXTURES_DIR = __DIR__ . '/../../Fixtures/Parsers/Extension';
 
 	protected function setUp(): void
-    {
-        $trackpoint = new TrackPointExtension();
-        $trackpoint->aTemp = 14.0;
-        $trackpoint->hr = 152.0;
+	{
+		$trackpoint = new TrackPointExtension();
+		$trackpoint->aTemp = 14.0;
+		$trackpoint->hr = 152.0;
 
-        $this->extensions = new Extensions();
-        $this->extensions->trackPointExtension = $trackpoint;
+		$this->extensions = new Extensions();
+		$this->extensions->trackPointExtension = $trackpoint;
 
-        $this->file = simplexml_load_file(sprintf("%s/extension.xml", __DIR__));
+		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/extension.xml');
 	}
 
-    /**
-     * @covers \phpGPX\Parsers\ExtensionParser
-     * @covers \phpGPX\Parsers\Extensions\TrackPointExtensionParser
-     * @covers \phpGPX\Models\Extensions
-     * @covers \phpGPX\Helpers\SerializationHelper
-     * @covers \phpGPX\Models\Extensions\AbstractExtension
-     * @covers \phpGPX\Models\Extensions\TrackPointExtension
-     * @return void
-     */
-    public function testParse()
+	public function testParse(): void
 	{
 		$extensions = ExtensionParser::parse($this->file->extensions);
 
-        $this->assertEquals($this->extensions->unsupported, $extensions->unsupported);
+		$this->assertEquals($this->extensions->unsupported, $extensions->unsupported);
 		$this->assertEquals(
-            $this->extensions->trackPointExtension->toArray(), $extensions->trackPointExtension->toArray()
-        );
+			$this->extensions->trackPointExtension->toArray(), $extensions->trackPointExtension->toArray()
+		);
 
 		$this->assertEquals($this->extensions->toArray(), $extensions->toArray());
 	}
 
-    /**
-     * @covers \phpGPX\Parsers\ExtensionParser
-     * @covers \phpGPX\Parsers\Extensions\TrackPointExtensionParser
-     * @covers \phpGPX\Models\Extensions
-     * @covers \phpGPX\Models\Extensions\AbstractExtension
-     * @covers \phpGPX\Models\Extensions\TrackPointExtension
-     * @return void
-     * @throws \DOMException
-     */
-    public function testToXML()
+	public function testToXML(): void
 	{
 		$document = new \DOMDocument("1.0", 'UTF-8');
 
@@ -80,17 +64,10 @@ class ExtensionParserTest extends TestCase
 		$this->assertXmlStringEqualsXmlString($this->file->asXML(), $document->saveXML());
 	}
 
-    /**
-     * @covers \phpGPX\Models\Extensions
-     * @covers \phpGPX\Models\Extensions\AbstractExtension
-     * @covers \phpGPX\Models\Extensions\TrackPointExtension
-     * @covers \phpGPX\Helpers\SerializationHelper
-     * @return void
-     */
-    public function testToJSON()
-    {
-        $this->assertJsonStringEqualsJsonFile(
-            sprintf("%s/extension.json", __DIR__), json_encode($this->extensions->toArray())
-        );
-    }
+	public function testToJSON(): void
+	{
+		$this->assertJsonStringEqualsJsonFile(
+			self::FIXTURES_DIR . '/extension.json', json_encode($this->extensions->toArray())
+		);
+	}
 }

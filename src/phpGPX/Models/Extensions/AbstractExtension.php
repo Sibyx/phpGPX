@@ -6,9 +6,9 @@
 
 namespace phpGPX\Models\Extensions;
 
-use phpGPX\Models\Summarizable;
+use phpGPX\GpxSerializable;
 
-abstract class AbstractExtension implements Summarizable
+abstract class AbstractExtension implements \JsonSerializable, GpxSerializable
 {
 
 	/**
@@ -32,5 +32,25 @@ abstract class AbstractExtension implements Summarizable
 	{
 		$this->namespace = $namespace;
 		$this->extensionName = $extensionName;
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
 	}
 }

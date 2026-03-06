@@ -84,7 +84,7 @@ class TrackPointExtension extends AbstractExtension
 	 * @return array
 	 */
 	public function toArray(): array
-    {
+	{
 		return [
 			'aTemp' => $this->aTemp ?? null,
 			'wTemp' => $this->wTemp ?? null,
@@ -95,5 +95,14 @@ class TrackPointExtension extends AbstractExtension
 			'course' => $this->course ?? null,
 			'bearing' => $this->bearing ?? null
 		];
+	}
+
+	/**
+	 * Serialize object to array for JSON encoding
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+    {
+		return $this->toArray();
 	}
 }

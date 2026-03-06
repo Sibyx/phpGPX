@@ -86,9 +86,10 @@ abstract class MetadataParser
 					break;
 				default:
 					if (!in_array($attribute['type'], ['object', 'array'])) {
-						$metadata->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-						if (!is_null($metadata->{$attribute['name']})) {
-							settype($metadata->{$attribute['name']}, $attribute['type']);
+						if (isset($node->$key)) {
+							$value = (string) $node->$key;
+							settype($value, $attribute['type']);
+							$metadata->{$attribute['name']} = $value;
 						}
 					}
 					break;

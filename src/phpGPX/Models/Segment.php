@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\GeoHelper;
@@ -19,24 +20,24 @@ use phpGPX\phpGPX;
  * start a new Track Segment for each continuous span of track data.
  * @package phpGPX\Models
  */
-class Segment implements Summarizable, StatsCalculator
+class Segment implements \JsonSerializable, GpxSerializable, StatsCalculator
 {
 	/**
 	 * Array of segment points
 	 * @var Point[]
 	 */
-	public $points;
+	public array $points;
 
 	/**
 	 * You can add extend GPX by adding your own elements from another schema here.
 	 * @var Extensions|null
 	 */
-	public $extensions;
+	public ?Extensions $extensions;
 
 	/**
 	 * @var Stats|null
 	 */
-	public $stats;
+	public ?Stats $stats;
 
 	/**
 	 * Segment constructor.
@@ -53,7 +54,7 @@ class Segment implements Summarizable, StatsCalculator
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'points' => SerializationHelper::serialize($this->points),
@@ -63,9 +64,72 @@ class Segment implements Summarizable, StatsCalculator
 	}
 
 	/**
+	 * Implements JsonSerializable interface
+	 * Always returns GeoJSON format
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		// GeoJSON LineString feature
+		$coordinates = [];
+		$properties = [
+			'extensions' => SerializationHelper::serialize($this->extensions)
+		];
+
+		// Filter out null values
+		$properties = array_filter($properties, function ($value) {
+			return $value !== null;
+		});
+
+		// Add stats if available
+		if ($this->stats) {
+			$properties['stats'] = $this->stats->jsonSerialize();
+		}
+
+		// Collect coordinates from segment points
+		foreach ($this->points as $point) {
+			$coordinates[] = [
+				(float) $point->longitude,
+				(float) $point->latitude,
+				SerializationHelper::floatOrNull($point->elevation)
+			];
+		}
+
+		return [
+			'type' => 'Feature',
+			'geometry' => [
+				'type' => 'LineString',
+				'coordinates' => $coordinates
+			],
+			'properties' => $properties
+		];
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
+	}
+
+
+	/**
 	 * @return array|Point[]
 	 */
-	public function getPoints()
+	public function getPoints(): array
 	{
 		return $this->points;
 	}
@@ -74,7 +138,7 @@ class Segment implements Summarizable, StatsCalculator
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats()
+	public function recalculateStats(): void
 	{
 		if (empty($this->stats)) {
 			$this->stats = new Stats();

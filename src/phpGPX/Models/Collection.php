@@ -10,7 +10,7 @@ namespace phpGPX\Models;
  * Class Collection
  * @package phpGPX\Models
  */
-abstract class Collection implements Summarizable, StatsCalculator
+abstract class Collection implements \JsonSerializable, StatsCalculator
 {
 
 	/**

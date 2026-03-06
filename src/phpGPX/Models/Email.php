@@ -6,24 +6,26 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\GpxSerializable;
+
 /**
  * Class Email
  * An email address. Broken into two parts (id and domain) to help prevent email harvesting.
  * @package phpGPX\Models
  */
-class Email implements Summarizable
+class Email implements \JsonSerializable, GpxSerializable
 {
 
 	/**
 	 * Id half of email address (jakub.dubec)
-	 * @var string
+	 * @var string|null
 	 */
-	public $id;
+	public ?string $id = null;
 
 	/** Domain half of email address (gmail.com)
-	 * @var string
+	 * @var string|null
 	 */
-	public $domain;
+	public ?string $domain = null;
 
 	/**
 	 * Email constructor.
@@ -39,11 +41,40 @@ class Email implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
-			'id' => (string) $this->id,
-			'domain' => (string) $this->domain
+			'id' => $this->id !== null ? (string) $this->id : null,
+			'domain' => $this->domain !== null ? (string) $this->domain : null
 		];
+	}
+
+	/**
+	 * Serialize object to array for JSON encoding
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		return $this->toArray();
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
 	}
 }

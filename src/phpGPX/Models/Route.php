@@ -16,7 +16,7 @@ use phpGPX\phpGPX;
  * Class Route
  * @package phpGPX\Models
  */
-class Route extends Collection
+class Route extends Collection implements \phpGPX\GpxSerializable
 {
 
 	/**
@@ -24,7 +24,7 @@ class Route extends Collection
 	 * An original GPX 1.1 attribute.
 	 * @var Point[]
 	 */
-	public $points;
+	public array $points;
 
 	/**
 	 * Route constructor.
@@ -55,10 +55,83 @@ class Route extends Collection
 	}
 
 	/**
+	 * Serialize object to array for JSON encoding
+	 * Always returns GeoJSON format
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		// GeoJSON LineString feature
+		$coordinates = [];
+		$properties = [
+			'name' => SerializationHelper::stringOrNull($this->name),
+			'cmt' => SerializationHelper::stringOrNull($this->comment),
+			'desc' => SerializationHelper::stringOrNull($this->description),
+			'src' => SerializationHelper::stringOrNull($this->source),
+			'link' => SerializationHelper::serialize($this->links),
+			'number' => SerializationHelper::integerOrNull($this->number),
+			'type' => SerializationHelper::stringOrNull($this->type),
+			'extensions' => SerializationHelper::serialize($this->extensions)
+		];
+
+		// Filter out null values
+		$properties = array_filter($properties, function ($value) {
+			return $value !== null;
+		});
+
+		// Add stats if available
+		if ($this->stats) {
+			$properties['stats'] = $this->stats->jsonSerialize();
+		}
+
+		// Collect coordinates from route points
+		foreach ($this->points as $point) {
+			$coordinates[] = [
+				(float) $point->longitude,
+				(float) $point->latitude,
+				SerializationHelper::floatOrNull($point->elevation)
+			];
+		}
+
+		return [
+			'type' => 'Feature',
+			'geometry' => [
+				'type' => 'LineString',
+				'coordinates' => $coordinates
+			],
+			'properties' => $properties
+		];
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+		// This method would be called to serialize a Route to GPX XML
+		// Since RouteParser already handles this, this method can be empty
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
+		// This method would be called to deserialize GPX XML to a Route
+		// Since RouteParser already handles this, this method can be empty
+	}
+
+	/**
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'name' => SerializationHelper::stringOrNull($this->name),
@@ -78,7 +151,7 @@ class Route extends Collection
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats()
+	public function recalculateStats(): void
 	{
 		if (empty($this->stats)) {
 			$this->stats = new Stats();

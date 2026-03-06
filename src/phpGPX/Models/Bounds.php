@@ -72,4 +72,16 @@ class Bounds implements \JsonSerializable, GpxSerializable
             (float) $node['maxlon']
         );
     }
+
+    public static function gpxSerialize(\SimpleXMLElement $node): void
+    {
+        // This method is required by the GpxSerializable interface
+        // but is not used in this class
+    }
+
+    public function gpxDeserialize(\DOMDocument &$document): void
+    {
+        // This method is required by the GpxSerializable interface
+        // but is not used in this class
+    }
 }

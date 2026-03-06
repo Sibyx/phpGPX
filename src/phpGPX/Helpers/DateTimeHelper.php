@@ -31,16 +31,16 @@ class DateTimeHelper
     /**
      * @param $datetime
      * @param string $format
-     * @param string $timezone
+     * @param string|null $timezone
      * @return null|string
      * @throws \Exception
      */
-	public static function formatDateTime($datetime, string $format = 'c', string $timezone = 'UTC'): ?string
+	public static function formatDateTime($datetime, string $format = 'c', ?string $timezone = 'UTC'): ?string
     {
 		$formatted = null;
 
 		if ($datetime instanceof \DateTime) {
-			$datetime->setTimezone(new \DateTimeZone($timezone));
+			$datetime->setTimezone(new \DateTimeZone($timezone ?? 'UTC'));
 			$formatted = $datetime->format($format);
 		}
 

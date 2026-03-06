@@ -6,11 +6,9 @@
 
 namespace phpGPX\Helpers;
 
-use phpGPX\Models\Summarizable;
-
 /**
  * Class SerializationHelper
- * Contains basic serialization helpers used in summary() methods.
+ * Contains basic serialization helpers used in serialization methods.
  * @package phpGPX\Helpers
  */
 abstract class SerializationHelper
@@ -47,22 +45,30 @@ abstract class SerializationHelper
 	}
 
 	/**
-	 * Recursively traverse Summarizable objects and returns their array representation according summary() method.
-	 * @param Summarizable|Summarizable[] $object
+	 * Recursively traverse objects and returns their array representation.
+	 * If the object has a toArray method, it will be used, otherwise jsonSerialize will be used.
+	 * @param \JsonSerializable|array|null $object
 	 * @return array|null
 	 */
-	public static function serialize(Summarizable|array|null $object): ?array
+	public static function serialize(\JsonSerializable|array|null $object): ?array
     {
 		if (is_array($object)) {
 			$result = [];
 			foreach ($object as $record) {
-				$result[] = $record->toArray();
+				if (method_exists($record, 'toArray')) {
+					$result[] = $record->toArray();
+				} else {
+					$result[] = $record->jsonSerialize();
+				}
 				$record = null;
 			}
 			$object = null;
 			return $result;
 		} else {
-			return $object?->toArray();
+			if ($object !== null && method_exists($object, 'toArray')) {
+				return $object->toArray();
+			}
+			return $object?->jsonSerialize();
 		}
 	}
 
@@ -72,7 +78,7 @@ abstract class SerializationHelper
 			if (!is_array($item)) {
 				continue;
 			}
-			
+
 			$item = self::filterNotNull($item);
 		}
 

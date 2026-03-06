@@ -13,11 +13,11 @@ interface StatsCalculator
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats();
+	public function recalculateStats(): void;
 
 	/**
 	 * Return all points in collection.
 	 * @return Point[]
 	 */
-	public function getPoints();
+	public function getPoints(): array;
 }

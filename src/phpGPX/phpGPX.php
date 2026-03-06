@@ -18,11 +18,78 @@ use phpGPX\Parsers\WaypointParser;
  */
 class phpGPX
 {
-	const JSON_FORMAT = 'json';
+ const JSON_FORMAT = 'json';
 	const XML_FORMAT = 'xml';
+	const GEOJSON_FORMAT = 'geojson';
 
 	const PACKAGE_NAME = 'phpGPX';
 	const VERSION = '2.0.0-alpha.1';
+
+	/**
+	 * Pretty print XML output
+	 * @var bool
+	 */
+	public static bool $PRETTY_PRINT = true;
+
+	/**
+	 * Ignore elevation values of 0
+	 * @var bool
+	 */
+	public static bool $IGNORE_ELEVATION_0 = false;
+
+	/**
+	 * Calculate stats for tracks, segments and routes
+	 * @var bool
+	 */
+	public static bool $CALCULATE_STATS = true;
+
+	/**
+	 * DateTime format for output
+	 * @var string
+	 */
+	public static string $DATETIME_FORMAT = 'c';
+
+	/**
+	 * DateTime timezone output
+	 * @var string|null
+	 */
+	public static ?string $DATETIME_TIMEZONE_OUTPUT = null;
+
+	/**
+	 * Additional sort based on timestamp in Routes & Tracks on XML read.
+	 * @var bool
+	 */
+	public static bool $SORT_BY_TIMESTAMP = false;
+
+	/**
+	 * Apply elevation gain/loss smoothing
+	 * @var bool
+	 */
+	public static bool $APPLY_ELEVATION_SMOOTHING = false;
+
+	/**
+	 * Minimum elevation difference threshold in meters for smoothing
+	 * @var int
+	 */
+	public static int $ELEVATION_SMOOTHING_THRESHOLD = 2;
+
+	/**
+	 * Maximum elevation difference threshold in meters for spike filtering
+	 * @var int|null
+	 */
+	public static ?int $ELEVATION_SMOOTHING_SPIKES_THRESHOLD = null;
+
+	/**
+	 * Apply distance calculation smoothing
+	 * @var bool
+	 */
+	public static bool $APPLY_DISTANCE_SMOOTHING = false;
+
+	/**
+	 * Minimum distance threshold in meters for smoothing
+	 * @var int
+	 */
+	public static int $DISTANCE_SMOOTHING_THRESHOLD = 2;
 
 	/**
 	 * Load GPX file.

@@ -20,7 +20,7 @@ abstract class EmailParser
 	 * @param \SimpleXMLElement $node
 	 * @return Email
 	 */
-	public static function parse(\SimpleXMLElement $node)
+	public static function parse(\SimpleXMLElement $node): Email
 	{
 		$email = new Email();
 
@@ -36,15 +36,15 @@ abstract class EmailParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Email $email, \DOMDocument &$document)
+	public static function toXML(Email $email, \DOMDocument &$document): \DOMElement
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!empty($email->id)) {
+		if ($email->id !== null && $email->id !== '') {
 			$node->setAttribute('id', $email->id);
 		}
 
-		if (!empty($email->domain)) {
+		if ($email->domain !== null && $email->domain !== '') {
 			$node->setAttribute('domain', $email->domain);
 		}
 

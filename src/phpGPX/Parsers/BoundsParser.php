@@ -21,7 +21,7 @@ abstract class BoundsParser
 	 * @param \SimpleXMLElement $node
 	 * @return Bounds|null
 	 */
-	public static function parse(\SimpleXMLElement $node)
+	public static function parse(\SimpleXMLElement $node): ?Bounds
 	{
 		if ($node->getName() != self::$tagName) {
 			return null;
@@ -41,23 +41,23 @@ abstract class BoundsParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Bounds $bounds, \DOMDocument &$document)
+	public static function toXML(Bounds $bounds, \DOMDocument &$document): \DOMElement
 	{
 		$node =  $document->createElement(self::$tagName);
 
-		if (!is_null($bounds->minLatitude)) {
+		if ($bounds->minLatitude !== null) {
 			$node->setAttribute('minlat', $bounds->minLatitude);
 		}
 
-		if (!is_null($bounds->minLongitude)) {
+		if ($bounds->minLongitude !== null) {
 			$node->setAttribute('minlon', $bounds->minLongitude);
 		}
 
-		if (!is_null($bounds->maxLatitude)) {
+		if ($bounds->maxLatitude !== null) {
 			$node->setAttribute('maxlat', $bounds->maxLatitude);
 		}
 
-		if (!is_null($bounds->maxLongitude)) {
+		if ($bounds->maxLongitude !== null) {
 			$node->setAttribute('maxlon', $bounds->maxLongitude);
 		}
 

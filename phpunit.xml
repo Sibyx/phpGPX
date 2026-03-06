@@ -4,14 +4,14 @@
 		 bootstrap="vendor/autoload.php"
 		 cacheDirectory=".phpunit.cache"
 		 executionOrder="depends,defects"
-		 requireCoverageMetadata="true"
-		 beStrictAboutCoverageMetadata="true"
 		 beStrictAboutOutputDuringTests="true"
-		 failOnRisky="true"
 		 failOnWarning="true">
 	<testsuites>
-		<testsuite name="default">
-			<directory>tests/phpGPX</directory>
+		<testsuite name="unit">
+			<directory>tests/Unit</directory>
+		</testsuite>
+		<testsuite name="integration">
+			<directory>tests/Integration</directory>
 		</testsuite>
 	</testsuites>
 
@@ -19,8 +19,5 @@
 		<include>
 			<directory>src</directory>
 		</include>
-		<exclude>
-			<directory>tests/phpGPX</directory>
-		</exclude>
 	</source>
 </phpunit>

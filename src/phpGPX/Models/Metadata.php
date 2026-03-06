@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\SerializationHelper;
 
@@ -15,7 +16,7 @@ use phpGPX\Helpers\SerializationHelper;
  * Providing rich, meaningful information about your GPX files allows others to search for and use your GPS data.
  * @package phpGPX\Models
  */
-class Metadata implements Summarizable
+class Metadata implements \JsonSerializable, GpxSerializable
 {
 
 	/**
@@ -23,59 +24,59 @@ class Metadata implements Summarizable
 	 * Original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public $name;
+	public ?string $name;
 
 	/**
 	 * A description of the contents of the GPX file.
 	 * Original GPX 1.1 attribute.
 	 * @var string|null
 	 */
-	public $description;
+	public ?string $description;
 
 	/**
 	 * The person or organization who created the GPX file.
 	 * An original GPX 1.1 attribute.
 	 * @var Person|null
 	 */
-	public $author;
+	public ?Person $author;
 
 	/**
 	 * Copyright and license information governing use of the file.
 	 * Original GPX 1.1 attribute.
 	 * @var Copyright|null
 	 */
-	public $copyright;
+	public ?Copyright $copyright;
 
 	/**
 	 * Original GPX 1.1 attribute.
 	 * @var Link[]|null
 	 */
-	public $links;
+	public ?array $links;
 
 	/**
 	 * Date of GPX creation
-	 * @var \DateTime
+	 * @var \DateTime|null
 	 */
-	public $time;
+	public ?\DateTime $time;
 
 	/**
 	 * Keywords associated with the file. Search engines or databases can use this information to classify the data.
 	 * @var string|null
 	 */
-	public $keywords;
+	public ?string $keywords;
 
 	/**
 	 * Minimum and maximum coordinates which describe the extent of the coordinates in the file.
 	 * Original GPX 1.1 attribute.
 	 * @var Bounds|null
 	 */
-	public $bounds;
+	public ?Bounds $bounds;
 
 	/**
 	 * Extensions.
 	 * @var Extensions|null
 	 */
-	public $extensions;
+	public ?Extensions $extensions;
 
 	/**
 	 * Metadata constructor.
@@ -98,7 +99,7 @@ class Metadata implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'name' => SerializationHelper::stringOrNull($this->name),
@@ -111,5 +112,34 @@ class Metadata implements Summarizable
 			'bounds' => SerializationHelper::serialize($this->bounds),
 			'extensions' => SerializationHelper::serialize($this->extensions)
 		];
+	}
+
+	/**
+	 * Implements JsonSerializable interface
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		return $this->toArray();
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
 	}
 }

@@ -27,13 +27,13 @@
 		"ext-dom": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^10.5.5",
+		"phpunit/phpunit": "^12.2.6",
 		"friendsofphp/php-cs-fixer": "^v3.43.1"
 	},
 	"autoload": {
 		"psr-4": { "phpGPX\\": "src/phpGPX" }
 	},
 	"autoload-dev": {
-		"psr-4": { "phpGPX\\": "tests/phpGPX" }
+		"psr-4": { "phpGPX\\Tests\\": "tests" }
 	}
 }

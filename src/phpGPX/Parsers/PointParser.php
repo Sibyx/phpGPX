@@ -96,7 +96,7 @@ abstract class PointParser
 		'rtept' => Point::ROUTEPOINT
 	];
 
-	public static function parse(\SimpleXMLElement $node)
+	public static function parse(\SimpleXMLElement $node): ?Point
 	{
 		if (!array_key_exists($node->getName(), self::$typeMapper)) {
 			return null;
@@ -120,9 +120,10 @@ abstract class PointParser
 					break;
 				default:
 					if (!in_array($attribute['type'], ['object', 'array'])) {
-						$point->{$attribute['name']} = isset($node->$key) ? $node->$key : null;
-						if (!is_null($point->{$attribute['name']})) {
-							settype($point->{$attribute['name']}, $attribute['type']);
+						if (isset($node->$key)) {
+							$value = (string) $node->$key;
+							settype($value, $attribute['type']);
+							$point->{$attribute['name']} = $value;
 						}
 					}
 					break;
@@ -137,12 +138,16 @@ abstract class PointParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Point $point, \DOMDocument &$document)
+	public static function toXML(Point $point, \DOMDocument &$document): \DOMElement
 	{
 		$node = $document->createElement(array_search($point->getPointType(), self::$typeMapper));
 
-		$node->setAttribute('lat', $point->latitude);
-		$node->setAttribute('lon', $point->longitude);
+		if ($point->latitude !== null) {
+			$node->setAttribute('lat', $point->latitude);
+		}
+		if ($point->longitude !== null) {
+			$node->setAttribute('lon', $point->longitude);
+		}
 
 		foreach (self::$attributeMapper as $key => $attribute) {
 			if (!is_null($point->{$attribute['name']})) {
@@ -160,7 +165,6 @@ abstract class PointParser
 						$child = $document->createElement($key);
 						$elementText = $document->createTextNode((string) $point->{$attribute['name']});
 						$child->appendChild($elementText);
-						break;
 						break;
 				}
 
@@ -182,7 +186,7 @@ abstract class PointParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement[]
 	 */
-	public static function toXMLArray(array $points, \DOMDocument &$document)
+	public static function toXMLArray(array $points, \DOMDocument &$document): array
 	{
 		$result = [];
 

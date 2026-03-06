@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\GpxSerializable;
 use phpGPX\Helpers\SerializationHelper;
 
 /**
@@ -14,26 +15,26 @@ use phpGPX\Helpers\SerializationHelper;
  * By linking to an appropriate license, you may place your data into the public domain or grant additional usage rights.
  * @package phpGPX\Models
  */
-class Copyright implements Summarizable
+class Copyright implements \JsonSerializable, GpxSerializable
 {
 
 	/**
 	 * Copyright holder (TopoSoft, Inc.)
-	 * @var string
+	 * @var string|null
 	 */
-	public $author;
+	public ?string $author;
 
 	/**
 	 * Year of copyright.
-	 * @var string
+	 * @var string|null
 	 */
-	public $year;
+	public ?string $year;
 
 	/**
 	 * Link to external file containing license text.
-	 * @var string
+	 * @var string|null
 	 */
-	public $license;
+	public ?string $license;
 
 	/**
 	 * Copyright constructor.
@@ -50,12 +51,41 @@ class Copyright implements Summarizable
 	 * Serialize object to array
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'author' => $this->author,
 			'year' => SerializationHelper::stringOrNull($this->year),
 			'license' => SerializationHelper::stringOrNull($this->license)
 		];
+	}
+
+	/**
+	 * Implements JsonSerializable interface
+	 * @return array
+	 */
+	public function jsonSerialize(): array
+	{
+		return $this->toArray();
+	}
+
+	/**
+	 * GPX serializer
+	 * @param \SimpleXMLElement $node
+	 * @return void
+	 */
+	public static function gpxSerialize(\SimpleXMLElement $node): void
+	{
+		// Implementation required by GpxSerializable interface
+	}
+
+	/**
+	 * GPX deserializer
+	 * @param \DOMDocument $document
+	 * @return void
+	 */
+	public function gpxDeserialize(\DOMDocument &$document): void
+	{
+		// Implementation required by GpxSerializable interface
 	}
 }
