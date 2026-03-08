@@ -1,34 +1,21 @@
 # Configuration
 
-phpGPX is configured through the `Config` value object, passed to the `phpGPX` constructor. Each instance carries its own configuration — there is no global state.
+phpGPX is configured through two mechanisms:
 
-## All options
+1. **`Config` value object** — output formatting, passed to the `phpGPX` constructor
+2. **`engine` and analyzer constructors** — processing behavior (smoothing, thresholds, sorting, etc.)
+
+Each `phpGPX` instance carries its own configuration — there is no global state.
+
+## Config options
 
 ```php
 use phpGPX\phpGPX;
 use phpGPX\Config;
 
-$gpx = new phpGPX(new Config(
-    // Calculate statistics automatically on load (default: true)
-    calculateStats: true,
-
-    // Sort points by timestamp when loading (default: false)
-    sortByTimestamp: false,
-
+$gpx = new phpGPX(config: new Config(
     // Pretty print XML and JSON output (default: true)
     prettyPrint: true,
-
-    // Ignore elevation values of 0 in stats (default: false)
-    ignoreZeroElevation: false,
-
-    // Distance smoothing (default: false)
-    applyDistanceSmoothing: false,
-    distanceSmoothingThreshold: 2, // meters
-
-    // Elevation smoothing (default: false)
-    applyElevationSmoothing: false,
-    elevationSmoothingThreshold: 2, // meters
-    elevationSmoothingSpikesThreshold: null, // meters, or null to disable
 ));
 ```
 
@@ -40,19 +27,93 @@ All options have sensible defaults. Creating a `phpGPX` instance without argumen
 $gpx = new phpGPX(); // uses all defaults
 ```
 
+## Config properties reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `prettyPrint` | bool | `true` | Indent XML and JSON output |
+
+!!! note "Config is for output only"
+    Processing behavior (stats calculation, smoothing, sorting) is controlled by `engine` and analyzer constructor arguments, not by Config.
+
+## engine configuration
+
+### Using the factory (recommended)
+
+```php
+use phpGPX\Analysis\Engine;
+
+$gpx = new phpGPX(engine: Engine::default(
+    sortByTimestamp: true,                   // Sort points by time before analysis
+    ignoreZeroElevation: false,              // Treat 0m elevation as missing
+    applyElevationSmoothing: true,           // Enable elevation smoothing
+    elevationSmoothingThreshold: 2,          // Minimum elevation change (m)
+    elevationSmoothingSpikesThreshold: 50,   // Maximum change before spike rejection
+    applyDistanceSmoothing: true,            // Enable distance smoothing
+    distanceSmoothingThreshold: 2,           // Minimum movement (m) to count
+    speedThreshold: 0.5,                     // Movement detection threshold (m/s)
+));
+```
+
+### Building manually
+
+```php
+use phpGPX\Analysis\Engine;
+use phpGPX\Analysis\DistanceAnalyzer;
+use phpGPX\Analysis\ElevationAnalyzer;
+use phpGPX\Analysis\AltitudeAnalyzer;
+use phpGPX\Analysis\TimestampAnalyzer;
+use phpGPX\Analysis\BoundsAnalyzer;
+use phpGPX\Analysis\MovementAnalyzer;
+use phpGPX\Analysis\TrackPointExtensionAnalyzer;
+
+$engine = (new Engine(sortByTimestamp: true))
+    ->addAnalyzer(new DistanceAnalyzer(applySmoothing: true, smoothingThreshold: 3))
+    ->addAnalyzer(new ElevationAnalyzer(
+        applySmoothing: true,
+        smoothingThreshold: 5,
+        spikesThreshold: 100,
+    ))
+    ->addAnalyzer(new AltitudeAnalyzer(ignoreZeroElevation: true))
+    ->addAnalyzer(new TimestampAnalyzer())
+    ->addAnalyzer(new BoundsAnalyzer())
+    ->addAnalyzer(new MovementAnalyzer(speedThreshold: 1.0))
+    ->addAnalyzer(new TrackPointExtensionAnalyzer());
+
+$gpx = new phpGPX(engine: $engine);
+```
+
+## Full example
+
+```php
+use phpGPX\phpGPX;
+use phpGPX\Config;
+use phpGPX\Analysis\Engine;
+
+$gpx = new phpGPX(
+    config: new Config(prettyPrint: true),
+    engine: Engine::default(
+        sortByTimestamp: true,
+        applyElevationSmoothing: true,
+        elevationSmoothingThreshold: 5,
+        speedThreshold: 0.5,
+    ),
+);
+
+$file = $gpx->load('track.gpx');
+```
+
 ## Multiple configurations
 
 Since configuration is per-instance, you can use different settings for different files:
 
 ```php
-$smooth = new phpGPX(new Config(
+$smooth = new phpGPX(engine: engine::default(
     applyElevationSmoothing: true,
     elevationSmoothingThreshold: 5,
 ));
 
-$raw = new phpGPX(new Config(
-    applyElevationSmoothing: false,
-));
+$raw = new phpGPX(engine: engine::default());
 
 $smoothFile = $smooth->load('track.gpx');
 $rawFile = $raw->load('track.gpx');
@@ -61,5 +122,5 @@ $rawFile = $raw->load('track.gpx');
 ## Notes
 
 - Configuration is immutable after construction — `Config` properties are set once via constructor.
-- The `sortByTimestamp` option is useful for GPX files where points are out of order, but is disabled by default since most files are already sorted.
-- JSON output always uses ISO 8601 UTC for datetime values (GeoJSON convention). Datetime formatting is a consumer concern.
+- JSON output always uses ISO 8601 UTC for datetime values (GeoJSON convention).
+- Stats are produced exclusively by `engine` and its analyzers — models are pure data containers.

@@ -2,6 +2,7 @@
 
 namespace phpGPX\Tests\Integration;
 
+use phpGPX\Analysis\Engine;
 use phpGPX\phpGPX;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ class XmlRoundTripTest extends TestCase
 
 	protected function setUp(): void
 	{
-		$this->gpx = new phpGPX();
+		$this->gpx = new phpGPX(engine: Engine::default());
 	}
 
 	/**

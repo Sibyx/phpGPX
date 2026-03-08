@@ -4,15 +4,18 @@
 
 ```php
 use phpGPX\phpGPX;
+use phpGPX\Analysis\Engine;
 
-$gpx = new phpGPX();
+$gpx = new phpGPX(engine: Engine::default());
+
 $file = $gpx->load('path/to/file.gpx');
 ```
 
 You can also parse GPX data from a string:
 
 ```php
-$gpx = new phpGPX();
+$gpx = new phpGPX(engine: engine::default());
+
 $xml = file_get_contents('path/to/file.gpx');
 $file = $gpx->parse($xml);
 ```
@@ -28,9 +31,10 @@ foreach ($file->waypoints as $waypoint) {
 }
 
 // Tracks - ordered lists of points recorded by a GPS device
+// $track->stats is populated because engine was provided above
 foreach ($file->tracks as $track) {
     echo $track->name . "\n";
-    echo "Distance: " . $track->stats->distance . " m\n";
+    echo "Distance: " . round($track->stats->distance) . " m\n";
 
     foreach ($track->segments as $segment) {
         foreach ($segment->points as $point) {

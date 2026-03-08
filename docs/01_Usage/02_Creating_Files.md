@@ -5,7 +5,6 @@ You can build GPX files programmatically.
 ## Building a track from scratch
 
 ```php
-use phpGPX\Config;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
@@ -44,20 +43,28 @@ foreach ($points as $data) {
 }
 
 $track->segments[] = $segment;
-
-// Calculate statistics
-$track->recalculateStats(new Config());
-
 $gpxFile->tracks[] = $track;
 
-// Save
+// Save to file
 $gpxFile->save('morning_run.gpx', phpGPX::XML_FORMAT);
+```
+
+## Calculating stats after building
+
+Models are pure data containers — they do not calculate stats. To populate `$track->stats` and `$segment->stats` on a file you have built programmatically, call `engine` directly:
+
+```php
+use phpGPX\Analysis\Engine;
+
+// Build the file as above, then:
+$gpxFile = Engine::default()->process($gpxFile);
+
+echo "Distance: " . round($gpxFile->tracks[0]->stats->distance) . " m\n";
 ```
 
 ## Building a route
 
 ```php
-use phpGPX\Config;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\Route;
@@ -82,8 +89,6 @@ foreach ($waypoints as $data) {
     $point->name = $data['name'];
     $route->points[] = $point;
 }
-
-$route->recalculateStats(new Config());
 
 $gpxFile->routes[] = $route;
 $gpxFile->save('trail.gpx', phpGPX::XML_FORMAT);

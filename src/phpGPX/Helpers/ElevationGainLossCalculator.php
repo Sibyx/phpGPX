@@ -8,18 +8,21 @@
 
 namespace phpGPX\Helpers;
 
-use phpGPX\Config;
 use phpGPX\Models\Point;
 
 class ElevationGainLossCalculator
 {
 	/**
 	 * @param Point[] $points
-	 * @param Config $config
 	 * @return array [cumulativeElevationGain, cumulativeElevationLoss]
 	 */
-	public static function calculate(array $points, Config $config): array
-	{
+	public static function calculate(
+		array $points,
+		bool $ignoreZeroElevation = false,
+		bool $applySmoothing = false,
+		int $smoothingThreshold = 2,
+		?int $spikesThreshold = null,
+	): array {
 		$cumulativeElevationGain = 0;
 		$cumulativeElevationLoss = 0;
 
@@ -34,7 +37,7 @@ class ElevationGainLossCalculator
 				continue;
 			}
 
-			if ($config->ignoreZeroElevation && $curElevation == 0) {
+			if ($ignoreZeroElevation && $curElevation == 0) {
 				continue;
 			}
 
@@ -45,16 +48,16 @@ class ElevationGainLossCalculator
 
 			$elevationDelta = $curElevation - $lastConsideredElevation;
 
-			if ($config->applyElevationSmoothing &&
-				abs($elevationDelta) > $config->elevationSmoothingThreshold &&
-						($config->elevationSmoothingSpikesThreshold === null || abs($elevationDelta) < $config->elevationSmoothingSpikesThreshold)) {
+			if ($applySmoothing &&
+				abs($elevationDelta) > $smoothingThreshold &&
+						($spikesThreshold === null || abs($elevationDelta) < $spikesThreshold)) {
 				$cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
 				$cumulativeElevationLoss += ($elevationDelta < 0) ? abs($elevationDelta) : 0;
 
 				$lastConsideredElevation = $curElevation;
 			}
 
-			if (!$config->applyElevationSmoothing) {
+			if (!$applySmoothing) {
 				$cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
 				$cumulativeElevationLoss += ($elevationDelta < 0) ? abs($elevationDelta) : 0;
 

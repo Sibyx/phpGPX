@@ -17,34 +17,35 @@ Repository branches:
 ## Features
 
  - Full support of [official specification](http://www.topografix.com/GPX/1/1/).
- - Statistics calculation.
- - Extensions.
- - JSON & XML & PHP Array output.
+ - Single-pass stats engine with pluggable analyzers.
+ - Extensions support.
+ - JSON (GeoJSON) & XML output.
 
 ### Supported Extensions
 
-- Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd): 
+- Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd):
    http://www.garmin.com/xmlschemas/TrackPointExtension/v1
 
 ### Stats calculation
 
-- (Smoothed) Distance (m)
-- Average speed (m/s)
-- Average pace  (s/km)
-- Min / max altitude (m)
-- Min / max coordinates ([lat,lng])
-- (Smoothed) Elevation gain / loss (m)
-- Start / end (DateTime object)
-- Start / end coordinates ([lat,lng])
-- Duration (seconds)
+Stats are provided by the `Engine` and its analyzers:
+
+- (Smoothed) Distance (m) — `DistanceAnalyzer`
+- Average speed (m/s), average pace (s/km) — derived by engine
+- Min / max altitude with coordinates — `AltitudeAnalyzer`
+- (Smoothed) Elevation gain / loss (m) — `ElevationAnalyzer`
+- Start / end timestamps with coordinates — `TimestampAnalyzer`
+- Duration (seconds) — derived by engine
+- Coordinate bounds (min/max lat/lon) — `BoundsAnalyzer`
+- Moving duration and moving average speed — `MovementAnalyzer`
+- Heart rate, cadence, temperature — `TrackPointExtensionAnalyzer`
 
 ## Installation
 
-You can easily install phpGPX library with [composer](https://getcomposer.org/). There is no stable release yet, so
-please use release candidates.
+You can easily install phpGPX library with [composer](https://getcomposer.org/).
 
 ```
-composer require sibyx/phpgpx:1.3.0
+composer require sibyx/phpgpx
 ```
 
 ## Examples
@@ -54,20 +55,20 @@ composer require sibyx/phpgpx:1.3.0
 ```php
 <?php
 use phpGPX\phpGPX;
+use phpGPX\Analysis\Engine;
 
-$gpx = new phpGPX();
-	
+$gpx = new phpGPX(engine: Engine::default());
+
 $file = $gpx->load('example.gpx');
-	
-foreach ($file->tracks as $track)
-{
+
+foreach ($file->tracks as $track) {
     // Statistics for whole track
-    $track->stats->toArray();
-    
-    foreach ($track->segments as $segment)
-    {
-    	// Statistics for segment of track
-    	$segment->stats->toArray();
+    echo "Distance: " . round($track->stats->distance) . " m\n";
+    echo "Duration: " . gmdate("H:i:s", $track->stats->duration) . "\n";
+
+    foreach ($track->segments as $segment) {
+        // Statistics for segment of track
+        echo "  Segment distance: " . round($segment->stats->distance) . " m\n";
     }
 }
 ```
@@ -78,13 +79,13 @@ foreach ($file->tracks as $track)
 use phpGPX\phpGPX;
 
 $gpx = new phpGPX();
-	
+
 $file = $gpx->load('example.gpx');
 
 // XML
 $file->save('output.gpx', phpGPX::XML_FORMAT);
-	
-//JSON
+
+// JSON (GeoJSON)
 $file->save('output.json', phpGPX::JSON_FORMAT);
 ```
 
@@ -164,9 +165,7 @@ $track->source = "MySpecificGarminDevice";
 // Creating Track segment
 $segment = new Segment();
 
-
-foreach ($sample_data as $sample_point)
-{
+foreach ($sample_data as $sample_point) {
 	// Creating trackpoint
 	$point = new Point(Point::TRACKPOINT);
 	$point->latitude = $sample_point['latitude'];
@@ -180,20 +179,16 @@ foreach ($sample_data as $sample_point)
 // Add segment to segment array of track
 $track->segments[] = $segment;
 
-// Recalculate stats based on received data
-$track->recalculateStats();
-
 // Add track to file
 $gpx_file->tracks[] = $track;
 
 // GPX output
 $gpx_file->save('CreatingFileFromScratchExample.gpx', \phpGPX\phpGPX::XML_FORMAT);
 
-// Serialized data as JSON
+// Serialized data as JSON (GeoJSON)
 $gpx_file->save('CreatingFileFromScratchExample.json', \phpGPX\phpGPX::JSON_FORMAT);
 
 // Direct GPX output to browser
-
 header("Content-Type: application/gpx+xml");
 header("Content-Disposition: attachment; filename=CreatingFileFromScratchExample.gpx");
 
@@ -201,81 +196,54 @@ echo $gpx_file->toXML()->saveXML();
 exit();
 ```
 
-Currently, supported output formats:
+Currently supported output formats:
 
  - XML
- - JSON
+ - JSON (GeoJSON, RFC 7946)
 
 ## Configuration
 
-Use the static constants in phpGPX to modify behaviour.
+Output formatting is configured via the `Config` value object. Stats computation is configured via analyzer constructor arguments.
 
 ```php
-/**
- * Create Stats object for each track, segment and route
- */
-public static $CALCULATE_STATS = true;
+use phpGPX\phpGPX;
+use phpGPX\Config;
+use phpGPX\Analysis\Engine;
 
-/**
- * Additional sort based on timestamp in Routes & Tracks on XML read.
- * Disabled by default, data should be already sorted.
- */
-public static $SORT_BY_TIMESTAMP = false;
+$gpx = new phpGPX(
+    config: new Config(prettyPrint: true),
+    engine: Engine::default(
+        sortByTimestamp: true,
+        applyElevationSmoothing: true,
+        elevationSmoothingThreshold: 2,
+        ignoreZeroElevation: false,
+    ),
+);
 
-/**
- * Default DateTime output format in JSON serialization.
- */
-public static $DATETIME_FORMAT = 'c';
-
-/**
- * Default timezone for display.
- * Data are always stored in UTC timezone.
- */
-public static $DATETIME_TIMEZONE_OUTPUT = 'UTC';
-
-/**
- * Pretty print.
- */
-public static $PRETTY_PRINT = true;
-
-/**
- * In stats elevation calculation: ignore points with an elevation of 0
- * This can happen with some GPS software adding a point with 0 elevation
- */
-public static $IGNORE_ELEVATION_0 = true;
-
-/**
- * Apply elevation gain/loss smoothing? If true, the threshold in
- * ELEVATION_SMOOTHING_THRESHOLD and ELEVATION_SMOOTHING_SPIKES_THRESHOLD (if not null) applies
- */
-public static $APPLY_ELEVATION_SMOOTHING = false;
-
-/**
- * if APPLY_ELEVATION_SMOOTHING is true
- * the minimum elevation difference between considered points in meters
- */
-public static $ELEVATION_SMOOTHING_THRESHOLD = 2;
-
-/**
- * if APPLY_ELEVATION_SMOOTHING is true
- * the maximum elevation difference between considered points in meters
- */
-public static $ELEVATION_SMOOTHING_SPIKES_THRESHOLD = null;
-
-/**
- * Apply distance calculation smoothing? If true, the threshold in
- * DISTANCE_SMOOTHING_THRESHOLD applies
- */
-public static $APPLY_DISTANCE_SMOOTHING = false;
-
-/**
- * if APPLY_DISTANCE_SMOOTHING is true
- * the minimum distance between considered points in meters
- */
-public static $DISTANCE_SMOOTHING_THRESHOLD = 2;
+$file = $gpx->load('track.gpx');
 ```
 
-This library started as part of my job at [BACKBONE, s.r.o.](https://www.backbone.sk/en/). 
+For fine-grained control, build the engine manually:
+
+```php
+use phpGPX\Analysis\Engine;
+use phpGPX\Analysis\DistanceAnalyzer;
+use phpGPX\Analysis\ElevationAnalyzer;
+use phpGPX\Analysis\AltitudeAnalyzer;
+use phpGPX\Analysis\TimestampAnalyzer;
+use phpGPX\Analysis\BoundsAnalyzer;
+
+$engine = (new Engine())
+    ->addAnalyzer(new DistanceAnalyzer(applySmoothing: true, smoothingThreshold: 3))
+    ->addAnalyzer(new ElevationAnalyzer(applySmoothing: true, spikesThreshold: 100))
+    ->addAnalyzer(new AltitudeAnalyzer())
+    ->addAnalyzer(new TimestampAnalyzer())
+    ->addAnalyzer(new BoundsAnalyzer());
+
+$gpx->setEngine($engine);
+```
+
+This library started as part of my job at [BACKBONE, s.r.o.](https://www.backbone.sk/en/).
 Thank you very much for their support!
 
 ## License

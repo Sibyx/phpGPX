@@ -6,9 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\Config;
-use phpGPX\Helpers\DistanceCalculator;
-use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\SerializationHelper;
 
 /**
@@ -71,81 +68,5 @@ class Route extends Collection
 			],
 			'properties' => $properties ?: new \stdClass(),
 		];
-	}
-
-	/**
-	 * Recalculate stats objects.
-	 * @return void
-	 */
-	public function recalculateStats(Config $config): void
-	{
-		if (empty($this->stats)) {
-			$this->stats = new Stats();
-		}
-
-		$this->stats->reset();
-
-		if (empty($this->points)) {
-			return;
-		}
-
-		$pointCount = count($this->points);
-
-		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
-			ElevationGainLossCalculator::calculate($this->getPoints(), $config);
-
-		$calculator = new DistanceCalculator($this->getPoints(), $config);
-		$this->stats->distance = $calculator->getRawDistance();
-		$this->stats->realDistance = $calculator->getRealDistance();
-
-		// Find first/last non-null timestamps (#51)
-		for ($i = 0; $i < $pointCount; $i++) {
-			if ($this->points[$i]->time instanceof \DateTime) {
-				$this->stats->startedAt = $this->points[$i]->time;
-				$this->stats->startedAtCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
-				break;
-			}
-		}
-		for ($i = $pointCount - 1; $i >= 0; $i--) {
-			if ($this->points[$i]->time instanceof \DateTime) {
-				$this->stats->finishedAt = $this->points[$i]->time;
-				$this->stats->finishedAtCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
-				break;
-			}
-		}
-
-		// Find min/max altitude — don't assume first point (#70)
-		for ($i = 0; $i < $pointCount; $i++) {
-			$ele = $this->points[$i]->elevation;
-			if ($ele === null) {
-				continue;
-			}
-			if ($config->ignoreZeroElevation && $ele == 0) {
-				continue;
-			}
-
-			$coords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
-
-			if ($this->stats->maxAltitude === null || $ele > $this->stats->maxAltitude) {
-				$this->stats->maxAltitude = $ele;
-				$this->stats->maxAltitudeCoords = $coords;
-			}
-			if ($this->stats->minAltitude === null || $ele < $this->stats->minAltitude) {
-				$this->stats->minAltitude = $ele;
-				$this->stats->minAltitudeCoords = $coords;
-			}
-		}
-
-		if ($this->stats->startedAt instanceof \DateTime && $this->stats->finishedAt instanceof \DateTime) {
-			$this->stats->duration = $this->stats->finishedAt->getTimestamp() - $this->stats->startedAt->getTimestamp();
-
-			if ($this->stats->duration != 0) {
-				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;
-			}
-
-			if ($this->stats->distance != 0) {
-				$this->stats->averagePace = $this->stats->duration / ($this->stats->distance / 1000);
-			}
-		}
 	}
 }

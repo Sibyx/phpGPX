@@ -26,20 +26,36 @@ $gpx = new phpGPX();
 $file = $gpx->parse($xml);
 ```
 
-## With custom configuration
+## With statistics
 
-Pass a `Config` object to customize parsing behavior:
+Statistics are not calculated by default. Pass a `engine` to populate `$track->stats`, `$segment->stats`, and `$route->stats`:
 
 ```php
 use phpGPX\phpGPX;
-use phpGPX\Config;
+use phpGPX\Analysis\Engine;
 
-$gpx = new phpGPX(new Config(
-    calculateStats: false,
-    sortByTimestamp: true,
-));
+$gpx = new phpGPX(engine: Engine::default());
 
-$file = $gpx->load('/path/to/track.gpx');
+$file = $gpx->load('track.gpx');
+
+foreach ($file->tracks as $track) {
+    echo "Distance: " . round($track->stats->distance) . " m\n";
+}
+```
+
+Without the engine, `$track->stats` will be `null`.
+
+## Sorting points by timestamp
+
+If your GPX file has out-of-order points, enable sorting on the engine:
+
+```php
+use phpGPX\phpGPX;
+use phpGPX\Analysis\Engine;
+
+$gpx = new phpGPX(engine: Engine::default(sortByTimestamp: true));
+
+$file = $gpx->load('track.gpx');
 ```
 
 ## What gets parsed
@@ -52,25 +68,13 @@ When loading a GPX file, phpGPX processes:
 - **Routes** (`<rte>`) - containing route points (`<rtept>`)
 - **Extensions** - Garmin TrackPointExtension (heart rate, temperature, cadence) and unsupported extensions preserved as key-value pairs
 
-## Automatic statistics
+## Processing pipeline
 
-By default, statistics are calculated automatically when loading a file. This includes distance, elevation gain/loss, duration, speed, and pace for each track, segment, and route.
+After parsing, the `engine` (if provided) runs a single-pass analysis over all points:
 
-To disable automatic stats calculation:
-
-```php
-use phpGPX\Config;
-
-$gpx = new phpGPX(new Config(calculateStats: false));
-$file = $gpx->load('track.gpx');
-// $file->tracks[0]->stats will be null
-```
-
-You can recalculate stats manually at any time:
-
-```php
-use phpGPX\Config;
-
-$config = new Config();
-$file->tracks[0]->recalculateStats($config);
+```mermaid
+flowchart LR
+    A[XML / string input] --> B[Parse to GpxFile]
+    B --> C["engine (single pass)"]
+    C --> D[Return GpxFile]
 ```

@@ -6,7 +6,7 @@
 
 namespace phpGPX;
 
-use phpGPX\Helpers\DateTimeHelper;
+use phpGPX\Analysis\Engine;
 use phpGPX\Models\GpxFile;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\RouteParser;
@@ -28,9 +28,23 @@ class phpGPX
 
 	public readonly Config $config;
 
-	public function __construct(?Config $config = null)
+	private ?Engine $engine = null;
+
+	public function __construct(?Config $config = null, ?Engine $engine = null)
 	{
 		$this->config = $config ?? new Config();
+		$this->engine = $engine;
+	}
+
+	/**
+	 * Set the stats engine for computing statistics after parsing.
+	 *
+	 * @return $this Fluent interface
+	 */
+	public function setEngine(Engine $engine): self
+	{
+		$this->engine = $engine;
+		return $this;
 	}
 
 	/**
@@ -56,40 +70,11 @@ class phpGPX
 		$gpx->tracks = isset($xmlElement->trk) ? TrackParser::parse($xmlElement->trk) : [];
 		$gpx->routes = isset($xmlElement->rte) ? RouteParser::parse($xmlElement->rte) : [];
 
-		if ($this->config->sortByTimestamp) {
-			$this->sortPointsByTimestamp($gpx);
-		}
-
-		if ($this->config->calculateStats) {
-			foreach ($gpx->tracks as $track) {
-				$track->recalculateStats($this->config);
-			}
-			foreach ($gpx->routes as $route) {
-				$route->recalculateStats($this->config);
-			}
+		if ($this->engine !== null) {
+			$gpx = $this->engine->process($gpx);
 		}
 
 		return $gpx;
-	}
-
-	/**
-	 * Sort all point arrays in-place by timestamp.
-	 */
-	private function sortPointsByTimestamp(GpxFile $gpx): void
-	{
-		foreach ($gpx->tracks as $track) {
-			foreach ($track->segments as $segment) {
-				if (!empty($segment->points) && $segment->points[0]->time !== null) {
-					usort($segment->points, [DateTimeHelper::class, 'comparePointsByTimestamp']);
-				}
-			}
-		}
-
-		foreach ($gpx->routes as $route) {
-			if (!empty($route->points) && $route->points[0]->time !== null) {
-				usort($route->points, [DateTimeHelper::class, 'comparePointsByTimestamp']);
-			}
-		}
 	}
 
 	/**

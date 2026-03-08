@@ -2,7 +2,12 @@
 
 namespace phpGPX\Tests\Unit\Models;
 
-use phpGPX\Config;
+use phpGPX\Analysis\AltitudeAnalyzer;
+use phpGPX\Analysis\DistanceAnalyzer;
+use phpGPX\Analysis\ElevationAnalyzer;
+use phpGPX\Analysis\Engine;
+use phpGPX\Analysis\TimestampAnalyzer;
+use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
@@ -12,11 +17,15 @@ use PHPUnit\Framework\TestCase;
 
 class StatsCalculationTest extends TestCase
 {
-	private Config $config;
+	private Engine $engine;
 
 	protected function setUp(): void
 	{
-		$this->config = new Config();
+		$this->engine = (new Engine())
+			->addAnalyzer(new DistanceAnalyzer())
+			->addAnalyzer(new ElevationAnalyzer())
+			->addAnalyzer(new AltitudeAnalyzer())
+			->addAnalyzer(new TimestampAnalyzer());
 	}
 
 	private function makePoint(
@@ -47,15 +56,37 @@ class StatsCalculationTest extends TestCase
 		return $p;
 	}
 
+	private function processTrack(Track $track): GpxFile
+	{
+		$gpx = new GpxFile();
+		$gpx->tracks = [$track];
+		return $this->engine->process($gpx);
+	}
+
+	private function processRoute(Route $route): GpxFile
+	{
+		$gpx = new GpxFile();
+		$gpx->routes = [$route];
+		return $this->engine->process($gpx);
+	}
+
+	private function processSegment(Segment $segment): GpxFile
+	{
+		$track = new Track();
+		$track->segments = [$segment];
+		return $this->processTrack($track);
+	}
+
 	// --- Segment stats ---
 
 	public function testSegmentStatsEmptyPoints(): void
 	{
 		$segment = new Segment();
-		$segment->recalculateStats($this->config);
+		$result = $this->processSegment($segment);
 
-		$this->assertInstanceOf(Stats::class, $segment->stats);
-		$this->assertNull($segment->stats->distance);
+		$stats = $result->tracks[0]->segments[0]->stats;
+		$this->assertInstanceOf(Stats::class, $stats);
+		$this->assertNull($stats->distance);
 	}
 
 	public function testSegmentStatsSinglePoint(): void
@@ -64,13 +95,14 @@ class StatsCalculationTest extends TestCase
 		$segment->points = [
 			$this->makePoint(46.571948, 8.414757, 2419, '2017-08-13T07:10:41Z'),
 		];
-		$segment->recalculateStats($this->config);
+		$result = $this->processSegment($segment);
+		$stats = $result->tracks[0]->segments[0]->stats;
 
-		$this->assertEqualsWithDelta(0.0, $segment->stats->distance, 0.01);
-		$this->assertEqualsWithDelta(0.0, $segment->stats->cumulativeElevationGain, 0.01);
-		$this->assertEqualsWithDelta(0.0, $segment->stats->cumulativeElevationLoss, 0.01);
-		$this->assertEquals(46.571948, $segment->stats->startedAtCoords['lat']);
-		$this->assertEquals(46.571948, $segment->stats->finishedAtCoords['lat']);
+		$this->assertEqualsWithDelta(0.0, $stats->distance, 0.01);
+		$this->assertEqualsWithDelta(0.0, $stats->cumulativeElevationGain, 0.01);
+		$this->assertEqualsWithDelta(0.0, $stats->cumulativeElevationLoss, 0.01);
+		$this->assertEquals(46.571948, $stats->startedAtCoords['lat']);
+		$this->assertEquals(46.571948, $stats->finishedAtCoords['lat']);
 	}
 
 	public function testSegmentStatsBasicTrack(): void
@@ -83,34 +115,35 @@ class StatsCalculationTest extends TestCase
 			$this->makePoint(46.572069, 8.414912, 2422, '2017-08-13T07:12:15Z'),
 			$this->makePoint(46.572054, 8.414888, 2425, '2017-08-13T07:12:18Z'),
 		];
-		$segment->recalculateStats($this->config);
+		$result = $this->processSegment($segment);
+		$stats = $result->tracks[0]->segments[0]->stats;
 
 		// Distance should be positive
-		$this->assertGreaterThan(0, $segment->stats->distance);
-		$this->assertGreaterThan(0, $segment->stats->realDistance);
+		$this->assertGreaterThan(0, $stats->distance);
+		$this->assertGreaterThan(0, $stats->realDistance);
 
 		// Elevation gain: 2418.88→2419.90 (+1.02), 2419.90→2422 (+2.1), 2422→2425 (+3)
-		$this->assertGreaterThan(6, $segment->stats->cumulativeElevationGain);
+		$this->assertGreaterThan(6, $stats->cumulativeElevationGain);
 
 		// Elevation loss: 2419→2418.88 (-0.12)
-		$this->assertGreaterThan(0, $segment->stats->cumulativeElevationLoss);
+		$this->assertGreaterThan(0, $stats->cumulativeElevationLoss);
 
 		// Duration
-		$this->assertEqualsWithDelta(97.0, $segment->stats->duration, 0.1);
+		$this->assertEqualsWithDelta(97.0, $stats->duration, 0.1);
 
 		// Speed and pace
-		$this->assertNotNull($segment->stats->averageSpeed);
-		$this->assertGreaterThan(0, $segment->stats->averageSpeed);
-		$this->assertNotNull($segment->stats->averagePace);
-		$this->assertGreaterThan(0, $segment->stats->averagePace);
+		$this->assertNotNull($stats->averageSpeed);
+		$this->assertGreaterThan(0, $stats->averageSpeed);
+		$this->assertNotNull($stats->averagePace);
+		$this->assertGreaterThan(0, $stats->averagePace);
 
 		// Altitude bounds
-		$this->assertEqualsWithDelta(2418.88, $segment->stats->minAltitude, 0.01);
-		$this->assertEqualsWithDelta(2425, $segment->stats->maxAltitude, 0.01);
+		$this->assertEqualsWithDelta(2418.88, $stats->minAltitude, 0.01);
+		$this->assertEqualsWithDelta(2425, $stats->maxAltitude, 0.01);
 
 		// Start/end coordinates
-		$this->assertEquals(46.571948, $segment->stats->startedAtCoords['lat']);
-		$this->assertEquals(46.572054, $segment->stats->finishedAtCoords['lat']);
+		$this->assertEquals(46.571948, $stats->startedAtCoords['lat']);
+		$this->assertEquals(46.572054, $stats->finishedAtCoords['lat']);
 	}
 
 	public function testSegmentStatsWithoutTimestamps(): void
@@ -120,15 +153,16 @@ class StatsCalculationTest extends TestCase
 			$this->makePoint(46.571948, 8.414757, 100),
 			$this->makePoint(46.572016, 8.414866, 200),
 		];
-		$segment->recalculateStats($this->config);
+		$result = $this->processSegment($segment);
+		$stats = $result->tracks[0]->segments[0]->stats;
 
 		// Distance should still be calculated
-		$this->assertGreaterThan(0, $segment->stats->distance);
+		$this->assertGreaterThan(0, $stats->distance);
 
 		// Duration, speed, pace should be null (no timestamps)
-		$this->assertNull($segment->stats->duration);
-		$this->assertNull($segment->stats->averageSpeed);
-		$this->assertNull($segment->stats->averagePace);
+		$this->assertNull($stats->duration);
+		$this->assertNull($stats->averageSpeed);
+		$this->assertNull($stats->averagePace);
 	}
 
 	public function testSegmentStatsWithoutElevation(): void
@@ -138,16 +172,21 @@ class StatsCalculationTest extends TestCase
 			$this->makePoint(46.571948, 8.414757, null, '2017-08-13T07:10:41Z'),
 			$this->makePoint(46.572016, 8.414866, null, '2017-08-13T07:10:54Z'),
 		];
-		$segment->recalculateStats($this->config);
+		$result = $this->processSegment($segment);
+		$stats = $result->tracks[0]->segments[0]->stats;
 
-		$this->assertGreaterThan(0, $segment->stats->distance);
-		$this->assertEqualsWithDelta(0.0, $segment->stats->cumulativeElevationGain, 0.001);
-		$this->assertEqualsWithDelta(0.0, $segment->stats->cumulativeElevationLoss, 0.001);
+		$this->assertGreaterThan(0, $stats->distance);
+		$this->assertEqualsWithDelta(0.0, $stats->cumulativeElevationGain, 0.001);
+		$this->assertEqualsWithDelta(0.0, $stats->cumulativeElevationLoss, 0.001);
 	}
 
 	public function testSegmentStatsIgnoreElevationZero(): void
 	{
-		$config = new Config(ignoreZeroElevation: true);
+		$engine = (new Engine())
+			->addAnalyzer(new DistanceAnalyzer())
+			->addAnalyzer(new ElevationAnalyzer(ignoreZeroElevation: true))
+			->addAnalyzer(new AltitudeAnalyzer(ignoreZeroElevation: true))
+			->addAnalyzer(new TimestampAnalyzer());
 
 		$segment = new Segment();
 		$segment->points = [
@@ -155,10 +194,15 @@ class StatsCalculationTest extends TestCase
 			$this->makePoint(46.572016, 8.414866, 0, '2017-08-13T07:10:54Z'),
 			$this->makePoint(46.572088, 8.414911, 200, '2017-08-13T07:11:56Z'),
 		];
-		$segment->recalculateStats($config);
+
+		$track = new Track();
+		$track->segments = [$segment];
+		$gpx = new GpxFile();
+		$gpx->tracks = [$track];
+		$result = $engine->process($gpx);
 
 		// minAltitude should NOT be 0 when ignoreZeroElevation is true
-		$this->assertGreaterThan(0, $segment->stats->minAltitude);
+		$this->assertGreaterThan(0, $result->tracks[0]->segments[0]->stats->minAltitude);
 	}
 
 	public function testSegmentStatsRecalculateResetsValues(): void
@@ -168,12 +212,12 @@ class StatsCalculationTest extends TestCase
 			$this->makePoint(46.571948, 8.414757, 100, '2017-08-13T07:10:41Z'),
 			$this->makePoint(46.572016, 8.414866, 200, '2017-08-13T07:10:54Z'),
 		];
-		$segment->recalculateStats($this->config);
-		$firstDistance = $segment->stats->distance;
+		$result = $this->processSegment($segment);
+		$firstDistance = $result->tracks[0]->segments[0]->stats->distance;
 
-		// Recalculate again — should get same result (not accumulated)
-		$segment->recalculateStats($this->config);
-		$this->assertEqualsWithDelta($firstDistance, $segment->stats->distance, 0.001);
+		// Process again — should get same result (not accumulated)
+		$result2 = $this->processSegment($segment);
+		$this->assertEqualsWithDelta($firstDistance, $result2->tracks[0]->segments[0]->stats->distance, 0.001);
 	}
 
 	// --- Track stats ---
@@ -181,10 +225,10 @@ class StatsCalculationTest extends TestCase
 	public function testTrackStatsEmptySegments(): void
 	{
 		$track = new Track();
-		$track->recalculateStats($this->config);
+		$result = $this->processTrack($track);
 
-		$this->assertInstanceOf(Stats::class, $track->stats);
-		$this->assertNull($track->stats->distance);
+		$this->assertInstanceOf(Stats::class, $result->tracks[0]->stats);
+		$this->assertNull($result->tracks[0]->stats->distance);
 	}
 
 	public function testTrackStatsSingleSegment(): void
@@ -197,12 +241,13 @@ class StatsCalculationTest extends TestCase
 
 		$track = new Track();
 		$track->segments = [$segment];
-		$track->recalculateStats($this->config);
+		$result = $this->processTrack($track);
+		$stats = $result->tracks[0]->stats;
 
-		$this->assertGreaterThan(0, $track->stats->distance);
-		$this->assertEqualsWithDelta(6.0, $track->stats->cumulativeElevationGain, 0.01);
-		$this->assertEqualsWithDelta(2419.0, $track->stats->minAltitude, 0.01);
-		$this->assertEqualsWithDelta(2425.0, $track->stats->maxAltitude, 0.01);
+		$this->assertGreaterThan(0, $stats->distance);
+		$this->assertEqualsWithDelta(6.0, $stats->cumulativeElevationGain, 0.01);
+		$this->assertEqualsWithDelta(2419.0, $stats->minAltitude, 0.01);
+		$this->assertEqualsWithDelta(2425.0, $stats->maxAltitude, 0.01);
 	}
 
 	public function testTrackStatsMultipleSegmentsAggregated(): void
@@ -221,32 +266,33 @@ class StatsCalculationTest extends TestCase
 
 		$track = new Track();
 		$track->segments = [$seg1, $seg2];
-		$track->recalculateStats($this->config);
+		$result = $this->processTrack($track);
+		$stats = $result->tracks[0]->stats;
 
-		// Distances should be summed across segments
-		$seg1->recalculateStats($this->config);
-		$seg2->recalculateStats($this->config);
-		$expectedDistance = $seg1->stats->distance + $seg2->stats->distance;
-		$this->assertEqualsWithDelta($expectedDistance, $track->stats->distance, 0.01);
+		// Get individual segment distances for comparison
+		$seg1Distance = $result->tracks[0]->segments[0]->stats->distance;
+		$seg2Distance = $result->tracks[0]->segments[1]->stats->distance;
+		$expectedDistance = $seg1Distance + $seg2Distance;
+		$this->assertEqualsWithDelta($expectedDistance, $stats->distance, 0.01);
 
 		// Elevation gain aggregated: seg1 has 50m gain, seg2 has 0
-		$this->assertEqualsWithDelta(50.0, $track->stats->cumulativeElevationGain, 0.01);
+		$this->assertEqualsWithDelta(50.0, $stats->cumulativeElevationGain, 0.01);
 
 		// Elevation loss aggregated: seg1 has 0, seg2 has 20m loss
-		$this->assertEqualsWithDelta(20.0, $track->stats->cumulativeElevationLoss, 0.01);
+		$this->assertEqualsWithDelta(20.0, $stats->cumulativeElevationLoss, 0.01);
 
 		// Min altitude should be minimum across all segments
-		$this->assertEqualsWithDelta(100.0, $track->stats->minAltitude, 0.01);
+		$this->assertEqualsWithDelta(100.0, $stats->minAltitude, 0.01);
 
 		// Max altitude should be maximum across all segments
-		$this->assertEqualsWithDelta(200.0, $track->stats->maxAltitude, 0.01);
+		$this->assertEqualsWithDelta(200.0, $stats->maxAltitude, 0.01);
 
 		// Start/end should span the entire track
-		$this->assertNotNull($track->stats->startedAt);
-		$this->assertNotNull($track->stats->finishedAt);
+		$this->assertNotNull($stats->startedAt);
+		$this->assertNotNull($stats->finishedAt);
 
 		// Duration spans first point of first segment to last point of last segment
-		$this->assertEqualsWithDelta(330.0, $track->stats->duration, 0.1);
+		$this->assertEqualsWithDelta(330.0, $stats->duration, 0.1);
 	}
 
 	public function testTrackGetPointsFlattensSegments(): void
@@ -274,10 +320,10 @@ class StatsCalculationTest extends TestCase
 	public function testRouteStatsEmptyPoints(): void
 	{
 		$route = new Route();
-		$route->recalculateStats($this->config);
+		$result = $this->processRoute($route);
 
-		$this->assertInstanceOf(Stats::class, $route->stats);
-		$this->assertNull($route->stats->distance);
+		$this->assertInstanceOf(Stats::class, $result->routes[0]->stats);
+		$this->assertNull($result->routes[0]->stats->distance);
 	}
 
 	public function testRouteStatsBasic(): void
@@ -289,13 +335,14 @@ class StatsCalculationTest extends TestCase
 			$this->makeRoutePoint(54.93327743521187, 9.86187816543752, 2.0),
 			$this->makeRoutePoint(54.93342326167919, 9.862439849679859, 3.0),
 		];
-		$route->recalculateStats($this->config);
+		$result = $this->processRoute($route);
+		$stats = $result->routes[0]->stats;
 
-		$this->assertGreaterThan(0, $route->stats->distance);
-		$this->assertEqualsWithDelta(3.0, $route->stats->cumulativeElevationGain, 0.01);
-		$this->assertEqualsWithDelta(0.0, $route->stats->cumulativeElevationLoss, 0.01);
-		$this->assertEqualsWithDelta(0.0, $route->stats->minAltitude, 0.01);
-		$this->assertEqualsWithDelta(3.0, $route->stats->maxAltitude, 0.01);
+		$this->assertGreaterThan(0, $stats->distance);
+		$this->assertEqualsWithDelta(3.0, $stats->cumulativeElevationGain, 0.01);
+		$this->assertEqualsWithDelta(0.0, $stats->cumulativeElevationLoss, 0.01);
+		$this->assertEqualsWithDelta(0.0, $stats->minAltitude, 0.01);
+		$this->assertEqualsWithDelta(3.0, $stats->maxAltitude, 0.01);
 	}
 
 	// --- Stats model ---

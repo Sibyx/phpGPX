@@ -106,6 +106,48 @@ class Stats implements \JsonSerializable
 	public ?float $duration = null;
 
 	/**
+	 * Coordinate bounds
+	 * @var Bounds|null
+	 */
+	public ?Bounds $bounds = null;
+
+	/**
+	 * Moving duration in seconds (excludes stopped time)
+	 * @var float|null
+	 */
+	public ?float $movingDuration = null;
+
+	/**
+	 * Average speed while moving in meters per second (m/s)
+	 * @var float|null
+	 */
+	public ?float $movingAverageSpeed = null;
+
+	/**
+	 * Average heart rate in beats per minute (bpm)
+	 * @var float|null
+	 */
+	public ?float $averageHeartRate = null;
+
+	/**
+	 * Maximum heart rate in beats per minute (bpm)
+	 * @var float|null
+	 */
+	public ?float $maxHeartRate = null;
+
+	/**
+	 * Average cadence in revolutions per minute (rpm)
+	 * @var float|null
+	 */
+	public ?float $averageCadence = null;
+
+	/**
+	 * Average temperature in degrees Celsius
+	 * @var float|null
+	 */
+	public ?float $averageTemperature = null;
+
+	/**
 	 * Reset all stats
 	 * @return void
 	 */
@@ -126,6 +168,13 @@ class Stats implements \JsonSerializable
 		$this->finishedAt = null;
 		$this->finishedAtCoords = null;
 		$this->duration = null;
+		$this->bounds = null;
+		$this->movingDuration = null;
+		$this->movingAverageSpeed = null;
+		$this->averageHeartRate = null;
+		$this->maxHeartRate = null;
+		$this->averageCadence = null;
+		$this->averageTemperature = null;
 	}
 
 	public function jsonSerialize(): array
@@ -146,6 +195,13 @@ class Stats implements \JsonSerializable
 			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt),
 			'finishedAtCoords' => $this->finishedAtCoords,
 			'duration' => $this->duration,
+			'bounds' => $this->bounds?->jsonSerialize(),
+			'movingDuration' => $this->movingDuration,
+			'movingAvgSpeed' => $this->movingAverageSpeed,
+			'avgHeartRate' => $this->averageHeartRate,
+			'maxHeartRate' => $this->maxHeartRate,
+			'avgCadence' => $this->averageCadence,
+			'avgTemperature' => $this->averageTemperature,
 		], fn($v) => $v !== null);
 	}
 }

@@ -6,28 +6,12 @@
 
 namespace phpGPX\Helpers;
 
-use phpGPX\Models\Point;
-
 /**
  * Class DateTimeHelper
  * @package phpGPX\Helpers
  */
 class DateTimeHelper
 {
-
-	/**
-	 * @param Point $point1
-	 * @param Point $point2
-	 * @return bool|int
-	 */
-	public static function comparePointsByTimestamp(Point $point1, Point $point2): bool|int
-    {
-		if ($point1->time == $point2->time) {
-			return 0;
-		}
-		return $point1->time > $point2->time;
-	}
-
     /**
      * @param $datetime
      * @param string $format

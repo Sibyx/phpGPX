@@ -10,25 +10,18 @@
 
 namespace phpGPX\Helpers;
 
-use phpGPX\Config;
 use phpGPX\Models\Point;
 
 class DistanceCalculator
 {
-	/** @var Point[] */
-	private array $points;
-
-	private Config $config;
-
 	/**
 	 * @param Point[] $points
-	 * @param Config $config
 	 */
-	public function __construct(array $points, Config $config)
-	{
-		$this->points = $points;
-		$this->config = $config;
-	}
+	public function __construct(
+		private array $points,
+		private bool $applySmoothing = false,
+		private int $smoothingThreshold = 2,
+	) {}
 
 	public function getRawDistance(): float
 	{
@@ -58,10 +51,10 @@ class DistanceCalculator
 
 			$curPoint->difference = call_user_func($strategy, $lastConsideredPoint, $curPoint);
 
-			if ($this->config->applyDistanceSmoothing) {
+			if ($this->applySmoothing) {
 				$differenceFromLastConsideredPoint = call_user_func($strategy, $curPoint, $lastConsideredPoint);
 
-				if ($differenceFromLastConsideredPoint > $this->config->distanceSmoothingThreshold) {
+				if ($differenceFromLastConsideredPoint > $this->smoothingThreshold) {
 					$distance += $differenceFromLastConsideredPoint;
 					$lastConsideredPoint = $curPoint;
 				}

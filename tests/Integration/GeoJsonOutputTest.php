@@ -2,7 +2,6 @@
 
 namespace phpGPX\Tests\Integration;
 
-use phpGPX\Config;
 use phpGPX\Models\Point;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
@@ -66,7 +65,6 @@ class GeoJsonOutputTest extends TestCase
 		$p2->elevation = 1.0;
 
 		$route->points = [$p1, $p2];
-		$route->recalculateStats(new Config());
 
 		$json = $route->jsonSerialize();
 
@@ -105,7 +103,6 @@ class GeoJsonOutputTest extends TestCase
 		$seg2->points = [$p3];
 
 		$track->segments = [$seg1, $seg2];
-		$track->recalculateStats(new Config());
 
 		$json = $track->jsonSerialize();
 

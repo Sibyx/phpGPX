@@ -10,7 +10,7 @@ namespace phpGPX\Models;
  * Class Collection
  * @package phpGPX\Models
  */
-abstract class Collection implements \JsonSerializable, StatsCalculator
+abstract class Collection implements \JsonSerializable
 {
 
 	/**
@@ -88,6 +88,7 @@ abstract class Collection implements \JsonSerializable, StatsCalculator
 		$this->number = null;
 		$this->type = null;
 		$this->extensions = null;
+		$this->stats = null;
 	}
 
 
