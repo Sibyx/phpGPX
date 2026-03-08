@@ -13,7 +13,7 @@ use phpGPX\phpGPX;
  * Class Track
  * @package phpGPX\Models
  */
-class Track extends Collection implements \phpGPX\GpxSerializable
+class Track extends Collection
 {
 
 	/**
@@ -83,14 +83,6 @@ class Track extends Collection implements \phpGPX\GpxSerializable
 			],
 			'properties' => $properties ?: new \stdClass(),
 		];
-	}
-
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-	}
-
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
 	}
 
 	/**

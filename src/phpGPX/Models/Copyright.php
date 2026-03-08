@@ -6,15 +6,13 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
-
 /**
  * Class Copyright
  * Information about the copyright holder and any license governing use of this file.
  * By linking to an appropriate license, you may place your data into the public domain or grant additional usage rights.
  * @package phpGPX\Models
  */
-class Copyright implements \JsonSerializable, GpxSerializable
+class Copyright implements \JsonSerializable
 {
 
 	/**
@@ -53,25 +51,5 @@ class Copyright implements \JsonSerializable, GpxSerializable
 			'year' => $this->year,
 			'license' => $this->license,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }

@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
 use phpGPX\Models\Extensions\TrackPointExtension;
 
 /**
@@ -14,7 +13,7 @@ use phpGPX\Models\Extensions\TrackPointExtension;
  * TODO: http://www.garmin.com/xmlschemas/GpxExtensions/v3
  * @package phpGPX\Models
  */
-class Extensions implements \JsonSerializable, GpxSerializable
+class Extensions implements \JsonSerializable
 {
 	/**
 	 * GPX Garmin TrackPointExtension v1
@@ -42,25 +41,5 @@ class Extensions implements \JsonSerializable, GpxSerializable
 			'trackpoint' => $this->trackPointExtension,
 			'unsupported' => !empty($this->unsupported) ? $this->unsupported : null,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }

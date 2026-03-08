@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\SerializationHelper;
@@ -19,7 +18,7 @@ use phpGPX\phpGPX;
  * start a new Track Segment for each continuous span of track data.
  * @package phpGPX\Models
  */
-class Segment implements \JsonSerializable, GpxSerializable, StatsCalculator
+class Segment implements \JsonSerializable, StatsCalculator
 {
 	/**
 	 * Array of segment points
@@ -70,15 +69,6 @@ class Segment implements \JsonSerializable, GpxSerializable, StatsCalculator
 			'properties' => $properties ?: new \stdClass(),
 		];
 	}
-
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-	}
-
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-	}
-
 
 	/**
 	 * @return array|Point[]

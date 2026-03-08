@@ -15,7 +15,7 @@ use phpGPX\phpGPX;
  * Class Route
  * @package phpGPX\Models
  */
-class Route extends Collection implements \phpGPX\GpxSerializable
+class Route extends Collection
 {
 
 	/**
@@ -80,30 +80,6 @@ class Route extends Collection implements \phpGPX\GpxSerializable
 			],
 			'properties' => $properties ?: new \stdClass(),
 		];
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-		// This method would be called to serialize a Route to GPX XML
-		// Since RouteParser already handles this, this method can be empty
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
-		// This method would be called to deserialize GPX XML to a Route
-		// Since RouteParser already handles this, this method can be empty
 	}
 
 	/**

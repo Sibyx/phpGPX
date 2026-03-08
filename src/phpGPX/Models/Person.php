@@ -6,14 +6,12 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
-
 /**
  * Class Person
  * A person or organisation
  * @package phpGPX\Models
  */
-class Person implements \JsonSerializable, GpxSerializable
+class Person implements \JsonSerializable
 {
 
 	/**
@@ -55,25 +53,5 @@ class Person implements \JsonSerializable, GpxSerializable
 			'email' => $this->email,
 			'links' => !empty($this->links) ? $this->links : null,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }

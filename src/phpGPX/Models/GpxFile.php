@@ -18,7 +18,7 @@ use phpGPX\phpGPX;
  * Representation of GPX file.
  * @package phpGPX\Models
  */
-class GpxFile implements \JsonSerializable, \phpGPX\GpxSerializable
+class GpxFile implements \JsonSerializable
 {
 	/**
 	 * A list of waypoints.
@@ -101,31 +101,6 @@ class GpxFile implements \JsonSerializable, \phpGPX\GpxSerializable
 
 		return $result;
 	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation of GpxSerializable interface
-		// This method would be called to serialize a GpxFile to GPX XML
-		// Since the toXML method already handles this, this method can be empty
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation of GpxSerializable interface
-		// This method would be called to deserialize GPX XML to a GpxFile
-		// Since the parse method in phpGPX class already handles this, this method can be empty
-	}
-
 
 	/**
 	 * Return GeoJSON representation of GPX file.

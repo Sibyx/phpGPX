@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\phpGPX;
 
@@ -14,7 +13,7 @@ use phpGPX\phpGPX;
  * Class Stats
  * @package phpGPX\Models
  */
-class Stats implements \JsonSerializable, GpxSerializable
+class Stats implements \JsonSerializable
 {
 
 	/**
@@ -149,25 +148,5 @@ class Stats implements \JsonSerializable, GpxSerializable
 			'finishedAtCoords' => $this->finishedAtCoords,
 			'duration' => $this->duration,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }

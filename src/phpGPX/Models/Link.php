@@ -6,15 +6,13 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
-
 /**
  * Class Link according to GPX 1.1 specification.
  * A link to an external resource (Web page, digital photo, video clip, etc) with additional information.
  * @see http://www.topografix.com/GPX/1/1/#type_linkType
  * @package phpGPX\Models
  */
-class Link implements \JsonSerializable, GpxSerializable
+class Link implements \JsonSerializable
 {
 
 	/**
@@ -53,25 +51,5 @@ class Link implements \JsonSerializable, GpxSerializable
 			'text' => $this->text,
 			'type' => $this->type,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }

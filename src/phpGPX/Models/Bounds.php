@@ -6,9 +6,7 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
-
-class Bounds implements \JsonSerializable, GpxSerializable
+class Bounds implements \JsonSerializable
 {
     public const TAG_NAME = 'bounds';
 
@@ -71,17 +69,5 @@ class Bounds implements \JsonSerializable, GpxSerializable
             (float) $node['maxlat'],
             (float) $node['maxlon']
         );
-    }
-
-    public static function gpxSerialize(\SimpleXMLElement $node): void
-    {
-        // This method is required by the GpxSerializable interface
-        // but is not used in this class
-    }
-
-    public function gpxDeserialize(\DOMDocument &$document): void
-    {
-        // This method is required by the GpxSerializable interface
-        // but is not used in this class
     }
 }

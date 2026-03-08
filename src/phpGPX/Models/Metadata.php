@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DateTimeHelper;
 
 /**
@@ -15,7 +14,7 @@ use phpGPX\Helpers\DateTimeHelper;
  * Providing rich, meaningful information about your GPX files allows others to search for and use your GPS data.
  * @package phpGPX\Models
  */
-class Metadata implements \JsonSerializable, GpxSerializable
+class Metadata implements \JsonSerializable
 {
 
 	/**
@@ -107,25 +106,5 @@ class Metadata implements \JsonSerializable, GpxSerializable
 			'bounds' => $this->bounds,
 			'extensions' => $this->extensions,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }

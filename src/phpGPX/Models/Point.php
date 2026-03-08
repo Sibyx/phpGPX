@@ -23,7 +23,7 @@ enum PointType: string
  * @see http://www.topografix.com/GPX/1/1/#type_wptType
  * @package phpGPX\Models
  */
-class Point implements \JsonSerializable, \phpGPX\GpxSerializable
+class Point implements \JsonSerializable
 {
 	const WAYPOINT = 'waypoint';
 	const TRACKPOINT = 'track';

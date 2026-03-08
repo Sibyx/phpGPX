@@ -6,14 +6,12 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\GpxSerializable;
-
 /**
  * Class Email
  * An email address. Broken into two parts (id and domain) to help prevent email harvesting.
  * @package phpGPX\Models
  */
-class Email implements \JsonSerializable, GpxSerializable
+class Email implements \JsonSerializable
 {
 
 	/**
@@ -43,25 +41,5 @@ class Email implements \JsonSerializable, GpxSerializable
 			'id' => $this->id,
 			'domain' => $this->domain,
 		], fn($v) => $v !== null);
-	}
-
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-		// Implementation required by GpxSerializable interface
-	}
-
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-		// Implementation required by GpxSerializable interface
 	}
 }
