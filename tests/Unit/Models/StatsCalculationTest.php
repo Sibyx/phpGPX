@@ -9,6 +9,7 @@ use phpGPX\Analysis\Engine;
 use phpGPX\Analysis\TimestampAnalyzer;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Stats;
@@ -34,7 +35,7 @@ class StatsCalculationTest extends TestCase
 		?float $ele = null,
 		?string $time = null
 	): Point {
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 		$p->elevation = $ele;
@@ -48,7 +49,7 @@ class StatsCalculationTest extends TestCase
 		?float $ele = null,
 		?string $time = null
 	): Point {
-		$p = new Point(Point::ROUTEPOINT);
+		$p = new Point(PointType::Routepoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 		$p->elevation = $ele;
@@ -346,24 +347,6 @@ class StatsCalculationTest extends TestCase
 	}
 
 	// --- Stats model ---
-
-	public function testStatsReset(): void
-	{
-		$stats = new Stats();
-		$stats->distance = 100.0;
-		$stats->duration = 60.0;
-		$stats->averageSpeed = 1.67;
-		$stats->cumulativeElevationGain = 50.0;
-
-		$stats->reset();
-
-		$this->assertNull($stats->distance);
-		$this->assertNull($stats->duration);
-		$this->assertNull($stats->averageSpeed);
-		$this->assertNull($stats->cumulativeElevationGain);
-		$this->assertNull($stats->startedAt);
-		$this->assertNull($stats->finishedAt);
-	}
 
 	public function testStatsJsonSerialize(): void
 	{

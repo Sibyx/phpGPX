@@ -12,6 +12,7 @@ use phpGPX\Analysis\Engine;
 use phpGPX\Analysis\TrackPointExtensionAnalyzer;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Stats;
@@ -26,7 +27,7 @@ class EngineTest extends TestCase
 		?float $ele = null,
 		?string $time = null
 	): Point {
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 		$p->elevation = $ele;
@@ -250,12 +251,12 @@ class EngineTest extends TestCase
 	{
 		$engine = Engine::default(sortByTimestamp: true);
 
-		$p1 = new Point(Point::ROUTEPOINT);
+		$p1 = new Point(PointType::Routepoint);
 		$p1->latitude = 48.002;
 		$p1->longitude = 17.0;
 		$p1->time = new \DateTime('2024-01-01T10:00:20Z');
 
-		$p2 = new Point(Point::ROUTEPOINT);
+		$p2 = new Point(PointType::Routepoint);
 		$p2->latitude = 48.000;
 		$p2->longitude = 17.0;
 		$p2->time = new \DateTime('2024-01-01T10:00:00Z');

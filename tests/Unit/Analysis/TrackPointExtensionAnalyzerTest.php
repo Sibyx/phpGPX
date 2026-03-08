@@ -8,6 +8,7 @@ use phpGPX\Models\Extensions;
 use phpGPX\Models\Extensions\TrackPointExtension;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
@@ -29,7 +30,7 @@ class TrackPointExtensionAnalyzerTest extends TestCase
 		?float $cad = null,
 		?float $aTemp = null
 	): Point {
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 

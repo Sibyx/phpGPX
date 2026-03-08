@@ -118,10 +118,9 @@ To add support for a new GPX extension type, implement two interfaces:
 ### 1. Extension model — `ExtensionInterface`
 
 ```php
-use phpGPX\Models\Extensions\AbstractExtension;
 use phpGPX\Models\Extensions\ExtensionInterface;
 
-class MyExtension extends AbstractExtension implements ExtensionInterface
+class MyExtension implements ExtensionInterface
 {
     public const NAMESPACE = 'http://example.com/ext/v1';
     public const XSD = 'http://example.com/ext/v1/schema.xsd';

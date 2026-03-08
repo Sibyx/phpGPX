@@ -1,13 +1,10 @@
 <?php
-/**
- * Created            15/02/2017 18:14
- * @author            Jakub Dubec <jakub.dubec@gmail.com>
- */
 
 namespace phpGPX\Parsers;
 
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 
 abstract class PointParser extends AbstractParser
 {
@@ -95,29 +92,22 @@ abstract class PointParser extends AbstractParser
 		];
 	}
 
-	private static array $typeMapper = [
-		'trkpt' => Point::TRACKPOINT,
-		'wpt' => Point::WAYPOINT,
-		'rtept' => Point::ROUTEPOINT
-	];
-
 	public static function parse(\SimpleXMLElement $node): ?Point
 	{
-		if (!array_key_exists($node->getName(), self::$typeMapper)) {
+		$pointType = PointType::tryFrom($node->getName());
+		if ($pointType === null) {
 			return null;
 		}
 
-		$point = new Point(self::$typeMapper[$node->getName()]);
+		$point = new Point($pointType);
 
 		$point->latitude = isset($node['lat']) ? ((float) $node['lat']) : null;
 		$point->longitude = isset($node['lon']) ? ((float) $node['lon']) : null;
 
 		self::mapAttributesFromXML($node, $point);
 
-		// Datetime
 		$point->time = isset($node->time) ? DateTimeHelper::parseDateTime($node->time) : null;
 
-		// Delegated parsers
 		$mapper = self::getAttributeMapper();
 		$point->links = self::parseDelegated($node, 'link', $mapper['link']);
 		$point->extensions = self::parseDelegated($node, 'extensions', $mapper['extensions']);
@@ -125,14 +115,9 @@ abstract class PointParser extends AbstractParser
 		return $point;
 	}
 
-	/**
-	 * @param Point $point
-	 * @param \DOMDocument $document
-	 * @return \DOMElement
-	 */
 	public static function toXML(Point $point, \DOMDocument &$document): \DOMElement
 	{
-		$node = $document->createElement(array_search($point->getPointType(), self::$typeMapper));
+		$node = $document->createElement($point->getPointType()->value);
 
 		if ($point->latitude !== null) {
 			$node->setAttribute('lat', $point->latitude);
@@ -143,18 +128,15 @@ abstract class PointParser extends AbstractParser
 
 		self::mapAttributesToXML($point, $document, $node);
 
-		// Datetime
 		if ($point->time !== null) {
 			$child = $document->createElement('time', DateTimeHelper::formatDateTime($point->time));
 			$node->appendChild($child);
 		}
 
-		// Delegated parsers
 		$mapper = self::getAttributeMapper();
 		self::serializeDelegated($point->links, $mapper['link'], $document, $node);
 		self::serializeDelegated($point->extensions, $mapper['extensions'], $document, $node);
 
 		return $node;
 	}
-
 }

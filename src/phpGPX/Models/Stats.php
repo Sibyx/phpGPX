@@ -147,36 +147,6 @@ class Stats implements \JsonSerializable
 	 */
 	public ?float $averageTemperature = null;
 
-	/**
-	 * Reset all stats
-	 * @return void
-	 */
-	public function reset(): void
-	{
-		$this->distance = null;
-		$this->realDistance = null;
-		$this->averageSpeed = null;
-		$this->averagePace = null;
-		$this->minAltitude = null;
-		$this->maxAltitude = null;
-		$this->minAltitudeCoords = null;
-		$this->maxAltitudeCoords = null;
-		$this->cumulativeElevationGain = null;
-		$this->cumulativeElevationLoss = null;
-		$this->startedAt = null;
-		$this->startedAtCoords = null;
-		$this->finishedAt = null;
-		$this->finishedAtCoords = null;
-		$this->duration = null;
-		$this->bounds = null;
-		$this->movingDuration = null;
-		$this->movingAverageSpeed = null;
-		$this->averageHeartRate = null;
-		$this->maxHeartRate = null;
-		$this->averageCadence = null;
-		$this->averageTemperature = null;
-	}
-
 	public function jsonSerialize(): array
 	{
 		return array_filter([

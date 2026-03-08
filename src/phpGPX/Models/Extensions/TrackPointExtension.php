@@ -13,7 +13,7 @@ namespace phpGPX\Models\Extensions;
  *
  * @see https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
  */
-class TrackPointExtension extends AbstractExtension implements ExtensionInterface
+class TrackPointExtension implements ExtensionInterface
 {
 	const NAMESPACE_URI = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2';
 	const SCHEMA_LOCATION = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd';

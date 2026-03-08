@@ -19,7 +19,7 @@ namespace phpGPX\Models\Extensions;
  * ## Implementing a custom extension
  *
  * ```php
- * class MyExtension extends AbstractExtension implements ExtensionInterface
+ * class MyExtension implements ExtensionInterface
  * {
  *     public static function getNamespace(): string { return 'http://example.com/ext/v1'; }
  *     public static function getSchemaLocation(): string { return 'http://example.com/ext/v1/schema.xsd'; }

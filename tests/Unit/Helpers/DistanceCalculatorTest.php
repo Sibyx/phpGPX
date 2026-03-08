@@ -5,13 +5,14 @@ namespace phpGPX\Tests\Unit\Helpers;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use PHPUnit\Framework\TestCase;
 
 class DistanceCalculatorTest extends TestCase
 {
 	private function makePoint(float $lat, float $lon, ?float $ele = null): Point
 	{
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 		$p->elevation = $ele;

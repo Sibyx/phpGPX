@@ -3,6 +3,7 @@
 namespace phpGPX\Tests\Integration;
 
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
@@ -32,7 +33,7 @@ class GeoJsonOutputTest extends TestCase
 
 	public function testWaypointJsonIsPointFeature(): void
 	{
-		$point = new Point(Point::WAYPOINT);
+		$point = new Point(PointType::Waypoint);
 		$point->latitude = 49.363;
 		$point->longitude = 0.080;
 		$point->elevation = 100.0;
@@ -54,12 +55,12 @@ class GeoJsonOutputTest extends TestCase
 		$route = new Route();
 		$route->name = 'Test Route';
 
-		$p1 = new Point(Point::ROUTEPOINT);
+		$p1 = new Point(PointType::Routepoint);
 		$p1->latitude = 54.932;
 		$p1->longitude = 9.860;
 		$p1->elevation = 0.0;
 
-		$p2 = new Point(Point::ROUTEPOINT);
+		$p2 = new Point(PointType::Routepoint);
 		$p2->latitude = 54.933;
 		$p2->longitude = 9.861;
 		$p2->elevation = 1.0;
@@ -84,19 +85,19 @@ class GeoJsonOutputTest extends TestCase
 		$track->name = 'Test Track';
 
 		$seg1 = new Segment();
-		$p1 = new Point(Point::TRACKPOINT);
+		$p1 = new Point(PointType::Trackpoint);
 		$p1->latitude = 46.571;
 		$p1->longitude = 8.414;
 		$p1->elevation = 2419.0;
 
-		$p2 = new Point(Point::TRACKPOINT);
+		$p2 = new Point(PointType::Trackpoint);
 		$p2->latitude = 46.572;
 		$p2->longitude = 8.415;
 		$p2->elevation = 2420.0;
 		$seg1->points = [$p1, $p2];
 
 		$seg2 = new Segment();
-		$p3 = new Point(Point::TRACKPOINT);
+		$p3 = new Point(PointType::Trackpoint);
 		$p3->latitude = 46.573;
 		$p3->longitude = 8.416;
 		$p3->elevation = 2421.0;

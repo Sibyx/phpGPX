@@ -7,6 +7,7 @@ use phpGPX\Analysis\MovementAnalyzer;
 use phpGPX\Analysis\Engine;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
@@ -16,7 +17,7 @@ class MovementAnalyzerTest extends TestCase
 {
 	private function makePoint(float $lat, float $lon, string $time): Point
 	{
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 		$p->time = new \DateTime($time);
@@ -134,11 +135,11 @@ class MovementAnalyzerTest extends TestCase
 	{
 		$engine = $this->makeEngine();
 
-		$p1 = new Point(Point::TRACKPOINT);
+		$p1 = new Point(PointType::Trackpoint);
 		$p1->latitude = 48.0;
 		$p1->longitude = 17.0;
 
-		$p2 = new Point(Point::TRACKPOINT);
+		$p2 = new Point(PointType::Trackpoint);
 		$p2->latitude = 48.1;
 		$p2->longitude = 17.1;
 

@@ -4,13 +4,14 @@ namespace phpGPX\Tests\Unit\Helpers;
 
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use PHPUnit\Framework\TestCase;
 
 class ElevationGainLossCalculatorTest extends TestCase
 {
 	private function makePoint(float $ele): Point
 	{
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = 46.57;
 		$p->longitude = 8.41;
 		$p->elevation = $ele;
@@ -88,7 +89,7 @@ class ElevationGainLossCalculatorTest extends TestCase
 	public function testNullElevationSkipped(): void
 	{
 		$p1 = $this->makePoint(100);
-		$p2 = new Point(Point::TRACKPOINT);
+		$p2 = new Point(PointType::Trackpoint);
 		$p2->latitude = 46.57;
 		$p2->longitude = 8.41;
 		$p2->elevation = null;

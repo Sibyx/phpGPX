@@ -7,6 +7,7 @@ use phpGPX\Models\GpxFile;
 use phpGPX\Models\Link;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
 
@@ -75,7 +76,7 @@ $track->source 					= sprintf("MySpecificGarminDevice");
 $wp = [];
 foreach ($sample_data as $sample_point) {
 	// Creating trackpoint
-	$point 						= new Point(Point::WAYPOINT);
+	$point 						= new Point(PointType::Waypoint);
 	$point->latitude 			= $sample_point['latitude'];
 	$point->longitude 			= $sample_point['longitude'];
 	$point->elevation 			= $sample_point['elevation'];

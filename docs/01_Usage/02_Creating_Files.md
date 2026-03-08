@@ -8,6 +8,7 @@ You can build GPX files programmatically.
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
 use phpGPX\phpGPX;
@@ -34,7 +35,7 @@ $points = [
 ];
 
 foreach ($points as $data) {
-    $point = new Point(Point::TRACKPOINT);
+    $point = new Point(PointType::Trackpoint);
     $point->latitude = $data['lat'];
     $point->longitude = $data['lon'];
     $point->elevation = $data['ele'];
@@ -67,6 +68,7 @@ echo "Distance: " . round($gpxFile->tracks[0]->stats->distance) . " m\n";
 ```php
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\phpGPX;
 
@@ -82,7 +84,7 @@ $waypoints = [
 ];
 
 foreach ($waypoints as $data) {
-    $point = new Point(Point::ROUTEPOINT);
+    $point = new Point(PointType::Routepoint);
     $point->latitude = $data['lat'];
     $point->longitude = $data['lon'];
     $point->elevation = $data['ele'];
@@ -100,11 +102,12 @@ $gpxFile->save('trail.gpx', phpGPX::XML_FORMAT);
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Link;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\phpGPX;
 
 $gpxFile = new GpxFile();
 
-$waypoint = new Point(Point::WAYPOINT);
+$waypoint = new Point(PointType::Waypoint);
 $waypoint->latitude = 48.8566;
 $waypoint->longitude = 2.3522;
 $waypoint->elevation = 35;

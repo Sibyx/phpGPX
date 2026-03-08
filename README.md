@@ -100,6 +100,7 @@ $file->save('output.json', phpGPX::JSON_FORMAT);
 
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
 use phpGPX\Models\Extensions;
@@ -113,7 +114,7 @@ $track->type = 'RUN';
 
 $segment = new Segment();
 
-$point = new Point(Point::TRACKPOINT);
+$point = new Point(PointType::Trackpoint);
 $point->latitude = 54.9328621088893;
 $point->longitude = 9.860624216140083;
 $point->elevation = 0;

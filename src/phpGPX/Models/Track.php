@@ -15,20 +15,8 @@ use phpGPX\Helpers\SerializationHelper;
 class Track extends Collection
 {
 
-	/**
-	 * Array of Track segments
-	 * @var Segment[]
-	 */
-	public array $segments;
-
-	/**
-	 * Track constructor.
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->segments = [];
-	}
+	/** @var Segment[] */
+	public array $segments = [];
 
 
 	/**

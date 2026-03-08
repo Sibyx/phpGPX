@@ -6,6 +6,7 @@ use phpGPX\Analysis\BoundsAnalyzer;
 use phpGPX\Analysis\Engine;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Stats;
@@ -23,7 +24,7 @@ class BoundsAnalyzerTest extends TestCase
 
 	private function makePoint(float $lat, float $lon): Point
 	{
-		$p = new Point(Point::TRACKPOINT);
+		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
 		$p->longitude = $lon;
 		return $p;
@@ -138,7 +139,7 @@ class BoundsAnalyzerTest extends TestCase
 
 	public function testMetadataBoundsIncludesWaypoints(): void
 	{
-		$waypoint = new Point(Point::WAYPOINT);
+		$waypoint = new Point(PointType::Waypoint);
 		$waypoint->latitude = 50.0;
 		$waypoint->longitude = 20.0;
 

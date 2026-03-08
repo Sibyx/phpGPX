@@ -7,6 +7,7 @@ use phpGPX\Models\GpxFile;
 use phpGPX\Models\Link;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
+use phpGPX\Models\PointType;
 use phpGPX\Models\Segment;
 use phpGPX\Models\Track;
 use phpGPX\Models\Extensions;
@@ -84,7 +85,7 @@ $segment 						= new Segment();
 
 foreach ($sample_data as $sample_point) {
 	// Creating trackpoint
-	$point 						= new Point(Point::TRACKPOINT);
+	$point 						= new Point(PointType::Trackpoint);
 	$point->latitude 			= $sample_point['latitude'];
 	$point->longitude 			= $sample_point['longitude'];
 	$point->elevation 			= $sample_point['elevation'];
@@ -106,7 +107,7 @@ $track->segments[] 				= $segment;
 $gpx_file->tracks[] 			= $track;
 
 // Create waypoint
-$point 							= new Point(Point::WAYPOINT);
+$point 							= new Point(PointType::Waypoint);
 $point->name 					= 'Example Waypoint';
 $point->latitude 				= $sample_point['latitude'];
 $point->longitude 				= $sample_point['longitude'];
