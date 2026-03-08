@@ -5,13 +5,6 @@ namespace phpGPX\Models;
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\SerializationHelper;
 
-enum PointType: string
-{
-	case Waypoint = 'wpt';
-	case Trackpoint = 'trkpt';
-	case Routepoint = 'rtept';
-}
-
 /**
  * GPX point representation according to GPX 1.1 specification.
  * @see http://www.topografix.com/GPX/1/1/#type_wptType
