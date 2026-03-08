@@ -46,12 +46,14 @@ jobs:
         run: composer install --no-interaction --prefer-dist
 
       - name: Run unit tests with coverage
-        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --testsuite unit --coverage-clover coverage-unit.xml
+        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --testsuite unit --coverage-clover coverage-unit.xml --log-junit junit-unit.xml
 
       - name: Run integration tests with coverage
-        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --testsuite integration --coverage-clover coverage-integration.xml
+        if: ${{ !cancelled() }}
+        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --testsuite integration --coverage-clover coverage-integration.xml --log-junit junit-integration.xml
 
       - name: Upload unit coverage to Codecov
+        if: ${{ !cancelled() }}
         uses: codecov/codecov-action@v4
         with:
           files: coverage-unit.xml
@@ -60,9 +62,28 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload integration coverage to Codecov
+        if: ${{ !cancelled() }}
         uses: codecov/codecov-action@v4
         with:
           files: coverage-integration.xml
+          flags: integration
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload unit test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          files: junit-unit.xml
+          flags: unit
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload integration test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          files: junit-integration.xml
           flags: integration
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
