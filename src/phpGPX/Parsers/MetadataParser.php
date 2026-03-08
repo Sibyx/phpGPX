@@ -13,131 +13,101 @@ use phpGPX\Models\Metadata;
  * Class MetadataParser
  * @package phpGPX\Parsers
  */
-abstract class MetadataParser
+abstract class MetadataParser extends AbstractParser
 {
-	private static $tagName = 'metadata';
+	private static string $tagName = 'metadata';
 
-	private static $attributeMapper = [
-		'name' => [
-			'name' => 'name',
-			'type' => 'string'
-		],
-		'desc' => [
-			'name' => 'description',
-			'type' => 'string'
-		],
-		'author' => [
-			'name' => 'author',
-			'type' => 'object'
-		],
-		'copyright' => [
-			'name' => 'copyright',
-			'type' => 'object'
-		],
-		'link' => [
-			'name' => 'links',
-			'type' => 'array'
-		],
-		'time' => [
-			'name' => 'time',
-			'type' => 'object'
-		],
-		'keywords' => [
-			'name' => 'keywords',
-			'type' => 'string'
-		],
-		'bounds' => [
-			'name' => 'bounds',
-			'type' => 'object'
-		],
-		'extensions' => [
-			'name' => 'extensions',
-			'type' => 'object'
-		]
-	];
+	protected static function getAttributeMapper(): array
+	{
+		return [
+			'name' => [
+				'name' => 'name',
+				'type' => 'string'
+			],
+			'desc' => [
+				'name' => 'description',
+				'type' => 'string'
+			],
+			'author' => [
+				'name' => 'author',
+				'type' => 'object',
+				'parser' => PersonParser::class,
+			],
+			'copyright' => [
+				'name' => 'copyright',
+				'type' => 'object',
+				'parser' => CopyrightParser::class,
+			],
+			'link' => [
+				'name' => 'links',
+				'type' => 'array',
+				'parser' => LinkParser::class,
+			],
+			'time' => [
+				'name' => 'time',
+				'type' => 'datetime'
+			],
+			'keywords' => [
+				'name' => 'keywords',
+				'type' => 'string'
+			],
+			'bounds' => [
+				'name' => 'bounds',
+				'type' => 'object',
+				'parser' => BoundsParser::class,
+			],
+			'extensions' => [
+				'name' => 'extensions',
+				'type' => 'object',
+				'parser' => ExtensionParser::class,
+			]
+		];
+	}
 
 	/**
 	 * @param \SimpleXMLElement $node
 	 * @return Metadata
 	 */
-	public static function parse(\SimpleXMLElement $node)
+	public static function parse(\SimpleXMLElement $node): Metadata
 	{
 		$metadata = new Metadata();
 
-		foreach (self::$attributeMapper as $key => $attribute) {
-			switch ($key) {
-				case 'author':
-					$metadata->author = isset($node->author) ? PersonParser::parse($node->author) : null;
-					break;
-				case 'copyright':
-					$metadata->copyright = isset($node->copyright) ? CopyrightParser::parse($node->copyright) : null;
-					break;
-				case 'link':
-					$metadata->links = isset($node->link) ? LinkParser::parse($node->link) : null;
-					break;
-				case 'time':
-					$metadata->time = isset($node->time) ? DateTimeHelper::parseDateTime($node->time) : null;
-					break;
-				case 'bounds':
-					$metadata->bounds = isset($node->bounds) ? BoundsParser::parse($node->bounds) : null;
-					break;
-				case 'extensions':
-					$metadata->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
-					break;
-				default:
-					if (!in_array($attribute['type'], ['object', 'array'])) {
-						if (isset($node->$key)) {
-							$value = (string) $node->$key;
-							settype($value, $attribute['type']);
-							$metadata->{$attribute['name']} = $value;
-						}
-					}
-					break;
+		self::mapAttributesFromXML($node, $metadata);
+
+		// Datetime
+		$metadata->time = isset($node->time) ? DateTimeHelper::parseDateTime($node->time) : null;
+
+		// Delegated parsers
+		foreach (self::getAttributeMapper() as $key => $attribute) {
+			if (isset($attribute['parser'])) {
+				$metadata->{$attribute['name']} = self::parseDelegated($node, $key, $attribute);
 			}
 		}
 
 		return $metadata;
 	}
 
-	public static function toXML(Metadata $metadata, \DOMDocument &$document)
+	/**
+	 * @param Metadata $metadata
+	 * @param \DOMDocument $document
+	 * @return \DOMElement
+	 */
+	public static function toXML(Metadata $metadata, \DOMDocument &$document): \DOMElement
 	{
-		$node =  $document->createElement(self::$tagName);
+		$node = $document->createElement(self::$tagName);
 
-		foreach (self::$attributeMapper as $key => $attribute) {
-			if (!is_null($metadata->{$attribute['name']})) {
-				switch ($key) {
-					case 'author':
-						$child = PersonParser::toXML($metadata->author, $document);
-						break;
-					case 'copyright':
-						$child = CopyrightParser::toXML($metadata->copyright, $document);
-						break;
-					case 'link':
-						$child = LinkParser::toXMLArray($metadata->links, $document);
-						break;
-					case 'time':
-						$child = $document->createElement('time', DateTimeHelper::formatDateTime($metadata->time));
-						break;
-					case 'bounds':
-						$child = BoundsParser::toXML($metadata->bounds, $document);
-						break;
-					case 'extensions':
-						$child = ExtensionParser::toXML($metadata->extensions, $document);
-						break;
-					default:
-						$child = $document->createElement($key);
-						$elementText = $document->createTextNode((string) $metadata->{$attribute['name']});
-						$child->appendChild($elementText);
-						break;
-				}
+		self::mapAttributesToXML($metadata, $document, $node);
 
-				if (is_array($child)) {
-					foreach ($child as $item) {
-						$node->appendChild($item);
-					}
-				} else {
-					$node->appendChild($child);
-				}
+		// Datetime
+		if ($metadata->time !== null) {
+			$child = $document->createElement('time', DateTimeHelper::formatDateTime($metadata->time));
+			$node->appendChild($child);
+		}
+
+		// Delegated parsers
+		foreach (self::getAttributeMapper() as $key => $attribute) {
+			if (isset($attribute['parser'])) {
+				self::serializeDelegated($metadata->{$attribute['name']}, $attribute, $document, $node);
 			}
 		}
 

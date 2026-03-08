@@ -16,15 +16,15 @@ use phpGPX\Parsers\Extensions\TrackPointExtensionParser;
  */
 abstract class ExtensionParser
 {
-	public static $tagName = 'extensions';
+	public static string $tagName = 'extensions';
 
-	public static $usedNamespaces = [];
+	public static array $usedNamespaces = [];
 
 	/**
 	 * @param \SimpleXMLElement $nodes
 	 * @return Extensions
 	 */
-	public static function parse($nodes)
+	public static function parse(\SimpleXMLElement $nodes): Extensions
 	{
 		$extensions = new Extensions();
 
@@ -55,7 +55,7 @@ abstract class ExtensionParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement|null
 	 */
-	public static function toXML(Extensions $extensions, \DOMDocument &$document)
+	public static function toXML(Extensions $extensions, \DOMDocument &$document): \DOMElement
 	{
 		$node =  $document->createElement(self::$tagName);
 

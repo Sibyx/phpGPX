@@ -14,7 +14,7 @@ use phpGPX\Models\Email;
  */
 abstract class EmailParser
 {
-	private static $tagName = 'email';
+	private static string $tagName = 'email';
 
 	/**
 	 * @param \SimpleXMLElement $node

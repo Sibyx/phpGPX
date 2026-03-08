@@ -15,40 +15,38 @@ use phpGPX\phpGPX;
  */
 abstract class SegmentParser
 {
-	public static $tagName = 'trkseg';
+	public static string $tagName = 'trkseg';
 
 	/**
-	 * @param $nodes \SimpleXMLElement[]
-	 * @return Segment[]
+	 * Parse a single track segment node.
+	 *
+	 * @param \SimpleXMLElement $node
+	 * @return Segment|null
 	 */
-	public static function parse($nodes)
+	public static function parse(\SimpleXMLElement $node): ?Segment
 	{
-		$segments = [];
-
-		foreach ($nodes as $node) {
-			$segment = new Segment();
-
-			if (!$node->count()) {
-				continue;
-			}
-
-			if (isset($node->trkpt)) {
-				$segment->points = [];
-
-				foreach ($node->trkpt as $point) {
-					$segment->points[] = PointParser::parse($point);
-				}
-			}
-			$segment->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
-
-			if (phpGPX::$CALCULATE_STATS) {
-				$segment->recalculateStats();
-			}
-
-			$segments[] = $segment;
+		if (!$node->count()) {
+			return null;
 		}
 
-		return $segments;
+		$segment = new Segment();
+
+		if (isset($node->trkpt)) {
+			foreach ($node->trkpt as $point) {
+				$parsed = PointParser::parse($point);
+				if ($parsed !== null) {
+					$segment->points[] = $parsed;
+				}
+			}
+		}
+
+		$segment->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
+
+		if (phpGPX::$CALCULATE_STATS) {
+			$segment->recalculateStats();
+		}
+
+		return $segment;
 	}
 
 	/**
@@ -56,7 +54,7 @@ abstract class SegmentParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Segment $segment, \DOMDocument &$document)
+	public static function toXML(Segment $segment, \DOMDocument &$document): \DOMElement
 	{
 		$node = $document->createElement(self::$tagName);
 
@@ -69,21 +67,5 @@ abstract class SegmentParser
 		}
 
 		return $node;
-	}
-
-	/**
-	 * @param array $segments
-	 * @param \DOMDocument $document
-	 * @return \DOMElement[]
-	 */
-	public static function toXMLArray(array $segments, \DOMDocument $document)
-	{
-		$result = [];
-
-		foreach ($segments as $segment) {
-			$result[] = self::toXML($segment, $document);
-		}
-
-		return $result;
 	}
 }

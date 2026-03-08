@@ -17,7 +17,7 @@ abstract class WaypointParser
 	 * @param \SimpleXMLElement $nodes - a non empty list of wpt elements
 	 * @return array
 	 */
-	public static function parse(\SimpleXMLElement $nodes)
+	public static function parse(\SimpleXMLElement $nodes): array
 	{
 		$points = [];
 

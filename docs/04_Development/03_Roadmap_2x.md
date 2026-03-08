@@ -11,7 +11,11 @@ The `develop` branch is the home of all 2.x work.
 - **GeoJSON-native JSON output** — `JsonSerializable` on models returns GeoJSON (RFC 7946)
 - **Nullable properties** — GPX files with missing attributes are not rejected
 
+---
+
 ## Completed
+
+### Pre-Phase
 
 - [x] Drop PHP < 8.1 support
 - [x] Upgrade to PHPUnit 10+ (supports 10.5, 11.x, 12.x)
@@ -20,100 +24,29 @@ The `develop` branch is the home of all 2.x work.
 - [x] Standardize test fixture directory naming
 - [x] `PointType` enum (replaces string constants for point type mapping)
 
----
+### Phase 1: Parser Consolidation
 
-## Phase 1: Parser Consolidation
+- [x] **1.1 — AbstractParser base class**
+  Extracted `AbstractParser` with four methods: `mapAttributesFromXML()`, `mapAttributesToXML()`,
+  `parseDelegated()`, `serializeDelegated()`. Five parsers refactored to extend it:
+  TrackParser, RouteParser, PointParser, MetadataParser, TrackPointExtensionParser.
+  Remaining 8 parsers (SegmentParser, LinkParser, PersonParser, EmailParser, CopyrightParser,
+  BoundsParser, ExtensionParser, WaypointParser) are standalone — they are too small or too
+  specialized to benefit from the base class.
 
-**Goal:** Reduce duplication across 13 parser classes by extracting shared attribute-mapping logic.
+- [x] **1.2 — Return type declarations on all parser methods**
+  All `parse()` and `toXML()` methods across all 13 parsers now have explicit return types.
+  All `$tagName` properties typed as `string`.
 
-### 1.1 — Extract `AbstractParser` base class
-
-All parsers (TrackParser, RouteParser, SegmentParser, PointParser, MetadataParser, LinkParser,
-PersonParser, EmailParser, CopyrightParser, BoundsParser) share the same pattern:
-
-```
-$attributeMapper → foreach → switch (special cases) → default settype()
-```
-
-Extract into an abstract base:
-
-```php
-abstract class AbstractParser
-{
-    abstract protected static function getAttributeMapper(): array;
-    abstract protected static function getTagName(): string;
-
-    protected static function mapAttributes(
-        \SimpleXMLElement $node,
-        object $model,
-        array $attributeMapper
-    ): void {
-        foreach ($attributeMapper as $key => $attribute) {
-            if (isset($attribute['parser'])) {
-                // Delegate to child parser (e.g., 'link' => LinkParser::class)
-                continue;
-            }
-            if (!in_array($attribute['type'], ['object', 'array'])) {
-                if (isset($node->$key)) {
-                    $value = (string) $node->$key;
-                    settype($value, $attribute['type']);
-                    $model->{$attribute['name']} = $value;
-                }
-            }
-        }
-    }
-
-    protected static function mapToXML(
-        object $model,
-        \DOMDocument $document,
-        \DOMElement $node,
-        array $attributeMapper
-    ): void {
-        foreach ($attributeMapper as $key => $attribute) {
-            if (!is_null($model->{$attribute['name']})) {
-                $child = $document->createElement($key);
-                $elementText = $document->createTextNode((string) $model->{$attribute['name']});
-                $child->appendChild($elementText);
-                $node->appendChild($child);
-            }
-        }
-    }
-}
-```
-
-Each concrete parser overrides only the special-case handling (time, links, extensions, segments).
-
-**Files to change:**
-- `src/phpGPX/Parsers/AbstractParser.php` (new)
-- All 13 existing parser classes (refactor to extend AbstractParser)
-
-**Estimated impact:** ~40% less code in parsers, single place for type-conversion logic.
-
-### 1.2 — Add return type declarations to all parser methods
-
-Several parsers are missing return types (e.g., `TrackParser::parse()`, `TrackParser::toXML()`).
-Add strict return types for PHP 8.4 compatibility (already partially done).
-
-### 1.3 — Unify `$attributeMapper` format
-
-Introduce a `'parser'` key for nested objects so special-case switches shrink:
-
-```php
-'link' => [
-    'name' => 'links',
-    'type' => 'array',
-    'parser' => LinkParser::class,
-],
-'extensions' => [
-    'name' => 'extensions',
-    'type' => 'object',
-    'parser' => ExtensionParser::class,
-],
-'time' => [
-    'name' => 'time',
-    'type' => 'datetime',  // new built-in type handled by AbstractParser
-],
-```
+- [x] **1.3 — Unified `$attributeMapper` format**
+  Attribute mappers in refactored parsers use a `'parser'` key for delegated parsing and
+  `'datetime'` type for DateTime fields. All switch/case blocks for delegation eliminated.
+  Unified parser contract: every `parse()` accepts a single `SimpleXMLElement` node and
+  returns a single model object (or null). Collection iteration is handled by
+  `AbstractParser::parseDelegated()` based on `'type' => 'array'`.
+  SegmentParser and LinkParser standardized to single-node contract.
+  Removed all `toXMLArray` methods from refactored parsers — iteration handled by
+  `serializeDelegated()`.
 
 ---
 

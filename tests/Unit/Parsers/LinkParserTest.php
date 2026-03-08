@@ -25,12 +25,9 @@ class LinkParserTest extends TestCase
 
 	public function testParse(): void
 	{
-		$links = LinkParser::parse($this->file->link);
+		$link = LinkParser::parse($this->file->link);
 
-		$this->assertNotEmpty($links);
-		$this->assertCount(1, $links);
-
-		$link = $links[0];
+		$this->assertInstanceOf(Link::class, $link);
 		$this->assertEquals($this->link->href, $link->href);
 		$this->assertEquals($this->link->text, $link->text);
 		$this->assertEquals($this->link->type, $link->type);
@@ -43,11 +40,7 @@ class LinkParserTest extends TestCase
 		$document = new \DOMDocument("1.0", 'UTF-8');
 
 		$root = $document->createElement("document");
-		$xmlArray = LinkParser::toXMLArray([$this->link], $document);
-
-		foreach ($xmlArray as $xmlElement) {
-			$root->appendChild($xmlElement);
-		}
+		$root->appendChild(LinkParser::toXML($this->link, $document));
 
 		$document->appendChild($root);
 

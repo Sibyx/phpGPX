@@ -7,62 +7,58 @@
 namespace phpGPX\Parsers\Extensions;
 
 use phpGPX\Models\Extensions\TrackPointExtension;
+use phpGPX\Parsers\AbstractParser;
 use phpGPX\Parsers\ExtensionParser;
 
-class TrackPointExtensionParser
+class TrackPointExtensionParser extends AbstractParser
 {
-	private static $attributeMapper = [
-		'atemp' => [
-			'name' => 'aTemp',
-			'type' => 'float'
-		],
-		'wtemp' => [
-			'name' => 'wTemp',
-			'type' => 'float'
-		],
-		'depth' => [
-			'name' => 'depth',
-			'type' => 'float'
-		],
-		'hr' => [
-			'name' => 'hr',
-			'type' => 'float'
-		],
-		'cad' => [
-			'name' => 'cad',
-			'type' => 'float'
-		],
-		'speed' => [
-			'name' => 'speed',
-			'type' => 'float'
-		],
-		'course' => [
-			'name' => 'course',
-			'type' => 'int'
-		],
-		'bearing' => [
-			'name' => 'bearing',
-			'type' => 'int'
-		]
-	];
+	protected static function getAttributeMapper(): array
+	{
+		return [
+			'atemp' => [
+				'name' => 'aTemp',
+				'type' => 'float'
+			],
+			'wtemp' => [
+				'name' => 'wTemp',
+				'type' => 'float'
+			],
+			'depth' => [
+				'name' => 'depth',
+				'type' => 'float'
+			],
+			'hr' => [
+				'name' => 'hr',
+				'type' => 'float'
+			],
+			'cad' => [
+				'name' => 'cad',
+				'type' => 'float'
+			],
+			'speed' => [
+				'name' => 'speed',
+				'type' => 'float'
+			],
+			'course' => [
+				'name' => 'course',
+				'type' => 'int'
+			],
+			'bearing' => [
+				'name' => 'bearing',
+				'type' => 'int'
+			]
+		];
+	}
 
 	/**
 	 * @param \SimpleXMLElement $node
 	 * @return TrackPointExtension
 	 */
-	public static function parse($node)
+	public static function parse(\SimpleXMLElement $node): TrackPointExtension
 	{
 		$extension = new TrackPointExtension();
 
-		foreach (self::$attributeMapper as $key => $attribute) {
-            $value = isset($node->$key) ? $node->$key : null;
-
-            if (!is_null($value)) {
-                settype($value, $attribute['type']);
-            }
-
-            $extension->{$attribute['name']} = $value;
-		}
+		self::mapAttributesFromXML($node, $extension);
 
 		return $extension;
 	}
@@ -72,9 +68,9 @@ class TrackPointExtensionParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(TrackPointExtension $extension, \DOMDocument &$document)
+	public static function toXML(TrackPointExtension $extension, \DOMDocument &$document): \DOMElement
 	{
-		$node =  $document->createElement("gpxtpx:TrackPointExtension");
+		$node = $document->createElement("gpxtpx:TrackPointExtension");
 
 		ExtensionParser::$usedNamespaces[TrackPointExtension::EXTENSION_NAME] = [
 			'namespace' => TrackPointExtension::EXTENSION_NAMESPACE,
@@ -83,7 +79,7 @@ class TrackPointExtensionParser
 			'prefix' => TrackPointExtension::EXTENSION_NAMESPACE_PREFIX
 		];
 
-		foreach (self::$attributeMapper as $key => $attribute) {
+		foreach (self::getAttributeMapper() as $key => $attribute) {
 			if (isset($extension->{$attribute['name']})) {
 				$child = $document->createElement(
 					sprintf("%s:%s", TrackPointExtension::EXTENSION_NAMESPACE_PREFIX, $key),

@@ -14,13 +14,13 @@ use phpGPX\Models\Copyright;
  */
 abstract class CopyrightParser
 {
-	public static $tagName = 'copyright';
+	public static string $tagName = 'copyright';
 
 	/**
 	 * @param \SimpleXMLElement $node
 	 * @return Copyright|null
 	 */
-	public static function parse(\SimpleXMLElement $node)
+	public static function parse(\SimpleXMLElement $node): ?Copyright
 	{
 		if ($node->getName() != self::$tagName) {
 			return null;
@@ -40,7 +40,7 @@ abstract class CopyrightParser
 	 * @param \DOMDocument $document
 	 * @return \DOMElement
 	 */
-	public static function toXML(Copyright $copyright, \DOMDocument &$document)
+	public static function toXML(Copyright $copyright, \DOMDocument &$document): \DOMElement
 	{
 		$node = $document->createElement(self::$tagName);
 

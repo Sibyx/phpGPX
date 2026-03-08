@@ -10,46 +10,22 @@ use phpGPX\Models\Link;
 
 abstract class LinkParser
 {
-	private static $tagName = 'link';
+	private static string $tagName = 'link';
 
 	/**
-	 * @param \SimpleXMLElement|\SimpleXMLElement[] $nodes
-	 * @return Link[]
+	 * Parse a single link node.
+	 *
+	 * @param \SimpleXMLElement $node
+	 * @return Link
 	 */
-	public static function parse($nodes): array
+	public static function parse(\SimpleXMLElement $node): Link
 	{
-		$links = [];
+		$link = new Link();
+		$link->href = isset($node['href']) ? (string) $node['href'] : null;
+		$link->text = isset($node->text) ? (string) $node->text : null;
+		$link->type = isset($node->type) ? (string) $node->type : null;
 
-		// Handle both a single SimpleXMLElement and an array of SimpleXMLElements
-		if (!is_array($nodes)) {
-			$nodes = [$nodes];
-		}
-
-		foreach ($nodes as $node) {
-			$link = new Link();
-			$link->href = isset($node['href']) ? (string) $node['href'] : null;
-			$link->text = isset($node->text) ? (string) $node->text : null;
-			$link->type = isset($node->type) ? (string) $node->type : null;
-
-			$links[] = $link;
-		}
-		return $links;
-	}
-
-	/**
-	 * @param Link[] $links
-	 * @param \DOMDocument $document
-	 * @return \DOMElement[]
-	 */
-	public static function toXMLArray(array $links, \DOMDocument &$document): array
-	{
-		$result = [];
-
-		foreach ($links as $link) {
-			$result[] = self::toXML($link, $document);
-		}
-
-		return $result;
+		return $link;
 	}
 
 	/**
@@ -59,7 +35,7 @@ abstract class LinkParser
 	 */
 	public static function toXML(Link $link, \DOMDocument &$document): \DOMElement
 	{
-		$node =  $document->createElement(self::$tagName);
+		$node = $document->createElement(self::$tagName);
 
 		if ($link->href !== null && $link->href !== '') {
 			$node->setAttribute('href', $link->href);

@@ -14,7 +14,7 @@ use phpGPX\Models\Bounds;
  */
 abstract class BoundsParser
 {
-	private static $tagName = 'bounds';
+	private static string $tagName = 'bounds';
 
 	/**
 	 * Parse data from XML.
