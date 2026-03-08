@@ -319,7 +319,7 @@ class StatsCalculationTest extends TestCase
 		$this->assertNull($stats->finishedAt);
 	}
 
-	public function testStatsToArray(): void
+	public function testStatsJsonSerialize(): void
 	{
 		$stats = new Stats();
 		$stats->distance = 1000.0;
@@ -330,23 +330,14 @@ class StatsCalculationTest extends TestCase
 		$stats->maxAltitude = 200.0;
 		$stats->duration = 400.0;
 
-		$array = $stats->toArray();
-
-		$this->assertEquals(1000.0, $array['distance']);
-		$this->assertEquals(1005.0, $array['realDistance']);
-		$this->assertEquals(2.5, $array['avgSpeed']);
-		$this->assertEquals(400.0, $array['avgPace']);
-		$this->assertEquals(100.0, $array['minAltitude']);
-		$this->assertEquals(200.0, $array['maxAltitude']);
-		$this->assertEquals(400.0, $array['duration']);
-	}
-
-	public function testStatsJsonSerialize(): void
-	{
-		$stats = new Stats();
-		$stats->distance = 500.0;
-
 		$json = $stats->jsonSerialize();
-		$this->assertEquals($stats->toArray(), $json);
+
+		$this->assertEquals(1000.0, $json['distance']);
+		$this->assertEquals(1005.0, $json['realDistance']);
+		$this->assertEquals(2.5, $json['avgSpeed']);
+		$this->assertEquals(400.0, $json['avgPace']);
+		$this->assertEquals(100.0, $json['minAltitude']);
+		$this->assertEquals(200.0, $json['maxAltitude']);
+		$this->assertEquals(400.0, $json['duration']);
 	}
 }

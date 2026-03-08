@@ -9,7 +9,6 @@ namespace phpGPX\Models;
 use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
-use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\phpGPX;
 
@@ -50,79 +49,34 @@ class Segment implements \JsonSerializable, GpxSerializable, StatsCalculator
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'points' => SerializationHelper::serialize($this->points),
-			'extensions' => SerializationHelper::serialize($this->extensions),
-			'stats' => SerializationHelper::serialize($this->stats)
-		];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * Always returns GeoJSON format
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		// GeoJSON LineString feature
 		$coordinates = [];
-		$properties = [
-			'extensions' => SerializationHelper::serialize($this->extensions)
-		];
-
-		// Filter out null values
-		$properties = array_filter($properties, function ($value) {
-			return $value !== null;
-		});
-
-		// Add stats if available
-		if ($this->stats) {
-			$properties['stats'] = $this->stats->jsonSerialize();
-		}
-
-		// Collect coordinates from segment points
 		foreach ($this->points as $point) {
-			$coordinates[] = [
-				(float) $point->longitude,
-				(float) $point->latitude,
-				SerializationHelper::floatOrNull($point->elevation)
-			];
+			$coordinates[] = SerializationHelper::position($point->longitude, $point->latitude, $point->elevation);
 		}
+
+		$properties = array_filter([
+			'extensions' => $this->extensions,
+			'stats' => $this->stats,
+		], fn($v) => $v !== null);
 
 		return [
 			'type' => 'Feature',
 			'geometry' => [
 				'type' => 'LineString',
-				'coordinates' => $coordinates
+				'coordinates' => $coordinates,
 			],
-			'properties' => $properties
+			'properties' => $properties ?: new \stdClass(),
 		];
 	}
 
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
 	public static function gpxSerialize(\SimpleXMLElement $node): void
 	{
-		// Implementation required by GpxSerializable interface
 	}
 
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
 	public function gpxDeserialize(\DOMDocument &$document): void
 	{
-		// Implementation required by GpxSerializable interface
 	}
 
 
@@ -151,16 +105,6 @@ class Segment implements \JsonSerializable, GpxSerializable, StatsCalculator
 			return;
 		}
 
-		$firstPoint = &$this->points[0];
-		$lastPoint = end($this->points);
-
-		$this->stats->startedAt = $firstPoint->time;
-		$this->stats->startedAtCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
-		$this->stats->finishedAt = $lastPoint->time;
-		$this->stats->finishedAtCoords = ["lat" => $lastPoint->latitude, "lng" => $lastPoint->longitude];
-		$this->stats->minAltitude = $firstPoint->elevation;
-		$this->stats->minAltitudeCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
-
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
 			ElevationGainLossCalculator::calculate($this->getPoints());
 
@@ -168,20 +112,46 @@ class Segment implements \JsonSerializable, GpxSerializable, StatsCalculator
 		$this->stats->distance = $calculator->getRawDistance();
 		$this->stats->realDistance = $calculator->getRealDistance();
 
+		// Find first/last non-null timestamps (#51)
 		for ($i = 0; $i < $count; $i++) {
-			if ($this->stats->maxAltitude < $this->points[$i]->elevation) {
-				$this->stats->maxAltitude = $this->points[$i]->elevation;
-				$this->stats->maxAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+			if ($this->points[$i]->time instanceof \DateTime) {
+				$this->stats->startedAt = $this->points[$i]->time;
+				$this->stats->startedAtCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+				break;
 			}
-
-			if ((phpGPX::$IGNORE_ELEVATION_0 === false || $this->points[$i]->elevation > 0) && $this->stats->minAltitude > $this->points[$i]->elevation) {
-				$this->stats->minAltitude = $this->points[$i]->elevation;
-				$this->stats->minAltitudeCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+		}
+		for ($i = $count - 1; $i >= 0; $i--) {
+			if ($this->points[$i]->time instanceof \DateTime) {
+				$this->stats->finishedAt = $this->points[$i]->time;
+				$this->stats->finishedAtCoords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+				break;
 			}
 		}
 
-		if (isset($firstPoint->time) && isset($lastPoint->time) && $firstPoint->time instanceof \DateTime && $lastPoint->time instanceof \DateTime) {
-			$this->stats->duration = $lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp();
+		// Find min/max altitude — don't assume first point (#70)
+		for ($i = 0; $i < $count; $i++) {
+			$ele = $this->points[$i]->elevation;
+			if ($ele === null) {
+				continue;
+			}
+			if (phpGPX::$IGNORE_ELEVATION_0 && $ele == 0) {
+				continue;
+			}
+
+			$coords = ["lat" => $this->points[$i]->latitude, "lng" => $this->points[$i]->longitude];
+
+			if ($this->stats->maxAltitude === null || $ele > $this->stats->maxAltitude) {
+				$this->stats->maxAltitude = $ele;
+				$this->stats->maxAltitudeCoords = $coords;
+			}
+			if ($this->stats->minAltitude === null || $ele < $this->stats->minAltitude) {
+				$this->stats->minAltitude = $ele;
+				$this->stats->minAltitudeCoords = $coords;
+			}
+		}
+
+		if ($this->stats->startedAt instanceof \DateTime && $this->stats->finishedAt instanceof \DateTime) {
+			$this->stats->duration = $this->stats->finishedAt->getTimestamp() - $this->stats->startedAt->getTimestamp();
 
 			if ($this->stats->duration != 0) {
 				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;

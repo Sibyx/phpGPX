@@ -6,8 +6,8 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\Helpers\SerializationHelper;
 use phpGPX\Helpers\DateTimeHelper;
+use phpGPX\Helpers\SerializationHelper;
 use phpGPX\phpGPX;
 
 enum PointType: string
@@ -242,111 +242,45 @@ class Point implements \JsonSerializable, \phpGPX\GpxSerializable
 		return $this->pointType;
 	}
 
-	/**
-	 * Serialize object to array for JSON encoding
-	 * Always returns GeoJSON format
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		// GeoJSON Point format
-		$properties = [
-			'ele' => SerializationHelper::floatOrNull($this->elevation),
+		$properties = array_filter([
+			'name' => $this->name,
+			'ele' => $this->elevation,
 			'time' => DateTimeHelper::formatDateTime($this->time, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
-			'magvar' => SerializationHelper::floatOrNull($this->magVar),
-			'geoidheight' => SerializationHelper::floatOrNull($this->geoidHeight),
-			'name' => SerializationHelper::stringOrNull($this->name),
-			'cmt' => SerializationHelper::stringOrNull($this->comment),
-			'desc' => SerializationHelper::stringOrNull($this->description),
-			'src' => SerializationHelper::stringOrNull($this->source),
-			'link' => SerializationHelper::serialize($this->links),
-			'sym' => SerializationHelper::stringOrNull($this->symbol),
-			'type' => SerializationHelper::stringOrNull($this->type),
-			'fix' => SerializationHelper::stringOrNull($this->fix),
-			'sat' => SerializationHelper::integerOrNull($this->satellitesNumber),
-			'hdop' => SerializationHelper::floatOrNull($this->hdop),
-			'vdop' => SerializationHelper::floatOrNull($this->vdop),
-			'pdop' => SerializationHelper::floatOrNull($this->pdop),
-			'ageofdgpsdata' => SerializationHelper::floatOrNull($this->ageOfGpsData),
-			'dgpsid' => SerializationHelper::integerOrNull($this->dgpsid),
-			'difference' => SerializationHelper::floatOrNull($this->difference),
-			'distance' => SerializationHelper::floatOrNull($this->distance),
-			'extensions' => SerializationHelper::serialize($this->extensions)
-		];
-
-		// Filter out null values
-		$properties = array_filter($properties, function ($value) {
-			return $value !== null;
-		});
+			'magvar' => $this->magVar,
+			'geoidheight' => $this->geoidHeight,
+			'cmt' => $this->comment,
+			'desc' => $this->description,
+			'src' => $this->source,
+			'link' => !empty($this->links) ? $this->links : null,
+			'sym' => $this->symbol,
+			'type' => $this->type,
+			'fix' => $this->fix,
+			'sat' => $this->satellitesNumber,
+			'hdop' => $this->hdop,
+			'vdop' => $this->vdop,
+			'pdop' => $this->pdop,
+			'ageofdgpsdata' => $this->ageOfGpsData,
+			'dgpsid' => $this->dgpsid,
+			'extensions' => $this->extensions,
+		], fn($v) => $v !== null);
 
 		return [
 			'type' => 'Feature',
 			'geometry' => [
 				'type' => 'Point',
-				'coordinates' => [
-					(float) $this->longitude,
-					(float) $this->latitude,
-					SerializationHelper::floatOrNull($this->elevation)
-				]
+				'coordinates' => SerializationHelper::position($this->longitude, $this->latitude, $this->elevation),
 			],
-			'properties' => $properties
+			'properties' => $properties ?: new \stdClass(),
 		];
 	}
 
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
 	public static function gpxSerialize(\SimpleXMLElement $node): void
 	{
-		// Implementation of GpxSerializable interface
-		// This method would be called to serialize a Point to GPX XML
-		// Since PointParser already handles this, this method can be empty
 	}
 
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
 	public function gpxDeserialize(\DOMDocument &$document): void
 	{
-		// Implementation of GpxSerializable interface
-		// This method would be called to deserialize GPX XML to a Point
-		// Since PointParser already handles this, this method can be empty
-	}
-
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'lat' => (float) $this->latitude,
-			'lon' => (float) $this->longitude,
-			'ele' => SerializationHelper::floatOrNull($this->elevation),
-			'time' => DateTimeHelper::formatDateTime($this->time, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
-			'magvar' => SerializationHelper::floatOrNull($this->magVar),
-			'geoidheight' => SerializationHelper::floatOrNull($this->geoidHeight),
-			'name' => SerializationHelper::stringOrNull($this->name),
-			'cmt' => SerializationHelper::stringOrNull($this->comment),
-			'desc' => SerializationHelper::stringOrNull($this->description),
-			'src' => SerializationHelper::stringOrNull($this->source),
-			'link' => SerializationHelper::serialize($this->links),
-			'sym' => SerializationHelper::stringOrNull($this->symbol),
-			'type' => SerializationHelper::stringOrNull($this->type),
-			'fix' => SerializationHelper::stringOrNull($this->fix),
-			'sat' => SerializationHelper::integerOrNull($this->satellitesNumber),
-			'hdop' => SerializationHelper::floatOrNull($this->hdop),
-			'vdop' => SerializationHelper::floatOrNull($this->vdop),
-			'pdop' => SerializationHelper::floatOrNull($this->pdop),
-			'ageofdgpsdata' => SerializationHelper::floatOrNull($this->ageOfGpsData),
-			'dgpsid' => SerializationHelper::integerOrNull($this->dgpsid),
-			'difference' => SerializationHelper::floatOrNull($this->difference),
-			'distance' => SerializationHelper::floatOrNull($this->distance),
-			'extensions' => SerializationHelper::serialize($this->extensions)
-		];
 	}
 }

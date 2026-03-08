@@ -130,38 +130,25 @@ class Stats implements \JsonSerializable, GpxSerializable
 		$this->duration = null;
 	}
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'distance' => $this->distance !== null ? (float)$this->distance : null,
-			'realDistance' => $this->realDistance !== null ? (float)$this->realDistance : null,
-			'avgSpeed' => $this->averageSpeed !== null ? (float)$this->averageSpeed : null,
-			'avgPace' => $this->averagePace !== null ? (float)$this->averagePace : null,
-			'minAltitude' => $this->minAltitude !== null ? (float)$this->minAltitude : null,
-			'minAltitudeCoords' => $this->minAltitudeCoords,
-			'maxAltitude' => $this->maxAltitude !== null ? (float)$this->maxAltitude : null,
-			'maxAltitudeCoords' => $this->maxAltitudeCoords,
-			'cumulativeElevationGain' => $this->cumulativeElevationGain !== null ? (float)$this->cumulativeElevationGain : null,
-			'cumulativeElevationLoss' => $this->cumulativeElevationLoss !== null ? (float)$this->cumulativeElevationLoss : null,
-			'startedAt' => $this->startedAt !== null ? DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT) : null,
-			'startedAtCoords' => $this->startedAtCoords,
-			'finishedAt' => $this->finishedAt !== null ? DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT) : null,
-			'finishedAtCoords' => $this->finishedAtCoords,
-			'duration' => $this->duration !== null ? (float)$this->duration : null
-		];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'distance' => $this->distance,
+			'realDistance' => $this->realDistance,
+			'avgSpeed' => $this->averageSpeed,
+			'avgPace' => $this->averagePace,
+			'minAltitude' => $this->minAltitude,
+			'minAltitudeCoords' => $this->minAltitudeCoords,
+			'maxAltitude' => $this->maxAltitude,
+			'maxAltitudeCoords' => $this->maxAltitudeCoords,
+			'cumulativeElevationGain' => $this->cumulativeElevationGain,
+			'cumulativeElevationLoss' => $this->cumulativeElevationLoss,
+			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'startedAtCoords' => $this->startedAtCoords,
+			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'finishedAtCoords' => $this->finishedAtCoords,
+			'duration' => $this->duration,
+		], fn($v) => $v !== null);
 	}
 
 	/**

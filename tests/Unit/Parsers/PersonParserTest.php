@@ -52,9 +52,9 @@ class PersonParserTest extends TestCase
 		$this->assertEquals($this->person->links[0]->text, $person->links[0]->text);
 		$this->assertEquals($this->person->links[0]->href, $person->links[0]->href);
 
-		$this->assertEquals($this->person->toArray(), $person->toArray());
-		$this->assertEquals($this->person->email->toArray(), $person->email->toArray());
-		$this->assertEquals($this->person->links[0]->toArray(), $person->links[0]->toArray());
+		$this->assertEquals($this->person->jsonSerialize(), $person->jsonSerialize());
+		$this->assertEquals($this->person->email->jsonSerialize(), $person->email->jsonSerialize());
+		$this->assertEquals($this->person->links[0]->jsonSerialize(), $person->links[0]->jsonSerialize());
 	}
 
 	/**
@@ -86,7 +86,7 @@ class PersonParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/person.json', json_encode($this->person->toArray())
+			self::FIXTURES_DIR . '/person.json', json_encode($this->person->jsonSerialize())
 		);
 	}
 }

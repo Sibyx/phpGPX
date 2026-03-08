@@ -79,13 +79,9 @@ class TrackPointExtension extends AbstractExtension
 		parent::__construct(self::EXTENSION_NAMESPACE, self::EXTENSION_NAME);
 	}
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
+	public function jsonSerialize(): array
 	{
-		return [
+		return array_filter([
 			'aTemp' => $this->aTemp ?? null,
 			'wTemp' => $this->wTemp ?? null,
 			'depth' => $this->depth ?? null,
@@ -93,16 +89,7 @@ class TrackPointExtension extends AbstractExtension
 			'cad' => $this->cad ?? null,
 			'speed' => $this->speed ?? null,
 			'course' => $this->course ?? null,
-			'bearing' => $this->bearing ?? null
-		];
-	}
-
-	/**
-	 * Serialize object to array for JSON encoding
-	 * @return array
-	 */
-	public function jsonSerialize(): array
-    {
-		return $this->toArray();
+			'bearing' => $this->bearing ?? null,
+		], fn($v) => $v !== null);
 	}
 }

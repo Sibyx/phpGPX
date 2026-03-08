@@ -8,7 +8,6 @@ namespace phpGPX\Models;
 
 use phpGPX\GpxSerializable;
 use phpGPX\Helpers\DateTimeHelper;
-use phpGPX\Helpers\SerializationHelper;
 
 /**
  * Class Metadata
@@ -95,32 +94,19 @@ class Metadata implements \JsonSerializable, GpxSerializable
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'name' => SerializationHelper::stringOrNull($this->name),
-			'desc' => SerializationHelper::stringOrNull($this->description),
-			'author' => SerializationHelper::serialize($this->author),
-			'copyright' => SerializationHelper::serialize($this->copyright),
-			'links' => SerializationHelper::serialize($this->links),
-			'time' => DateTimeHelper::formatDateTime($this->time),
-			'keywords' => SerializationHelper::stringOrNull($this->keywords),
-			'bounds' => SerializationHelper::serialize($this->bounds),
-			'extensions' => SerializationHelper::serialize($this->extensions)
-		];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'name' => $this->name,
+			'desc' => $this->description,
+			'author' => $this->author,
+			'copyright' => $this->copyright,
+			'links' => !empty($this->links) ? $this->links : null,
+			'time' => DateTimeHelper::formatDateTime($this->time),
+			'keywords' => $this->keywords,
+			'bounds' => $this->bounds,
+			'extensions' => $this->extensions,
+		], fn($v) => $v !== null);
 	}
 
 	/**

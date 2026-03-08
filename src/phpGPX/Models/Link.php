@@ -46,26 +46,13 @@ class Link implements \JsonSerializable, GpxSerializable
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'href' => $this->href !== null ? (string) $this->href : null,
-			'text' => $this->text,
-			'type' => $this->type
-		];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'href' => $this->href,
+			'text' => $this->text,
+			'type' => $this->type,
+		], fn($v) => $v !== null);
 	}
 
 	/**

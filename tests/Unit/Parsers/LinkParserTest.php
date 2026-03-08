@@ -35,7 +35,7 @@ class LinkParserTest extends TestCase
 		$this->assertEquals($this->link->text, $link->text);
 		$this->assertEquals($this->link->type, $link->type);
 
-		$this->assertEquals($this->link->toArray(), $link->toArray());
+		$this->assertEquals($this->link->jsonSerialize(), $link->jsonSerialize());
 	}
 
 	public function testToXML(): void
@@ -57,7 +57,7 @@ class LinkParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/link.json', json_encode($this->link->toArray())
+			self::FIXTURES_DIR . '/link.json', json_encode($this->link->jsonSerialize())
 		);
 	}
 }

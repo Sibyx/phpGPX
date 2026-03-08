@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\Helpers\SerializationHelper;
 use phpGPX\Parsers\ExtensionParser;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\PointParser;
@@ -71,52 +70,36 @@ class GpxFile implements \JsonSerializable, \phpGPX\GpxSerializable
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return SerializationHelper::filterNotNull([
-			'creator' => SerializationHelper::stringOrNull($this->creator),
-			'metadata' => SerializationHelper::serialize($this->metadata),
-			'waypoints' => SerializationHelper::serialize($this->waypoints),
-			'routes' => SerializationHelper::serialize($this->routes),
-			'tracks' => SerializationHelper::serialize($this->tracks),
-			'extensions' => SerializationHelper::serialize($this->extensions)
-		]);
-	}
-
-	/**
-	 * Serialize object to array for JSON encoding
-	 * Always returns GeoJSON format
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		// GeoJSON FeatureCollection format
 		$features = [];
 
-		// Add waypoints as Point features - each waypoint handles its own serialization
 		foreach ($this->waypoints as $waypoint) {
-			$features[] = $waypoint->jsonSerialize();
+			$features[] = $waypoint;
 		}
 
-		// Add routes as LineString features - each route handles its own serialization
 		foreach ($this->routes as $route) {
-			$features[] = $route->jsonSerialize();
+			$features[] = $route;
 		}
 
-		// Add tracks as MultiLineString features - each track handles its own serialization
 		foreach ($this->tracks as $track) {
-			$features[] = $track->jsonSerialize();
+			$features[] = $track;
 		}
 
-		return [
+		$result = [
 			'type' => 'FeatureCollection',
 			'features' => $features,
-			'metadata' => SerializationHelper::serialize($this->metadata)
 		];
+
+		if ($this->metadata !== null) {
+			$result['properties'] = array_filter([
+				'metadata' => $this->metadata,
+				'creator' => $this->creator,
+				'extensions' => $this->extensions,
+			], fn($v) => $v !== null);
+		}
+
+		return $result;
 	}
 
 	/**
@@ -145,19 +128,12 @@ class GpxFile implements \JsonSerializable, \phpGPX\GpxSerializable
 
 
 	/**
-	 * Return JSON representation of GPX file with statistics.
-	 * @param bool $geojson Whether to return GeoJSON format (true) or GPX format (false)
+	 * Return GeoJSON representation of GPX file.
 	 * @return string
 	 */
-	public function toJSON(bool $geojson = true): string
+	public function toJSON(): string
 	{
-		if ($geojson) {
-			// GeoJSON format (using jsonSerialize)
-			return json_encode($this->jsonSerialize(), phpGPX::$PRETTY_PRINT ? JSON_PRETTY_PRINT : null);
-		} else {
-			// GPX format (using toArray)
-			return json_encode($this->toArray(), phpGPX::$PRETTY_PRINT ? JSON_PRETTY_PRINT : null);
-		}
+		return json_encode($this, phpGPX::$PRETTY_PRINT ? JSON_PRETTY_PRINT : 0);
 	}
 
 	/**
@@ -239,12 +215,8 @@ class GpxFile implements \JsonSerializable, \phpGPX\GpxSerializable
 				$document->save($path);
 				break;
 			case phpGPX::JSON_FORMAT:
-				// Use GPX format for JSON
-				file_put_contents($path, $this->toJSON(false));
-				break;
 			case phpGPX::GEOJSON_FORMAT:
-				// Use GeoJSON format
-				file_put_contents($path, $this->toJSON(true));
+				file_put_contents($path, $this->toJSON());
 				break;
 			default:
 				throw new \RuntimeException("Unsupported file format!");

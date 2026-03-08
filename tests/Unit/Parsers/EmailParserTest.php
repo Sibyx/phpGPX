@@ -32,7 +32,7 @@ class EmailParserTest extends TestCase
 		$this->assertEquals($this->email->id, $email->id);
 		$this->assertEquals($this->email->domain, $email->domain);
 
-		$this->assertEquals($this->email->toArray(), $email->toArray());
+		$this->assertEquals($this->email->jsonSerialize(), $email->jsonSerialize());
 	}
 
 	public function testToXML(): void
@@ -50,7 +50,7 @@ class EmailParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/email.json', json_encode($this->email->toArray())
+			self::FIXTURES_DIR . '/email.json', json_encode($this->email->jsonSerialize())
 		);
 	}
 }

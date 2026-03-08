@@ -7,7 +7,6 @@
 namespace phpGPX\Models;
 
 use phpGPX\GpxSerializable;
-use phpGPX\Helpers\SerializationHelper;
 use phpGPX\Models\Extensions\TrackPointExtension;
 
 /**
@@ -37,25 +36,12 @@ class Extensions implements \JsonSerializable, GpxSerializable
 		$this->trackPointExtension = null;
 	}
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-				'trackpoint' => SerializationHelper::serialize($this->trackPointExtension),
-				'unsupported' => $this->unsupported,
-			];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'trackpoint' => $this->trackPointExtension,
+			'unsupported' => !empty($this->unsupported) ? $this->unsupported : null,
+		], fn($v) => $v !== null);
 	}
 
 	/**

@@ -34,7 +34,7 @@ class CopyrightParserTest extends TestCase
 		$this->assertEquals($this->copyright->license, $copyright->license);
 		$this->assertEquals($this->copyright->year, $copyright->year);
 
-		$this->assertEquals($this->copyright->toArray(), $copyright->toArray());
+		$this->assertEquals($this->copyright->jsonSerialize(), $copyright->jsonSerialize());
 	}
 
 	public function testToXML(): void
@@ -52,7 +52,7 @@ class CopyrightParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/copyright.json', json_encode($this->copyright->toArray())
+			self::FIXTURES_DIR . '/copyright.json', json_encode($this->copyright->jsonSerialize())
 		);
 	}
 }

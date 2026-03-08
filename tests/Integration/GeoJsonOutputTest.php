@@ -2,7 +2,6 @@
 
 namespace phpGPX\Tests\Integration;
 
-use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
@@ -113,7 +112,7 @@ class GeoJsonOutputTest extends TestCase
 	public function testLoadedFileGeoJsonStructure(): void
 	{
 		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/minimal.gpx');
-		$json = $gpxFile->jsonSerialize();
+		$json = json_decode(json_encode($gpxFile), true);
 
 		$this->assertEquals('FeatureCollection', $json['type']);
 
@@ -134,7 +133,7 @@ class GeoJsonOutputTest extends TestCase
 	public function testGeoJsonWithWaypoints(): void
 	{
 		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/timezero.gpx');
-		$json = $gpxFile->jsonSerialize();
+		$json = json_decode(json_encode($gpxFile), true);
 
 		$this->assertEquals('FeatureCollection', $json['type']);
 
@@ -154,16 +153,10 @@ class GeoJsonOutputTest extends TestCase
 	{
 		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/route.gpx');
 
-		// GeoJSON format
-		$geoJson = $gpxFile->toJSON(true);
+		$geoJson = $gpxFile->toJSON();
 		$decoded = json_decode($geoJson, true);
 		$this->assertNotNull($decoded);
 		$this->assertEquals('FeatureCollection', $decoded['type']);
-
-		// GPX array format
-		$gpxJson = $gpxFile->toJSON(false);
-		$decoded = json_decode($gpxJson, true);
-		$this->assertNotNull($decoded);
-		$this->assertArrayHasKey('routes', $decoded);
+		$this->assertArrayHasKey('features', $decoded);
 	}
 }

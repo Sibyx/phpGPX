@@ -6,7 +6,6 @@
 
 namespace phpGPX\Models;
 
-use phpGPX\Helpers\GeoHelper;
 use phpGPX\Helpers\SerializationHelper;
 use phpGPX\phpGPX;
 
@@ -53,103 +52,45 @@ class Track extends Collection implements \phpGPX\GpxSerializable
 		return $points;
 	}
 
-	/**
-	 * Serialize object to array for JSON encoding
-	 * Always returns GeoJSON format
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		// GeoJSON MultiLineString feature
 		$segmentCoordinates = [];
-		$properties = [
-			'name' => SerializationHelper::stringOrNull($this->name),
-			'cmt' => SerializationHelper::stringOrNull($this->comment),
-			'desc' => SerializationHelper::stringOrNull($this->description),
-			'src' => SerializationHelper::stringOrNull($this->source),
-			'link' => SerializationHelper::serialize($this->links),
-			'number' => SerializationHelper::integerOrNull($this->number),
-			'type' => SerializationHelper::stringOrNull($this->type),
-			'extensions' => SerializationHelper::serialize($this->extensions)
-		];
-
-		// Filter out null values
-		$properties = array_filter($properties, function ($value) {
-			return $value !== null;
-		});
-
-		// Add stats if available
-		if ($this->stats) {
-			$properties['stats'] = $this->stats->jsonSerialize();
-		}
-
-		// Collect coordinates from track segments
 		foreach ($this->segments as $segment) {
 			$coordinates = [];
-
 			foreach ($segment->points as $point) {
-				$coordinates[] = [
-					(float) $point->longitude,
-					(float) $point->latitude,
-					SerializationHelper::floatOrNull($point->elevation)
-				];
+				$coordinates[] = SerializationHelper::position($point->longitude, $point->latitude, $point->elevation);
 			}
-
 			$segmentCoordinates[] = $coordinates;
 		}
+
+		$properties = array_filter([
+			'name' => $this->name,
+			'cmt' => $this->comment,
+			'desc' => $this->description,
+			'src' => $this->source,
+			'link' => !empty($this->links) ? $this->links : null,
+			'number' => $this->number,
+			'type' => $this->type,
+			'extensions' => $this->extensions,
+			'stats' => $this->stats,
+		], fn($v) => $v !== null);
 
 		return [
 			'type' => 'Feature',
 			'geometry' => [
 				'type' => 'MultiLineString',
-				'coordinates' => $segmentCoordinates
+				'coordinates' => $segmentCoordinates,
 			],
-			'properties' => $properties
+			'properties' => $properties ?: new \stdClass(),
 		];
 	}
 
-	/**
-	 * GPX serializer
-	 * @param \SimpleXMLElement $node
-	 * @return void
-	 */
 	public static function gpxSerialize(\SimpleXMLElement $node): void
 	{
-		// Implementation required by GpxSerializable interface
-		// This method would be called to serialize a Track to GPX XML
-		// Since TrackParser already handles this, this method can be empty
 	}
 
-	/**
-	 * GPX deserializer
-	 * @param \DOMDocument $document
-	 * @return void
-	 */
 	public function gpxDeserialize(\DOMDocument &$document): void
 	{
-		// Implementation required by GpxSerializable interface
-		// This method would be called to deserialize GPX XML to a Track
-		// Since TrackParser already handles this, this method can be empty
-	}
-
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'name' => SerializationHelper::stringOrNull($this->name),
-			'cmt' => SerializationHelper::stringOrNull($this->comment),
-			'desc' => SerializationHelper::stringOrNull($this->description),
-			'src' => SerializationHelper::stringOrNull($this->source),
-			'link' => SerializationHelper::serialize($this->links),
-			'number' => SerializationHelper::integerOrNull($this->number),
-			'type' => SerializationHelper::stringOrNull($this->type),
-			'extensions' => SerializationHelper::serialize($this->extensions),
-			'trkseg' => SerializationHelper::serialize($this->segments),
-			'stats' => SerializationHelper::serialize($this->stats)
-		];
 	}
 
 	/**
@@ -170,60 +111,38 @@ class Track extends Collection implements \phpGPX\GpxSerializable
 
 		$segmentsCount = count($this->segments);
 
-		$firstSegment = null;
-		$firstPoint = null;
-
-		// Identify first Segment/Point
-		for ($s = 0; $s < $segmentsCount; $s++) {
-			$pointCount = count($this->segments[$s]->points);
-			for ($p = 0; $p < $pointCount; $p++) {
-				if (is_null($firstPoint)) {
-					$firstPoint = &$this->segments[$s]->points[$p];
-					$firstSegment = &$this->segments[$s];
-					break;
-				}
-			}
-		}
-
-		if (empty($firstPoint)) {
-			return;
-		}
-
-		$lastSegment = end($this->segments);
-		$lastPoint = end(end($this->segments)->points);
-
-		$this->stats->startedAt = $firstPoint->time;
-		$this->stats->startedAtCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
-		$this->stats->finishedAt = $lastPoint->time;
-		$this->stats->finishedAtCoords = ["lat" => $lastPoint->latitude, "lng" => $lastPoint->longitude];
-		$this->stats->minAltitude = $firstPoint->elevation;
-		$this->stats->minAltitudeCoords = ["lat" => $firstPoint->latitude, "lng" => $firstPoint->longitude];
-
 		for ($s = 0; $s < $segmentsCount; $s++) {
 			$this->segments[$s]->recalculateStats();
+			$segStats = $this->segments[$s]->stats;
 
-			$this->stats->cumulativeElevationGain += $this->segments[$s]->stats->cumulativeElevationGain;
-			$this->stats->cumulativeElevationLoss += $this->segments[$s]->stats->cumulativeElevationLoss;
+			$this->stats->cumulativeElevationGain += $segStats->cumulativeElevationGain;
+			$this->stats->cumulativeElevationLoss += $segStats->cumulativeElevationLoss;
+			$this->stats->distance += $segStats->distance;
+			$this->stats->realDistance += $segStats->realDistance;
 
-			$this->stats->distance += $this->segments[$s]->stats->distance;
-			$this->stats->realDistance += $this->segments[$s]->stats->realDistance;
-
-			if ($this->stats->minAltitude === null) {
-				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
-				$this->stats->minAltitudeCoords = $this->segments[$s]->stats->minAltitudeCoords;
+			// Aggregate min/max altitude from segments
+			if ($segStats->maxAltitude !== null && ($this->stats->maxAltitude === null || $segStats->maxAltitude > $this->stats->maxAltitude)) {
+				$this->stats->maxAltitude = $segStats->maxAltitude;
+				$this->stats->maxAltitudeCoords = $segStats->maxAltitudeCoords;
 			}
-			if ($this->stats->maxAltitude < $this->segments[$s]->stats->maxAltitude) {
-				$this->stats->maxAltitude = $this->segments[$s]->stats->maxAltitude;
-				$this->stats->maxAltitudeCoords = $this->segments[$s]->stats->maxAltitudeCoords;
+			if ($segStats->minAltitude !== null && ($this->stats->minAltitude === null || $segStats->minAltitude < $this->stats->minAltitude)) {
+				$this->stats->minAltitude = $segStats->minAltitude;
+				$this->stats->minAltitudeCoords = $segStats->minAltitudeCoords;
 			}
-			if ($this->stats->minAltitude > $this->segments[$s]->stats->minAltitude) {
-				$this->stats->minAltitude = $this->segments[$s]->stats->minAltitude;
-				$this->stats->minAltitudeCoords = $this->segments[$s]->stats->minAltitudeCoords;
+
+			// Aggregate startedAt/finishedAt from segments (#51)
+			if ($segStats->startedAt instanceof \DateTime && ($this->stats->startedAt === null || $segStats->startedAt < $this->stats->startedAt)) {
+				$this->stats->startedAt = $segStats->startedAt;
+				$this->stats->startedAtCoords = $segStats->startedAtCoords;
+			}
+			if ($segStats->finishedAt instanceof \DateTime && ($this->stats->finishedAt === null || $segStats->finishedAt > $this->stats->finishedAt)) {
+				$this->stats->finishedAt = $segStats->finishedAt;
+				$this->stats->finishedAtCoords = $segStats->finishedAtCoords;
 			}
 		}
 
-		if (($firstPoint->time instanceof \DateTime) && ($lastPoint->time instanceof \DateTime)) {
-			$this->stats->duration = abs($lastPoint->time->getTimestamp() - $firstPoint->time->getTimestamp());
+		if ($this->stats->startedAt instanceof \DateTime && $this->stats->finishedAt instanceof \DateTime) {
+			$this->stats->duration = abs($this->stats->finishedAt->getTimestamp() - $this->stats->startedAt->getTimestamp());
 
 			if ($this->stats->duration != 0) {
 				$this->stats->averageSpeed = $this->stats->distance / $this->stats->duration;

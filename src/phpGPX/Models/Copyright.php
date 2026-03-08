@@ -7,7 +7,6 @@
 namespace phpGPX\Models;
 
 use phpGPX\GpxSerializable;
-use phpGPX\Helpers\SerializationHelper;
 
 /**
  * Class Copyright
@@ -47,26 +46,13 @@ class Copyright implements \JsonSerializable, GpxSerializable
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'author' => $this->author,
-			'year' => SerializationHelper::stringOrNull($this->year),
-			'license' => SerializationHelper::stringOrNull($this->license)
-		];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'author' => $this->author,
+			'year' => $this->year,
+			'license' => $this->license,
+		], fn($v) => $v !== null);
 	}
 
 	/**

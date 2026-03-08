@@ -37,25 +37,12 @@ class Email implements \JsonSerializable, GpxSerializable
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'id' => $this->id !== null ? (string) $this->id : null,
-			'domain' => $this->domain !== null ? (string) $this->domain : null
-		];
-	}
-
-	/**
-	 * Serialize object to array for JSON encoding
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'id' => $this->id,
+			'domain' => $this->domain,
+		], fn($v) => $v !== null);
 	}
 
 	/**

@@ -32,10 +32,12 @@ class ExtensionParserTest extends TestCase
 
 		$this->assertEquals($this->extensions->unsupported, $extensions->unsupported);
 		$this->assertEquals(
-			$this->extensions->trackPointExtension->toArray(), $extensions->trackPointExtension->toArray()
+			$this->extensions->trackPointExtension->jsonSerialize(), $extensions->trackPointExtension->jsonSerialize()
 		);
 
-		$this->assertEquals($this->extensions->toArray(), $extensions->toArray());
+		$this->assertJsonStringEqualsJsonString(
+			json_encode($this->extensions), json_encode($extensions)
+		);
 	}
 
 	public function testToXML(): void
@@ -67,7 +69,7 @@ class ExtensionParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/extension.json', json_encode($this->extensions->toArray())
+			self::FIXTURES_DIR . '/extension.json', json_encode($this->extensions->jsonSerialize())
 		);
 	}
 }

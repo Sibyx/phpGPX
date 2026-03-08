@@ -7,7 +7,6 @@
 namespace phpGPX\Models;
 
 use phpGPX\GpxSerializable;
-use phpGPX\Helpers\SerializationHelper;
 
 /**
  * Class Person
@@ -49,26 +48,13 @@ class Person implements \JsonSerializable, GpxSerializable
 	}
 
 
-	/**
-	 * Serialize object to array
-	 * @return array
-	 */
-	public function toArray(): array
-	{
-		return [
-			'name' => (string) $this->name,
-			'email' => SerializationHelper::serialize($this->email),
-			'links' => SerializationHelper::serialize($this->links)
-		];
-	}
-
-	/**
-	 * Implements JsonSerializable interface
-	 * @return array
-	 */
 	public function jsonSerialize(): array
 	{
-		return $this->toArray();
+		return array_filter([
+			'name' => $this->name,
+			'email' => $this->email,
+			'links' => !empty($this->links) ? $this->links : null,
+		], fn($v) => $v !== null);
 	}
 
 	/**
