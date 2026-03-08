@@ -45,13 +45,25 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Run tests with coverage
-        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage.xml
+      - name: Run unit tests with coverage
+        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --testsuite unit --coverage-clover coverage-unit.xml
 
-      - name: Upload coverage to Codecov
+      - name: Run integration tests with coverage
+        run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml --testsuite integration --coverage-clover coverage-integration.xml
+
+      - name: Upload unit coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: coverage.xml
+          files: coverage-unit.xml
+          flags: unit
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload integration coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage-integration.xml
+          flags: integration
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
