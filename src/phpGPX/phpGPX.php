@@ -6,6 +6,7 @@
 
 namespace phpGPX;
 
+use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Models\GpxFile;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\RouteParser;
@@ -18,123 +19,81 @@ use phpGPX\Parsers\WaypointParser;
  */
 class phpGPX
 {
- const JSON_FORMAT = 'json';
+	const JSON_FORMAT = 'json';
 	const XML_FORMAT = 'xml';
 	const GEOJSON_FORMAT = 'geojson';
 
 	const PACKAGE_NAME = 'phpGPX';
-	const VERSION = '2.0.0-alpha.1';
+	const VERSION = '2.0.0-alpha.2';
 
-	/**
-	 * Pretty print XML output
-	 * @var bool
-	 */
-	public static bool $PRETTY_PRINT = true;
+	public readonly Config $config;
 
-	/**
-	 * Ignore elevation values of 0
-	 * @var bool
-	 */
-	public static bool $IGNORE_ELEVATION_0 = false;
-
-	/**
-	 * Calculate stats for tracks, segments and routes
-	 * @var bool
-	 */
-	public static bool $CALCULATE_STATS = true;
-
-	/**
-	 * DateTime format for output
-	 * @var string
-	 */
-	public static string $DATETIME_FORMAT = 'c';
-
-	/**
-	 * DateTime timezone output
-	 * @var string|null
-	 */
-	public static ?string $DATETIME_TIMEZONE_OUTPUT = null;
-
-	/**
-	 * Additional sort based on timestamp in Routes & Tracks on XML read.
-	 * @var bool
-	 */
-	public static bool $SORT_BY_TIMESTAMP = false;
-
-	/**
-	 * Apply elevation gain/loss smoothing
-	 * @var bool
-	 */
-	public static bool $APPLY_ELEVATION_SMOOTHING = false;
-
-	/**
-	 * Minimum elevation difference threshold in meters for smoothing
-	 * @var int
-	 */
-	public static int $ELEVATION_SMOOTHING_THRESHOLD = 2;
-
-	/**
-	 * Maximum elevation difference threshold in meters for spike filtering
-	 * @var int|null
-	 */
-	public static ?int $ELEVATION_SMOOTHING_SPIKES_THRESHOLD = null;
-
-	/**
-	 * Apply distance calculation smoothing
-	 * @var bool
-	 */
-	public static bool $APPLY_DISTANCE_SMOOTHING = false;
-
-	/**
-	 * Minimum distance threshold in meters for smoothing
-	 * @var int
-	 */
-	public static int $DISTANCE_SMOOTHING_THRESHOLD = 2;
-
-	/**
-	 * Load GPX file.
-	 * @param string $path
-	 * @return GpxFile
-	 */
-	public static function load(string $path): GpxFile
+	public function __construct(?Config $config = null)
 	{
-		$xml = file_get_contents($path);
+		$this->config = $config ?? new Config();
+	}
 
-		return self::parse($xml);
+	/**
+	 * Load GPX file from path.
+	 */
+	public function load(string $path): GpxFile
+	{
+		return $this->parse(file_get_contents($path));
 	}
 
 	/**
 	 * Parse GPX data string.
-	 * @param string $xml
-	 * @return GpxFile
 	 */
-	public static function parse(string $xml): GpxFile
+	public function parse(string $xml): GpxFile
 	{
-		$xml = simplexml_load_string($xml);
+		$xmlElement = simplexml_load_string($xml);
 
-		$gpx = new GpxFile();
+		$gpx = new GpxFile($this->config);
 
-		// Parse creator
-		$gpx->creator = isset($xml['creator']) ? (string)$xml['creator'] : null;
+		$gpx->creator = isset($xmlElement['creator']) ? (string)$xmlElement['creator'] : null;
+		$gpx->metadata = isset($xmlElement->metadata) ? MetadataParser::parse($xmlElement->metadata) : null;
+		$gpx->waypoints = isset($xmlElement->wpt) ? WaypointParser::parse($xmlElement->wpt) : [];
+		$gpx->tracks = isset($xmlElement->trk) ? TrackParser::parse($xmlElement->trk) : [];
+		$gpx->routes = isset($xmlElement->rte) ? RouteParser::parse($xmlElement->rte) : [];
 
-		// Parse metadata
-		$gpx->metadata = isset($xml->metadata) ? MetadataParser::parse($xml->metadata) : null;
+		if ($this->config->sortByTimestamp) {
+			$this->sortPointsByTimestamp($gpx);
+		}
 
-		// Parse waypoints
-		$gpx->waypoints = isset($xml->wpt) ? WaypointParser::parse($xml->wpt) : [];
-
-		// Parse tracks
-		$gpx->tracks = isset($xml->trk) ? TrackParser::parse($xml->trk) : [];
-
-		// Parse routes
-		$gpx->routes = isset($xml->rte) ? RouteParser::parse($xml->rte) : [];
+		if ($this->config->calculateStats) {
+			foreach ($gpx->tracks as $track) {
+				$track->recalculateStats($this->config);
+			}
+			foreach ($gpx->routes as $route) {
+				$route->recalculateStats($this->config);
+			}
+		}
 
 		return $gpx;
 	}
 
 	/**
+	 * Sort all point arrays in-place by timestamp.
+	 */
+	private function sortPointsByTimestamp(GpxFile $gpx): void
+	{
+		foreach ($gpx->tracks as $track) {
+			foreach ($track->segments as $segment) {
+				if (!empty($segment->points) && $segment->points[0]->time !== null) {
+					usort($segment->points, [DateTimeHelper::class, 'comparePointsByTimestamp']);
+				}
+			}
+		}
+
+		foreach ($gpx->routes as $route) {
+			if (!empty($route->points) && $route->points[0]->time !== null) {
+				usort($route->points, [DateTimeHelper::class, 'comparePointsByTimestamp']);
+			}
+		}
+	}
+
+	/**
 	 * Create library signature from name and version.
-	 * @return string
 	 */
 	public static function getSignature(): string
 	{

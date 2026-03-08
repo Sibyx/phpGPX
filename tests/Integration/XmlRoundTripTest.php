@@ -9,14 +9,21 @@ class XmlRoundTripTest extends TestCase
 {
 	private const FIXTURES_DIR = __DIR__ . '/../Fixtures';
 
+	private phpGPX $gpx;
+
+	protected function setUp(): void
+	{
+		$this->gpx = new phpGPX();
+	}
+
 	/**
 	 * Load a GPX file, serialize to XML, parse again, and verify key data is preserved.
 	 */
 	public function testRoundTripTimezero(): void
 	{
-		$original = phpGPX::load(self::FIXTURES_DIR . '/timezero.gpx');
+		$original = $this->gpx->load(self::FIXTURES_DIR . '/timezero.gpx');
 		$xml = $original->toXML()->saveXML();
-		$reloaded = phpGPX::parse($xml);
+		$reloaded = $this->gpx->parse($xml);
 
 		$this->assertCount(count($original->waypoints), $reloaded->waypoints);
 		$this->assertCount(count($original->tracks), $reloaded->tracks);
@@ -50,9 +57,9 @@ class XmlRoundTripTest extends TestCase
 
 	public function testRoundTripRoute(): void
 	{
-		$original = phpGPX::load(self::FIXTURES_DIR . '/route.gpx');
+		$original = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
 		$xml = $original->toXML()->saveXML();
-		$reloaded = phpGPX::parse($xml);
+		$reloaded = $this->gpx->parse($xml);
 
 		$this->assertCount(count($original->routes), $reloaded->routes);
 
@@ -76,9 +83,9 @@ class XmlRoundTripTest extends TestCase
 
 	public function testRoundTripGpsTrack(): void
 	{
-		$original = phpGPX::load(self::FIXTURES_DIR . '/gps-track.gpx');
+		$original = $this->gpx->load(self::FIXTURES_DIR . '/gps-track.gpx');
 		$xml = $original->toXML()->saveXML();
-		$reloaded = phpGPX::parse($xml);
+		$reloaded = $this->gpx->parse($xml);
 
 		$this->assertCount(1, $reloaded->tracks);
 		$this->assertEquals('GPS-Track', $reloaded->tracks[0]->name);
@@ -100,9 +107,9 @@ class XmlRoundTripTest extends TestCase
 
 	public function testRoundTripMinimalWithExtensions(): void
 	{
-		$original = phpGPX::load(self::FIXTURES_DIR . '/minimal.gpx');
+		$original = $this->gpx->load(self::FIXTURES_DIR . '/minimal.gpx');
 		$xml = $original->toXML()->saveXML();
-		$reloaded = phpGPX::parse($xml);
+		$reloaded = $this->gpx->parse($xml);
 
 		// Metadata survives
 		$this->assertNotNull($reloaded->metadata);
@@ -127,9 +134,9 @@ class XmlRoundTripTest extends TestCase
 
 	public function testRoundTripStatsConsistency(): void
 	{
-		$original = phpGPX::load(self::FIXTURES_DIR . '/gps-track.gpx');
+		$original = $this->gpx->load(self::FIXTURES_DIR . '/gps-track.gpx');
 		$xml = $original->toXML()->saveXML();
-		$reloaded = phpGPX::parse($xml);
+		$reloaded = $this->gpx->parse($xml);
 
 		$origStats = $original->tracks[0]->stats;
 		$reloadedStats = $reloaded->tracks[0]->stats;

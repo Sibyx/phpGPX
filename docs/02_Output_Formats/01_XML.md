@@ -17,13 +17,15 @@ $xmlString = $document->saveXML();
 
 ## Pretty printing
 
-By default, XML output is formatted with indentation:
+By default, XML output is formatted with indentation. Disable it via Config:
 
 ```php
-phpGPX::$PRETTY_PRINT = true; // default
-```
+use phpGPX\Config;
 
-Set to `false` for compact output.
+$gpx = new phpGPX(new Config(prettyPrint: false));
+$file = $gpx->load('input.gpx');
+$file->save('compact.gpx', phpGPX::XML_FORMAT);
+```
 
 ## Namespaces
 

@@ -22,7 +22,8 @@ The most common extension. Provides sensor data per track point.
 ### Reading extensions
 
 ```php
-$file = phpGPX::load('garmin_track.gpx');
+$gpx = new phpGPX();
+$file = $gpx->load('garmin_track.gpx');
 
 foreach ($file->tracks as $track) {
     foreach ($track->segments as $segment) {

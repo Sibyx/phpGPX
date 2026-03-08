@@ -2,21 +2,13 @@
 
 namespace phpGPX\Tests\Unit\Helpers;
 
+use phpGPX\Config;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Models\Point;
-use phpGPX\phpGPX;
 use PHPUnit\Framework\TestCase;
 
 class ElevationGainLossCalculatorTest extends TestCase
 {
-	protected function setUp(): void
-	{
-		phpGPX::$APPLY_ELEVATION_SMOOTHING = false;
-		phpGPX::$IGNORE_ELEVATION_0 = false;
-		phpGPX::$ELEVATION_SMOOTHING_THRESHOLD = 2;
-		phpGPX::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD = null;
-	}
-
 	private function makePoint(float $ele): Point
 	{
 		$p = new Point(Point::TRACKPOINT);
@@ -28,14 +20,14 @@ class ElevationGainLossCalculatorTest extends TestCase
 
 	public function testEmptyPoints(): void
 	{
-		[$gain, $loss] = ElevationGainLossCalculator::calculate([]);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate([], new Config());
 		$this->assertEqualsWithDelta(0.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
 
 	public function testSinglePoint(): void
 	{
-		[$gain, $loss] = ElevationGainLossCalculator::calculate([$this->makePoint(100)]);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate([$this->makePoint(100)], new Config());
 		$this->assertEqualsWithDelta(0.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
@@ -48,7 +40,7 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(100),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, new Config());
 		$this->assertEqualsWithDelta(0.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
@@ -61,7 +53,7 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(200),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, new Config());
 		$this->assertEqualsWithDelta(100.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
@@ -74,7 +66,7 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(100),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, new Config());
 		$this->assertEqualsWithDelta(0.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(100.0, $loss, 0.001);
 	}
@@ -89,7 +81,7 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(140),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, new Config());
 		$this->assertEqualsWithDelta(70.0, $gain, 0.001);  // 50 + 20
 		$this->assertEqualsWithDelta(30.0, $loss, 0.001);
 	}
@@ -103,14 +95,14 @@ class ElevationGainLossCalculatorTest extends TestCase
 		$p2->elevation = null;
 		$p3 = $this->makePoint(200);
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate([$p1, $p2, $p3]);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate([$p1, $p2, $p3], new Config());
 		$this->assertEqualsWithDelta(100.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
 
 	public function testIgnoreElevationZero(): void
 	{
-		phpGPX::$IGNORE_ELEVATION_0 = true;
+		$config = new Config(ignoreZeroElevation: true);
 
 		$points = [
 			$this->makePoint(100),
@@ -118,14 +110,14 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(200),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, $config);
 		$this->assertEqualsWithDelta(100.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
 
 	public function testIgnoreElevationZeroDisabled(): void
 	{
-		phpGPX::$IGNORE_ELEVATION_0 = false;
+		$config = new Config(ignoreZeroElevation: false);
 
 		$points = [
 			$this->makePoint(100),
@@ -133,15 +125,17 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(200),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, $config);
 		$this->assertEqualsWithDelta(200.0, $gain, 0.001);   // 0→200
 		$this->assertEqualsWithDelta(100.0, $loss, 0.001);   // 100→0
 	}
 
 	public function testSmoothingFiltersSmallChanges(): void
 	{
-		phpGPX::$APPLY_ELEVATION_SMOOTHING = true;
-		phpGPX::$ELEVATION_SMOOTHING_THRESHOLD = 5;
+		$config = new Config(
+			applyElevationSmoothing: true,
+			elevationSmoothingThreshold: 5,
+		);
 
 		// Small oscillations of 2m — below 5m threshold, should be filtered
 		$points = [
@@ -152,15 +146,17 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(100),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, $config);
 		$this->assertEqualsWithDelta(0.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
 
 	public function testSmoothingKeepsLargeChanges(): void
 	{
-		phpGPX::$APPLY_ELEVATION_SMOOTHING = true;
-		phpGPX::$ELEVATION_SMOOTHING_THRESHOLD = 5;
+		$config = new Config(
+			applyElevationSmoothing: true,
+			elevationSmoothingThreshold: 5,
+		);
 
 		// Large change of 50m — above 5m threshold
 		$points = [
@@ -168,16 +164,18 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(150),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, $config);
 		$this->assertEqualsWithDelta(50.0, $gain, 0.001);
 		$this->assertEqualsWithDelta(0.0, $loss, 0.001);
 	}
 
 	public function testSmoothingSpikesThreshold(): void
 	{
-		phpGPX::$APPLY_ELEVATION_SMOOTHING = true;
-		phpGPX::$ELEVATION_SMOOTHING_THRESHOLD = 2;
-		phpGPX::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD = 50;
+		$config = new Config(
+			applyElevationSmoothing: true,
+			elevationSmoothingThreshold: 2,
+			elevationSmoothingSpikesThreshold: 50,
+		);
 
 		// Spike of 100m — above spikes threshold, should be filtered
 		$points = [
@@ -186,7 +184,7 @@ class ElevationGainLossCalculatorTest extends TestCase
 			$this->makePoint(105),
 		];
 
-		[$gain, $loss] = ElevationGainLossCalculator::calculate($points);
+		[$gain, $loss] = ElevationGainLossCalculator::calculate($points, $config);
 		// The 100m jump is filtered (> spikes threshold)
 		// The 200→105 drop: delta from last considered (100) to 200 is 100 (filtered)
 		// delta from 100 to 105 is 5 (above 2, below 50) — counted

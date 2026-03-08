@@ -6,6 +6,7 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Config;
 use phpGPX\Parsers\ExtensionParser;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\PointParser;
@@ -20,55 +21,24 @@ use phpGPX\phpGPX;
  */
 class GpxFile implements \JsonSerializable
 {
-	/**
-	 * A list of waypoints.
-	 * @var Point[]
-	 */
-	public array $waypoints;
+	/** @var Point[] */
+	public array $waypoints = [];
 
-	/**
-	 * A list of routes.
-	 * @var Route[]
-	 */
-	public array $routes;
+	/** @var Route[] */
+	public array $routes = [];
 
-	/**
-	 * A list of tracks.
-	 * @var Track[]
-	 */
-	public array $tracks;
+	/** @var Track[] */
+	public array $tracks = [];
 
-	/**
-	 * Metadata about the file.
-	 * The original GPX 1.1 attribute.
-	 * @var Metadata|null
-	 */
-	public ?Metadata $metadata;
+	public ?Metadata $metadata = null;
 
-	/**
-	 * @var Extensions|null
-	 */
-	public ?Extensions $extensions;
+	public ?Extensions $extensions = null;
 
-	/**
-	 * Creator of GPX file.
-	 * @var string|null
-	 */
-	public ?string $creator;
+	public ?string $creator = null;
 
-	/**
-	 * GpxFile constructor.
-	 */
-	public function __construct()
-	{
-		$this->waypoints = [];
-		$this->routes = [];
-		$this->tracks = [];
-		$this->metadata = null;
-		$this->extensions = null;
-		$this->creator = null;
-	}
-
+	public function __construct(
+		public readonly Config $config = new Config(),
+	) {}
 
 	public function jsonSerialize(): array
 	{
@@ -104,16 +74,14 @@ class GpxFile implements \JsonSerializable
 
 	/**
 	 * Return GeoJSON representation of GPX file.
-	 * @return string
 	 */
 	public function toJSON(): string
 	{
-		return json_encode($this, phpGPX::$PRETTY_PRINT ? JSON_PRETTY_PRINT : 0);
+		return json_encode($this, $this->config->prettyPrint ? JSON_PRETTY_PRINT : 0);
 	}
 
 	/**
 	 * Create XML representation of GPX file.
-	 * @return \DOMDocument
 	 */
 	public function toXML(): \DOMDocument
 	{
@@ -170,7 +138,7 @@ class GpxFile implements \JsonSerializable
 
 		$document->appendChild($gpx);
 
-		if (phpGPX::$PRETTY_PRINT) {
+		if ($this->config->prettyPrint) {
 			$document->formatOutput = true;
 			$document->preserveWhiteSpace = true;
 		}
@@ -179,8 +147,6 @@ class GpxFile implements \JsonSerializable
 
 	/**
 	 * Save data to file according to selected format.
-	 * @param string $path
-	 * @param string $format
 	 */
 	public function save(string $path, string $format): void
 	{

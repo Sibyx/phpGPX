@@ -5,6 +5,7 @@ You can build GPX files programmatically.
 ## Building a track from scratch
 
 ```php
+use phpGPX\Config;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
@@ -45,7 +46,7 @@ foreach ($points as $data) {
 $track->segments[] = $segment;
 
 // Calculate statistics
-$track->recalculateStats();
+$track->recalculateStats(new Config());
 
 $gpxFile->tracks[] = $track;
 
@@ -56,9 +57,11 @@ $gpxFile->save('morning_run.gpx', phpGPX::XML_FORMAT);
 ## Building a route
 
 ```php
+use phpGPX\Config;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\Route;
+use phpGPX\phpGPX;
 
 $gpxFile = new GpxFile();
 
@@ -80,10 +83,10 @@ foreach ($waypoints as $data) {
     $route->points[] = $point;
 }
 
-$route->recalculateStats();
+$route->recalculateStats(new Config());
 
 $gpxFile->routes[] = $route;
-$gpxFile->save('trail.gpx', \phpGPX\phpGPX::XML_FORMAT);
+$gpxFile->save('trail.gpx', phpGPX::XML_FORMAT);
 ```
 
 ## Adding waypoints
@@ -92,6 +95,7 @@ $gpxFile->save('trail.gpx', \phpGPX\phpGPX::XML_FORMAT);
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Link;
 use phpGPX\Models\Point;
+use phpGPX\phpGPX;
 
 $gpxFile = new GpxFile();
 
@@ -109,7 +113,7 @@ $link->text = "Official website";
 $waypoint->links[] = $link;
 
 $gpxFile->waypoints[] = $waypoint;
-$gpxFile->save('places.gpx', \phpGPX\phpGPX::XML_FORMAT);
+$gpxFile->save('places.gpx', phpGPX::XML_FORMAT);
 ```
 
 ## Direct XML output to browser

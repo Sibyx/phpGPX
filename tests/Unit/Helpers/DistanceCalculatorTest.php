@@ -2,19 +2,14 @@
 
 namespace phpGPX\Tests\Unit\Helpers;
 
+use phpGPX\Config;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\GeoHelper;
 use phpGPX\Models\Point;
-use phpGPX\phpGPX;
 use PHPUnit\Framework\TestCase;
 
 class DistanceCalculatorTest extends TestCase
 {
-	protected function setUp(): void
-	{
-		phpGPX::$APPLY_DISTANCE_SMOOTHING = false;
-	}
-
 	private function makePoint(float $lat, float $lon, ?float $ele = null): Point
 	{
 		$p = new Point(Point::TRACKPOINT);
@@ -26,7 +21,7 @@ class DistanceCalculatorTest extends TestCase
 
 	public function testEmptyPoints(): void
 	{
-		$calc = new DistanceCalculator([]);
+		$calc = new DistanceCalculator([], new Config());
 		$this->assertEqualsWithDelta(0.0, $calc->getRawDistance(), 0.001);
 		$this->assertEqualsWithDelta(0.0, $calc->getRealDistance(), 0.001);
 	}
@@ -34,7 +29,7 @@ class DistanceCalculatorTest extends TestCase
 	public function testSinglePoint(): void
 	{
 		$points = [$this->makePoint(48.157, 17.054)];
-		$calc = new DistanceCalculator($points);
+		$calc = new DistanceCalculator($points, new Config());
 		$this->assertEqualsWithDelta(0.0, $calc->getRawDistance(), 0.001);
 	}
 
@@ -46,7 +41,7 @@ class DistanceCalculatorTest extends TestCase
 		$expectedRaw = GeoHelper::getRawDistance($p1, $p2);
 		$expectedReal = GeoHelper::getRealDistance($p1, $p2);
 
-		$calc = new DistanceCalculator([$p1, $p2]);
+		$calc = new DistanceCalculator([$p1, $p2], new Config());
 
 		$this->assertEqualsWithDelta($expectedRaw, $calc->getRawDistance(), 0.01);
 		$this->assertEqualsWithDelta($expectedReal, $calc->getRealDistance(), 0.01);
@@ -62,7 +57,7 @@ class DistanceCalculatorTest extends TestCase
 		$d12 = GeoHelper::getRawDistance($p1, $p2);
 		$d23 = GeoHelper::getRawDistance($p2, $p3);
 
-		$calc = new DistanceCalculator([$p1, $p2, $p3]);
+		$calc = new DistanceCalculator([$p1, $p2, $p3], new Config());
 		$totalRaw = $calc->getRawDistance();
 
 		$this->assertEqualsWithDelta($d12 + $d23, $totalRaw, 0.01);
@@ -74,7 +69,7 @@ class DistanceCalculatorTest extends TestCase
 		$p2 = $this->makePoint(46.572016, 8.414866);
 		$p3 = $this->makePoint(46.572088, 8.414911);
 
-		$calc = new DistanceCalculator([$p1, $p2, $p3]);
+		$calc = new DistanceCalculator([$p1, $p2, $p3], new Config());
 		$calc->getRawDistance();
 
 		// First point should have no difference set
@@ -91,38 +86,38 @@ class DistanceCalculatorTest extends TestCase
 
 	public function testDistanceSmoothingFiltersSmallMovements(): void
 	{
-		phpGPX::$APPLY_DISTANCE_SMOOTHING = true;
-		phpGPX::$DISTANCE_SMOOTHING_THRESHOLD = 10; // 10 meter threshold
+		$config = new Config(
+			applyDistanceSmoothing: true,
+			distanceSmoothingThreshold: 10,
+		);
 
 		// Points very close together (< 10m apart)
 		$p1 = $this->makePoint(46.571948, 8.414757);
 		$p2 = $this->makePoint(46.571949, 8.414758); // ~0.1m away
 		$p3 = $this->makePoint(46.571950, 8.414759); // ~0.1m away
 
-		$calc = new DistanceCalculator([$p1, $p2, $p3]);
+		$calc = new DistanceCalculator([$p1, $p2, $p3], $config);
 		$distance = $calc->getRawDistance();
 
 		// With smoothing, these tiny movements should be filtered out
 		$this->assertEqualsWithDelta(0.0, $distance, 0.01);
-
-		phpGPX::$APPLY_DISTANCE_SMOOTHING = false;
 	}
 
 	public function testDistanceSmoothingKeepsLargeMovements(): void
 	{
-		phpGPX::$APPLY_DISTANCE_SMOOTHING = true;
-		phpGPX::$DISTANCE_SMOOTHING_THRESHOLD = 2;
+		$config = new Config(
+			applyDistanceSmoothing: true,
+			distanceSmoothingThreshold: 2,
+		);
 
 		// Points ~857m apart — well above threshold
 		$p1 = $this->makePoint(48.1573923225717, 17.0547121910204);
 		$p2 = $this->makePoint(48.1644916381763, 17.0591753907502);
 
-		$calc = new DistanceCalculator([$p1, $p2]);
+		$calc = new DistanceCalculator([$p1, $p2], $config);
 		$distance = $calc->getRawDistance();
 
 		$this->assertGreaterThan(800, $distance);
-
-		phpGPX::$APPLY_DISTANCE_SMOOTHING = false;
 	}
 
 	public function testSamePointRepeatedZeroDistance(): void
@@ -131,7 +126,7 @@ class DistanceCalculatorTest extends TestCase
 		$p2 = $this->makePoint(46.571948, 8.414757);
 		$p3 = $this->makePoint(46.571948, 8.414757);
 
-		$calc = new DistanceCalculator([$p1, $p2, $p3]);
+		$calc = new DistanceCalculator([$p1, $p2, $p3], new Config());
 		$this->assertEqualsWithDelta(0.0, $calc->getRawDistance(), 0.001);
 	}
 }

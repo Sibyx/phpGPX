@@ -7,7 +7,8 @@ The simplest way to load a GPX file:
 ```php
 use phpGPX\phpGPX;
 
-$file = phpGPX::load('/path/to/track.gpx');
+$gpx = new phpGPX();
+$file = $gpx->load('/path/to/track.gpx');
 ```
 
 ## From string
@@ -21,7 +22,24 @@ $xml = '<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1">
     </trkseg></trk>
 </gpx>';
 
-$file = phpGPX::parse($xml);
+$gpx = new phpGPX();
+$file = $gpx->parse($xml);
+```
+
+## With custom configuration
+
+Pass a `Config` object to customize parsing behavior:
+
+```php
+use phpGPX\phpGPX;
+use phpGPX\Config;
+
+$gpx = new phpGPX(new Config(
+    calculateStats: false,
+    sortByTimestamp: true,
+));
+
+$file = $gpx->load('/path/to/track.gpx');
 ```
 
 ## What gets parsed
@@ -41,14 +59,18 @@ By default, statistics are calculated automatically when loading a file. This in
 To disable automatic stats calculation:
 
 ```php
-phpGPX::$CALCULATE_STATS = false;
+use phpGPX\Config;
 
-$file = phpGPX::load('track.gpx');
+$gpx = new phpGPX(new Config(calculateStats: false));
+$file = $gpx->load('track.gpx');
 // $file->tracks[0]->stats will be null
 ```
 
 You can recalculate stats manually at any time:
 
 ```php
-$file->tracks[0]->recalculateStats();
+use phpGPX\Config;
+
+$config = new Config();
+$file->tracks[0]->recalculateStats($config);
 ```

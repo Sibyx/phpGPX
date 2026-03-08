@@ -9,9 +9,16 @@ class GpxFileLoadTest extends TestCase
 {
 	private const FIXTURES_DIR = __DIR__ . '/../Fixtures';
 
+	private phpGPX $gpx;
+
+	protected function setUp(): void
+	{
+		$this->gpx = new phpGPX();
+	}
+
 	public function testLoadTimezeroGpx(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/timezero.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/timezero.gpx');
 
 		// Waypoints
 		$this->assertCount(2, $gpxFile->waypoints);
@@ -49,7 +56,7 @@ class GpxFileLoadTest extends TestCase
 
 	public function testLoadRouteGpx(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/route.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
 
 		$this->assertEmpty($gpxFile->tracks);
 		$this->assertEmpty($gpxFile->waypoints);
@@ -77,7 +84,7 @@ class GpxFileLoadTest extends TestCase
 
 	public function testLoadGpsTrackGpx(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/gps-track.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/gps-track.gpx');
 
 		$this->assertCount(1, $gpxFile->tracks);
 		$this->assertEquals('GPS-Track', $gpxFile->tracks[0]->name);
@@ -102,7 +109,7 @@ class GpxFileLoadTest extends TestCase
 
 	public function testLoadMinimalGpx(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/minimal.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/minimal.gpx');
 
 		// Has metadata
 		$this->assertNotNull($gpxFile->metadata);
@@ -130,14 +137,14 @@ class GpxFileLoadTest extends TestCase
 
 	public function testLoadCreatorAttribute(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/route.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
 		$this->assertEquals('RouteConverter', $gpxFile->creator);
 	}
 
 	public function testParseFromString(): void
 	{
 		$xml = file_get_contents(self::FIXTURES_DIR . '/route.gpx');
-		$gpxFile = phpGPX::parse($xml);
+		$gpxFile = $this->gpx->parse($xml);
 
 		$this->assertCount(2, $gpxFile->routes);
 		$this->assertEquals("Patrick's Route", $gpxFile->routes[0]->name);

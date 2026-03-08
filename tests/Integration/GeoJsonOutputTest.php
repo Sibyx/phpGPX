@@ -2,6 +2,7 @@
 
 namespace phpGPX\Tests\Integration;
 
+use phpGPX\Config;
 use phpGPX\Models\Point;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
@@ -13,9 +14,16 @@ class GeoJsonOutputTest extends TestCase
 {
 	private const FIXTURES_DIR = __DIR__ . '/../Fixtures';
 
+	private phpGPX $gpx;
+
+	protected function setUp(): void
+	{
+		$this->gpx = new phpGPX();
+	}
+
 	public function testGpxFileJsonSerializeIsFeatureCollection(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/route.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
 		$json = $gpxFile->jsonSerialize();
 
 		$this->assertEquals('FeatureCollection', $json['type']);
@@ -58,7 +66,7 @@ class GeoJsonOutputTest extends TestCase
 		$p2->elevation = 1.0;
 
 		$route->points = [$p1, $p2];
-		$route->recalculateStats();
+		$route->recalculateStats(new Config());
 
 		$json = $route->jsonSerialize();
 
@@ -97,7 +105,7 @@ class GeoJsonOutputTest extends TestCase
 		$seg2->points = [$p3];
 
 		$track->segments = [$seg1, $seg2];
-		$track->recalculateStats();
+		$track->recalculateStats(new Config());
 
 		$json = $track->jsonSerialize();
 
@@ -111,7 +119,7 @@ class GeoJsonOutputTest extends TestCase
 
 	public function testLoadedFileGeoJsonStructure(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/minimal.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/minimal.gpx');
 		$json = json_decode(json_encode($gpxFile), true);
 
 		$this->assertEquals('FeatureCollection', $json['type']);
@@ -132,7 +140,7 @@ class GeoJsonOutputTest extends TestCase
 
 	public function testGeoJsonWithWaypoints(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/timezero.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/timezero.gpx');
 		$json = json_decode(json_encode($gpxFile), true);
 
 		$this->assertEquals('FeatureCollection', $json['type']);
@@ -151,7 +159,7 @@ class GeoJsonOutputTest extends TestCase
 
 	public function testToJsonOutput(): void
 	{
-		$gpxFile = phpGPX::load(self::FIXTURES_DIR . '/route.gpx');
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
 
 		$geoJson = $gpxFile->toJSON();
 		$decoded = json_decode($geoJson, true);

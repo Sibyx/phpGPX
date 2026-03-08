@@ -10,41 +10,38 @@
 
 namespace phpGPX\Helpers;
 
+use phpGPX\Config;
 use phpGPX\Models\Point;
-use phpGPX\phpGPX;
 
 class DistanceCalculator
 {
-	/**
-	 * @var Point[]
-	 */
+	/** @var Point[] */
 	private array $points;
 
+	private Config $config;
+
 	/**
-	 * DistanceCalculator constructor.
 	 * @param Point[] $points
+	 * @param Config $config
 	 */
-	public function __construct(array $points)
+	public function __construct(array $points, Config $config)
 	{
 		$this->points = $points;
+		$this->config = $config;
 	}
 
 	public function getRawDistance(): float
-    {
+	{
 		return $this->calculate([GeoHelper::class, 'getRawDistance']);
 	}
 
 	public function getRealDistance(): float
-    {
+	{
 		return $this->calculate([GeoHelper::class, 'getRealDistance']);
 	}
 
-    /**
-     * @param array $strategy
-     * @return float
-     */
 	private function calculate(array $strategy): float
-    {
+	{
 		$distance = 0;
 
 		$pointCount = count($this->points);
@@ -54,27 +51,21 @@ class DistanceCalculator
 		for ($p = 0; $p < $pointCount; $p++) {
 			$curPoint = $this->points[$p];
 
-			// skip the first point
 			if ($p === 0) {
 				$lastConsideredPoint = $curPoint;
 				continue;
 			}
 
-			// calculate the delta from current point to last considered point
 			$curPoint->difference = call_user_func($strategy, $lastConsideredPoint, $curPoint);
 
-			// if smoothing is applied we only consider points with a delta above the threshold (e.g. 2 meters)
-			if (phpGPX::$APPLY_DISTANCE_SMOOTHING) {
+			if ($this->config->applyDistanceSmoothing) {
 				$differenceFromLastConsideredPoint = call_user_func($strategy, $curPoint, $lastConsideredPoint);
 
-				if ($differenceFromLastConsideredPoint > phpGPX::$DISTANCE_SMOOTHING_THRESHOLD) {
+				if ($differenceFromLastConsideredPoint > $this->config->distanceSmoothingThreshold) {
 					$distance += $differenceFromLastConsideredPoint;
 					$lastConsideredPoint = $curPoint;
 				}
-			}
-
-			// if smoothing is not applied we consider every point
-			else {
+			} else {
 				$distance += $curPoint->difference;
 				$lastConsideredPoint = $curPoint;
 			}

@@ -6,10 +6,10 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Config;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\SerializationHelper;
-use phpGPX\phpGPX;
 
 /**
  * Class Route
@@ -40,17 +40,8 @@ class Route extends Collection
 	 * @return Point[]
 	 */
 	public function getPoints(): array
-    {
-		/** @var Point[] $points */
-		$points = [];
-
-		$points = array_merge($points, $this->points);
-
-		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points) && $points[0]->time !== null) {
-			usort($points, array('phpGPX\Helpers\DateTimeHelper', 'comparePointsByTimestamp'));
-		}
-
-		return $points;
+	{
+		return $this->points;
 	}
 
 	public function jsonSerialize(): array
@@ -86,7 +77,7 @@ class Route extends Collection
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats(): void
+	public function recalculateStats(Config $config): void
 	{
 		if (empty($this->stats)) {
 			$this->stats = new Stats();
@@ -101,9 +92,9 @@ class Route extends Collection
 		$pointCount = count($this->points);
 
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
-			ElevationGainLossCalculator::calculate($this->getPoints());
+			ElevationGainLossCalculator::calculate($this->getPoints(), $config);
 
-		$calculator = new DistanceCalculator($this->getPoints());
+		$calculator = new DistanceCalculator($this->getPoints(), $config);
 		$this->stats->distance = $calculator->getRawDistance();
 		$this->stats->realDistance = $calculator->getRealDistance();
 
@@ -129,7 +120,7 @@ class Route extends Collection
 			if ($ele === null) {
 				continue;
 			}
-			if (phpGPX::$IGNORE_ELEVATION_0 && $ele == 0) {
+			if ($config->ignoreZeroElevation && $ele == 0) {
 				continue;
 			}
 

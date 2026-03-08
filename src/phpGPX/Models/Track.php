@@ -6,8 +6,8 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Config;
 use phpGPX\Helpers\SerializationHelper;
-use phpGPX\phpGPX;
 
 /**
  * Class Track
@@ -37,16 +37,12 @@ class Track extends Collection
 	 * @return Point[]
 	 */
 	public function getPoints(): array
-    {
+	{
 		/** @var Point[] $points */
 		$points = [];
 
 		foreach ($this->segments as $segment) {
 			$points = array_merge($points, $segment->points);
-		}
-
-		if (phpGPX::$SORT_BY_TIMESTAMP && !empty($points) && $points[0]->time !== null) {
-			usort($points, array('phpGPX\Helpers\DateTimeHelper', 'comparePointsByTimestamp'));
 		}
 
 		return $points;
@@ -89,7 +85,7 @@ class Track extends Collection
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats(): void
+	public function recalculateStats(Config $config): void
 	{
 		if (empty($this->stats)) {
 			$this->stats = new Stats();
@@ -104,7 +100,7 @@ class Track extends Collection
 		$segmentsCount = count($this->segments);
 
 		for ($s = 0; $s < $segmentsCount; $s++) {
-			$this->segments[$s]->recalculateStats();
+			$this->segments[$s]->recalculateStats($config);
 			$segStats = $this->segments[$s]->stats;
 
 			$this->stats->cumulativeElevationGain += $segStats->cumulativeElevationGain;

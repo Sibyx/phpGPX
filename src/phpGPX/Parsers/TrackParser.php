@@ -7,7 +7,6 @@
 namespace phpGPX\Parsers;
 
 use phpGPX\Models\Track;
-use phpGPX\phpGPX;
 
 /**
  * Class TrackParser
@@ -79,10 +78,6 @@ abstract class TrackParser extends AbstractParser
 				if (isset($attribute['parser'])) {
 					$track->{$attribute['name']} = self::parseDelegated($node, $key, $attribute);
 				}
-			}
-
-			if (phpGPX::$CALCULATE_STATS) {
-				$track->recalculateStats();
 			}
 
 			$tracks[] = $track;

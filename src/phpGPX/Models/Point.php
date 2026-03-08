@@ -8,7 +8,6 @@ namespace phpGPX\Models;
 
 use phpGPX\Helpers\DateTimeHelper;
 use phpGPX\Helpers\SerializationHelper;
-use phpGPX\phpGPX;
 
 enum PointType: string
 {
@@ -247,7 +246,7 @@ class Point implements \JsonSerializable
 		$properties = array_filter([
 			'name' => $this->name,
 			'ele' => $this->elevation,
-			'time' => DateTimeHelper::formatDateTime($this->time, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'time' => DateTimeHelper::formatDateTime($this->time),
 			'magvar' => $this->magVar,
 			'geoidheight' => $this->geoidHeight,
 			'cmt' => $this->comment,
@@ -276,11 +275,4 @@ class Point implements \JsonSerializable
 		];
 	}
 
-	public static function gpxSerialize(\SimpleXMLElement $node): void
-	{
-	}
-
-	public function gpxDeserialize(\DOMDocument &$document): void
-	{
-	}
 }

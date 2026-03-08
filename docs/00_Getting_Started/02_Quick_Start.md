@@ -5,14 +5,16 @@
 ```php
 use phpGPX\phpGPX;
 
-$file = phpGPX::load('path/to/file.gpx');
+$gpx = new phpGPX();
+$file = $gpx->load('path/to/file.gpx');
 ```
 
 You can also parse GPX data from a string:
 
 ```php
+$gpx = new phpGPX();
 $xml = file_get_contents('path/to/file.gpx');
-$file = phpGPX::parse($xml);
+$file = $gpx->parse($xml);
 ```
 
 ## Accessing data
@@ -51,14 +53,12 @@ foreach ($file->routes as $route) {
 ```php
 use phpGPX\phpGPX;
 
-$file = phpGPX::load('input.gpx');
+$gpx = new phpGPX();
+$file = $gpx->load('input.gpx');
 
 // Save as GPX XML
 $file->save('output.gpx', phpGPX::XML_FORMAT);
 
-// Save as JSON
-$file->save('output.json', phpGPX::JSON_FORMAT);
-
 // Save as GeoJSON
-$file->save('output.geojson', phpGPX::GEOJSON_FORMAT);
+$file->save('output.geojson', phpGPX::JSON_FORMAT);
 ```

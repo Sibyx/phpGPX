@@ -6,14 +6,17 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Config;
+
 interface StatsCalculator
 {
 
 	/**
 	 * Recalculate stats objects.
+	 * @param Config $config
 	 * @return void
 	 */
-	public function recalculateStats(): void;
+	public function recalculateStats(Config $config): void;
 
 	/**
 	 * Return all points in collection.

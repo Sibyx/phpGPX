@@ -7,7 +7,6 @@
 namespace phpGPX\Parsers;
 
 use phpGPX\Models\Segment;
-use phpGPX\phpGPX;
 
 /**
  * Class SegmentParser
@@ -41,10 +40,6 @@ abstract class SegmentParser
 		}
 
 		$segment->extensions = isset($node->extensions) ? ExtensionParser::parse($node->extensions) : null;
-
-		if (phpGPX::$CALCULATE_STATS) {
-			$segment->recalculateStats();
-		}
 
 		return $segment;
 	}

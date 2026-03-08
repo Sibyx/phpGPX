@@ -25,7 +25,10 @@ Coordinate properties are also available: `startedAtCoords`, `finishedAtCoords`,
 ## Accessing statistics
 
 ```php
-$file = phpGPX::load('track.gpx');
+use phpGPX\phpGPX;
+
+$gpx = new phpGPX();
+$file = $gpx->load('track.gpx');
 
 foreach ($file->tracks as $track) {
     $stats = $track->stats;
@@ -45,10 +48,13 @@ foreach ($file->tracks as $track) {
 
 ## Recalculating statistics
 
-After modifying points, recalculate:
+After modifying points, recalculate by passing a `Config` object:
 
 ```php
-$track->recalculateStats();
+use phpGPX\Config;
+
+$config = new Config();
+$track->recalculateStats($config);
 ```
 
 For tracks, this recalculates each segment's stats first, then aggregates them.
@@ -58,8 +64,12 @@ For tracks, this recalculates each segment's stats first, then aggregates them.
 GPS noise can inflate distance measurements. Enable smoothing to filter out small movements:
 
 ```php
-phpGPX::$APPLY_DISTANCE_SMOOTHING = true;
-phpGPX::$DISTANCE_SMOOTHING_THRESHOLD = 2; // meters — ignore movements smaller than this
+use phpGPX\Config;
+
+$gpx = new phpGPX(new Config(
+    applyDistanceSmoothing: true,
+    distanceSmoothingThreshold: 2, // meters — ignore movements smaller than this
+));
 ```
 
 ## Elevation smoothing
@@ -67,11 +77,15 @@ phpGPX::$DISTANCE_SMOOTHING_THRESHOLD = 2; // meters — ignore movements smalle
 GPS altitude data is often noisy. Smoothing helps get more accurate elevation gain/loss:
 
 ```php
-phpGPX::$APPLY_ELEVATION_SMOOTHING = true;
-phpGPX::$ELEVATION_SMOOTHING_THRESHOLD = 2; // meters — minimum change to count
+use phpGPX\Config;
 
-// Optional: filter spikes (e.g. GPS glitches showing 100m jumps)
-phpGPX::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD = 50; // meters — maximum change to count
+$gpx = new phpGPX(new Config(
+    applyElevationSmoothing: true,
+    elevationSmoothingThreshold: 2, // meters — minimum change to count
+
+    // Optional: filter spikes (e.g. GPS glitches showing 100m jumps)
+    elevationSmoothingSpikesThreshold: 50, // meters — maximum change to count
+));
 ```
 
 ## Ignoring zero elevation
@@ -79,5 +93,7 @@ phpGPX::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD = 50; // meters — maximum change
 Some GPS devices record elevation as 0 when they lose satellite fix. Ignore these points:
 
 ```php
-phpGPX::$IGNORE_ELEVATION_0 = true;
+use phpGPX\Config;
+
+$gpx = new phpGPX(new Config(ignoreZeroElevation: true));
 ```

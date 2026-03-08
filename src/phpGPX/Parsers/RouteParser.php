@@ -7,7 +7,6 @@
 namespace phpGPX\Parsers;
 
 use phpGPX\Models\Route;
-use phpGPX\phpGPX;
 
 /**
  * Class RouteParser
@@ -79,10 +78,6 @@ abstract class RouteParser extends AbstractParser
 				if (isset($attribute['parser'])) {
 					$route->{$attribute['name']} = self::parseDelegated($node, $key, $attribute);
 				}
-			}
-
-			if (phpGPX::$CALCULATE_STATS) {
-				$route->recalculateStats();
 			}
 
 			$routes[] = $route;

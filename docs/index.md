@@ -11,14 +11,16 @@ A PHP library for reading, creating, and manipulating [GPX files](https://en.wik
 - Full support of [GPX 1.1 specification](http://www.topografix.com/GPX/1/1/)
 - Statistics calculation (distance, elevation, speed, pace, duration)
 - Extension support (Garmin TrackPointExtension)
-- Output in XML, JSON, and GeoJSON formats
+- GeoJSON output (RFC 7946) and GPX XML output
+- Instance-based API with injectable configuration
 
 ## Quick Example
 
 ```php
 use phpGPX\phpGPX;
 
-$file = phpGPX::load('track.gpx');
+$gpx = new phpGPX();
+$file = $gpx->load('track.gpx');
 
 foreach ($file->tracks as $track) {
     echo $track->stats->distance . " meters\n";

@@ -8,17 +8,18 @@
 
 namespace phpGPX\Helpers;
 
+use phpGPX\Config;
 use phpGPX\Models\Point;
-use phpGPX\phpGPX;
 
 class ElevationGainLossCalculator
 {
 	/**
 	 * @param Point[] $points
-	 * @return array
+	 * @param Config $config
+	 * @return array [cumulativeElevationGain, cumulativeElevationLoss]
 	 */
-	public static function calculate(array $points): array
-    {
+	public static function calculate(array $points, Config $config): array
+	{
 		$cumulativeElevationGain = 0;
 		$cumulativeElevationLoss = 0;
 
@@ -29,37 +30,31 @@ class ElevationGainLossCalculator
 		for ($p = 0; $p < $pointCount; $p++) {
 			$curElevation = $points[$p]->elevation;
 
-			// skip points with empty elevation
 			if ($curElevation === null) {
 				continue;
 			}
 
-			// skip points with 0 elevation if configuration allows
-			if (phpGPX::$IGNORE_ELEVATION_0 && $curElevation == 0) {
+			if ($config->ignoreZeroElevation && $curElevation == 0) {
 				continue;
 			}
 
-			// skip the first point
 			if ($p === 0) {
 				$lastConsideredElevation = $curElevation;
 				continue;
 			}
 
-			// calculate the delta from current point to last considered point
 			$elevationDelta = $curElevation - $lastConsideredElevation;
 
-			// if smoothing is applied we only consider points with a delta above the threshold (e.g. 2 meters)
-			if (phpGPX::$APPLY_ELEVATION_SMOOTHING &&
-				abs($elevationDelta) > phpGPX::$ELEVATION_SMOOTHING_THRESHOLD &&
-						(phpGPX::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD === null || abs($elevationDelta) < phpGPX::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD)) {
+			if ($config->applyElevationSmoothing &&
+				abs($elevationDelta) > $config->elevationSmoothingThreshold &&
+						($config->elevationSmoothingSpikesThreshold === null || abs($elevationDelta) < $config->elevationSmoothingSpikesThreshold)) {
 				$cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
 				$cumulativeElevationLoss += ($elevationDelta < 0) ? abs($elevationDelta) : 0;
 
 				$lastConsideredElevation = $curElevation;
 			}
 
-			// if smoothing is not applied we consider every point
-			if (!phpGPX::$APPLY_ELEVATION_SMOOTHING) {
+			if (!$config->applyElevationSmoothing) {
 				$cumulativeElevationGain += ($elevationDelta > 0) ? $elevationDelta : 0;
 				$cumulativeElevationLoss += ($elevationDelta < 0) ? abs($elevationDelta) : 0;
 

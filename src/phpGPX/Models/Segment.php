@@ -6,10 +6,10 @@
 
 namespace phpGPX\Models;
 
+use phpGPX\Config;
 use phpGPX\Helpers\DistanceCalculator;
 use phpGPX\Helpers\ElevationGainLossCalculator;
 use phpGPX\Helpers\SerializationHelper;
-use phpGPX\phpGPX;
 
 /**
  * Class Segment
@@ -82,7 +82,7 @@ class Segment implements \JsonSerializable, StatsCalculator
 	 * Recalculate stats objects.
 	 * @return void
 	 */
-	public function recalculateStats(): void
+	public function recalculateStats(Config $config): void
 	{
 		if (empty($this->stats)) {
 			$this->stats = new Stats();
@@ -96,9 +96,9 @@ class Segment implements \JsonSerializable, StatsCalculator
 		}
 
 		list($this->stats->cumulativeElevationGain, $this->stats->cumulativeElevationLoss) =
-			ElevationGainLossCalculator::calculate($this->getPoints());
+			ElevationGainLossCalculator::calculate($this->getPoints(), $config);
 
-		$calculator = new DistanceCalculator($this->getPoints());
+		$calculator = new DistanceCalculator($this->getPoints(), $config);
 		$this->stats->distance = $calculator->getRawDistance();
 		$this->stats->realDistance = $calculator->getRealDistance();
 
@@ -124,7 +124,7 @@ class Segment implements \JsonSerializable, StatsCalculator
 			if ($ele === null) {
 				continue;
 			}
-			if (phpGPX::$IGNORE_ELEVATION_0 && $ele == 0) {
+			if ($config->ignoreZeroElevation && $ele == 0) {
 				continue;
 			}
 

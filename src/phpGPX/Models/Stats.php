@@ -7,7 +7,6 @@
 namespace phpGPX\Models;
 
 use phpGPX\Helpers\DateTimeHelper;
-use phpGPX\phpGPX;
 
 /**
  * Class Stats
@@ -142,9 +141,9 @@ class Stats implements \JsonSerializable
 			'maxAltitudeCoords' => $this->maxAltitudeCoords,
 			'cumulativeElevationGain' => $this->cumulativeElevationGain,
 			'cumulativeElevationLoss' => $this->cumulativeElevationLoss,
-			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'startedAt' => DateTimeHelper::formatDateTime($this->startedAt),
 			'startedAtCoords' => $this->startedAtCoords,
-			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt, phpGPX::$DATETIME_FORMAT, phpGPX::$DATETIME_TIMEZONE_OUTPUT),
+			'finishedAt' => DateTimeHelper::formatDateTime($this->finishedAt),
 			'finishedAtCoords' => $this->finishedAtCoords,
 			'duration' => $this->duration,
 		], fn($v) => $v !== null);
