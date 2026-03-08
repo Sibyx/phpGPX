@@ -3,6 +3,7 @@
 namespace UnitTests\phpGPX\Parsers;
 
 use phpGPX\Models\Extensions;
+use phpGPX\Models\Extensions\StyleExtension;
 use phpGPX\Models\Extensions\TrackPointExtension;
 use phpGPX\Parsers\ExtensionParser;
 
@@ -27,8 +28,15 @@ class ExtensionParserTest extends AbstractParserTest
 		$trackpoint->hr = (float) 152;
 		$trackpoint->heartRate = (float) 152;
 
+		$style = new StyleExtension();
+		$style->color = (string) "FF0000";
+		$style->opacity = (float) 0.5;
+		$style->width = (float) 1;
+		$style->linecap = (string) "square";
+
 		$extensions = new Extensions();
 		$extensions->trackPointExtension = $trackpoint;
+		$extensions->styleExtension = $style;
 
 		return $extensions;
 	}
@@ -46,6 +54,7 @@ class ExtensionParserTest extends AbstractParserTest
 
 		$this->assertEquals($this->testModelInstance->unsupported, $extensions->unsupported);
 		$this->assertEquals($this->testModelInstance->trackPointExtension, $extensions->trackPointExtension);
+		$this->assertEquals($this->testModelInstance->styleExtension, $extensions->styleExtension);
 
 		$this->assertEquals($this->testModelInstance->toArray(), $extensions->toArray());
 	}
@@ -71,8 +80,9 @@ class ExtensionParserTest extends AbstractParserTest
 		$attributes = [
 			'xmlns' => 'http://www.topografix.com/GPX/1/1',
 			'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-			'xsi:schemaLocation' => 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd',
+			'xsi:schemaLocation' => 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.topografix.com/GPX/gpx_style/0/2 http://www.topografix.com/GPX/gpx_style/0/2.xsd',
 			'xmlns:gpxtpx' => 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1',
+			'xmlns:gpxstyle' => 'http://www.topografix.com/GPX/gpx_style/0/2',
 			'xmlns:gpxx' => 'http://www.garmin.com/xmlschemas/GpxExtensions/v3',
 		];
 

@@ -7,7 +7,9 @@
 namespace phpGPX\Parsers;
 
 use phpGPX\Models\Extensions;
+use phpGPX\Models\Extensions\StyleExtension;
 use phpGPX\Models\Extensions\TrackPointExtension;
+use phpGPX\Parsers\Extensions\StyleExtensionParser;
 use phpGPX\Parsers\Extensions\TrackPointExtensionParser;
 
 /**
@@ -39,6 +41,12 @@ abstract class ExtensionParser
 						$extensions->trackPointExtension = TrackPointExtensionParser::parse($node);
 					}
 					break;
+				case StyleExtension::EXTENSION_NAMESPACE:
+					$node = $nodes->children($namespace)->{StyleExtension::EXTENSION_NAME};
+					if (!empty($node)) {
+						$extensions->styleExtension = StyleExtensionParser::parse($node);
+					}
+					break;
 				default:
 					foreach ($nodes->children($namespace) as $child_key => $value) {
 						$extensions->unsupported[$key ? "$key:$child_key" : "$child_key"] = (string) $value;
@@ -61,6 +69,11 @@ abstract class ExtensionParser
 
 		if (null !== $extensions->trackPointExtension) {
 			$child = TrackPointExtensionParser::toXML($extensions->trackPointExtension, $document);
+			$node->appendChild($child);
+		}
+
+		if (null !== $extensions->styleExtension) {
+			$child = StyleExtensionParser::toXML($extensions->styleExtension, $document);
 			$node->appendChild($child);
 		}
 
