@@ -9,17 +9,17 @@ A PHP library for reading, creating, and manipulating [GPX files](https://en.wik
 ## Features
 
 - Full support of [GPX 1.1 specification](http://www.topografix.com/GPX/1/1/)
-- Statistics calculation (distance, elevation, speed, pace, duration)
-- Extension support (Garmin TrackPointExtension)
+- Single-pass stats engine with pluggable analyzers
+- Extension registry — built-in Garmin TrackPointExtension, custom extensions via `ExtensionInterface`
 - GeoJSON output (RFC 7946) and GPX XML output
-- Instance-based API with injectable configuration
 
 ## Quick Example
 
 ```php
 use phpGPX\phpGPX;
+use phpGPX\Analysis\Engine;
 
-$gpx = new phpGPX();
+$gpx = new phpGPX(engine: Engine::default());
 $file = $gpx->load('track.gpx');
 
 foreach ($file->tracks as $track) {

@@ -132,14 +132,27 @@ class GpxFileLoadTest extends TestCase
 		// Check TrackPointExtension (heart rate)
 		$firstPoint = $gpxFile->tracks[0]->segments[0]->points[0];
 		$this->assertNotNull($firstPoint->extensions);
-		$this->assertNotNull($firstPoint->extensions->trackPointExtension);
-		$this->assertEqualsWithDelta(126, $firstPoint->extensions->trackPointExtension->hr, 0.1);
+		$this->assertNotNull($firstPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class));
+		$this->assertEqualsWithDelta(126, $firstPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class)->hr, 0.1);
 	}
 
 	public function testLoadCreatorAttribute(): void
 	{
 		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
 		$this->assertEquals('RouteConverter', $gpxFile->creator);
+	}
+
+	public function testLoadVersionAttribute(): void
+	{
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
+		$this->assertEquals('1.1', $gpxFile->version);
+	}
+
+	public function testVersionPreservedInXmlOutput(): void
+	{
+		$gpxFile = $this->gpx->load(self::FIXTURES_DIR . '/route.gpx');
+		$xml = $gpxFile->toXML()->saveXML();
+		$this->assertStringContainsString('version="1.1"', $xml);
 	}
 
 	public function testParseFromString(): void

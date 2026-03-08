@@ -74,13 +74,13 @@ The engine walks the GPX structure **once** and dispatches each point to all reg
 ### Quick start with defaults
 
 ```php
-$gpx = new phpGPX(engine: engine::default());
+$gpx = new phpGPX(engine: Engine::default());
 ```
 
 ### Customizing via the factory
 
 ```php
-$gpx = new phpGPX(engine: engine::default(
+$gpx = new phpGPX(engine: Engine::default(
     sortByTimestamp: true,
     applyElevationSmoothing: true,
     elevationSmoothingThreshold: 2,
@@ -166,7 +166,7 @@ Aggregates Garmin TrackPointExtension sensor data (heart rate, cadence, temperat
 You can also use `engine` directly on a `GpxFile` you built programmatically:
 
 ```php
-$gpxFile = engine::default()->process($gpxFile);
+$gpxFile = Engine::default()->process($gpxFile);
 ```
 
 ## Full example

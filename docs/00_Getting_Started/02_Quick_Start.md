@@ -14,7 +14,7 @@ $file = $gpx->load('path/to/file.gpx');
 You can also parse GPX data from a string:
 
 ```php
-$gpx = new phpGPX(engine: engine::default());
+$gpx = new phpGPX(engine: Engine::default());
 
 $xml = file_get_contents('path/to/file.gpx');
 $file = $gpx->parse($xml);

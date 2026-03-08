@@ -2,6 +2,7 @@
 
 namespace phpGPX\Analysis;
 
+use phpGPX\Models\Extensions\TrackPointExtension;
 use phpGPX\Models\Point;
 use phpGPX\Models\Stats;
 use phpGPX\Models\Track;
@@ -62,7 +63,7 @@ class TrackPointExtensionAnalyzer extends AbstractPointAnalyzer
 
 	public function visit(Point $current, ?Point $previous): void
 	{
-		$ext = $current->extensions?->trackPointExtension;
+		$ext = $current->extensions?->get(TrackPointExtension::class);
 
 		if ($ext === null) {
 			return;

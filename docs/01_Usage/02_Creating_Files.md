@@ -121,6 +121,34 @@ $gpxFile->waypoints[] = $waypoint;
 $gpxFile->save('places.gpx', phpGPX::XML_FORMAT);
 ```
 
+## Adding extensions to points
+
+```php
+use phpGPX\Models\Extensions;
+use phpGPX\Models\Extensions\TrackPointExtension;
+
+$ext = new TrackPointExtension();
+$ext->hr = 145.0;
+$ext->aTemp = 22.0;
+$ext->cad = 85.0;
+
+$extensions = new Extensions();
+$extensions->set($ext);
+
+$point->extensions = $extensions;
+```
+
+Reading extensions back:
+
+```php
+use phpGPX\Models\Extensions\TrackPointExtension;
+
+$ext = $point->extensions?->get(TrackPointExtension::class);
+if ($ext !== null) {
+    echo "Heart rate: " . $ext->hr . " bpm\n";
+}
+```
+
 ## Direct XML output to browser
 
 ```php

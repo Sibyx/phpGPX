@@ -7,6 +7,16 @@ phpGPX is configured through two mechanisms:
 
 Each `phpGPX` instance carries its own configuration — there is no global state.
 
+## phpGPX constructor
+
+```php
+new phpGPX(
+    config: ?Config,                        // Output formatting (default: new Config())
+    engine: ?Engine,                        // Stats analyzer engine (default: null — no stats)
+    extensionRegistry: ?ExtensionRegistry,  // Extension namespace→parser mappings (default: ExtensionRegistry::default())
+);
+```
+
 ## Config options
 
 ```php
@@ -36,7 +46,7 @@ $gpx = new phpGPX(); // uses all defaults
 !!! note "Config is for output only"
     Processing behavior (stats calculation, smoothing, sorting) is controlled by `engine` and analyzer constructor arguments, not by Config.
 
-## engine configuration
+## Engine configuration
 
 ### Using the factory (recommended)
 
@@ -108,12 +118,12 @@ $file = $gpx->load('track.gpx');
 Since configuration is per-instance, you can use different settings for different files:
 
 ```php
-$smooth = new phpGPX(engine: engine::default(
+$smooth = new phpGPX(engine: Engine::default(
     applyElevationSmoothing: true,
     elevationSmoothingThreshold: 5,
 ));
 
-$raw = new phpGPX(engine: engine::default());
+$raw = new phpGPX(engine: Engine::default());
 
 $smoothFile = $smooth->load('track.gpx');
 $rawFile = $raw->load('track.gpx');
@@ -123,4 +133,5 @@ $rawFile = $raw->load('track.gpx');
 
 - Configuration is immutable after construction — `Config` properties are set once via constructor.
 - JSON output always uses ISO 8601 UTC for datetime values (GeoJSON convention).
-- Stats are produced exclusively by `engine` and its analyzers — models are pure data containers.
+- Stats are produced exclusively by `Engine` and its analyzers — models are pure data containers.
+- Extension registry is configured per-instance. See [Extensions](05_Extensions.md) for custom extension setup.

@@ -8,6 +8,7 @@ namespace phpGPX\Models;
 
 use phpGPX\Config;
 use phpGPX\Parsers\ExtensionParser;
+use phpGPX\Parsers\ExtensionRegistry;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\PointParser;
 use phpGPX\Parsers\RouteParser;
@@ -35,6 +36,8 @@ class GpxFile implements \JsonSerializable
 	public ?Extensions $extensions = null;
 
 	public ?string $creator = null;
+
+	public ?string $version = null;
 
 	public function __construct(
 		public readonly Config $config = new Config(),
@@ -88,10 +91,11 @@ class GpxFile implements \JsonSerializable
 		$document = new \DOMDocument("1.0", 'UTF-8');
 
 		$gpx = $document->createElementNS("http://www.topografix.com/GPX/1/1", "gpx");
-		$gpx->setAttribute("version", "1.1");
+		$gpx->setAttribute("version", $this->version ?? "1.1");
 		$gpx->setAttribute("creator", $this->creator ? $this->creator : phpGPX::getSignature());
 
 		ExtensionParser::$usedNamespaces = [];
+		ExtensionParser::$registry ??= ExtensionRegistry::default();
 
 		if (!empty($this->metadata)) {
 			$gpx->appendChild(MetadataParser::toXML($this->metadata, $document));
@@ -109,7 +113,7 @@ class GpxFile implements \JsonSerializable
 			$gpx->appendChild(TrackParser::toXML($track, $document));
 		}
 
-		if (!empty($this->extensions)) {
+		if ($this->extensions !== null && !$this->extensions->isEmpty()) {
 			$gpx->appendChild(ExtensionParser::toXML($this->extensions, $document));
 		}
 

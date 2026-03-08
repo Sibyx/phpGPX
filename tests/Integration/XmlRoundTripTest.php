@@ -125,10 +125,10 @@ class XmlRoundTripTest extends TestCase
 		$reloadedPoint = $reloaded->tracks[0]->segments[0]->points[0];
 
 		$this->assertNotNull($reloadedPoint->extensions);
-		$this->assertNotNull($reloadedPoint->extensions->trackPointExtension);
+		$this->assertNotNull($reloadedPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class));
 		$this->assertEqualsWithDelta(
-			$origPoint->extensions->trackPointExtension->hr,
-			$reloadedPoint->extensions->trackPointExtension->hr,
+			$origPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class)->hr,
+			$reloadedPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class)->hr,
 			0.1
 		);
 	}

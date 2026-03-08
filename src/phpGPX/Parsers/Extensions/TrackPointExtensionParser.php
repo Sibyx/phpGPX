@@ -6,11 +6,11 @@
 
 namespace phpGPX\Parsers\Extensions;
 
+use phpGPX\Models\Extensions\ExtensionInterface;
 use phpGPX\Models\Extensions\TrackPointExtension;
 use phpGPX\Parsers\AbstractParser;
-use phpGPX\Parsers\ExtensionParser;
 
-class TrackPointExtensionParser extends AbstractParser
+class TrackPointExtensionParser extends AbstractParser implements ExtensionParserInterface
 {
 	protected static function getAttributeMapper(): array
 	{
@@ -50,11 +50,7 @@ class TrackPointExtensionParser extends AbstractParser
 		];
 	}
 
-	/**
-	 * @param \SimpleXMLElement $node
-	 * @return TrackPointExtension
-	 */
-	public static function parse(\SimpleXMLElement $node): TrackPointExtension
+	public static function parse(\SimpleXMLElement $node): ExtensionInterface
 	{
 		$extension = new TrackPointExtension();
 
@@ -63,26 +59,14 @@ class TrackPointExtensionParser extends AbstractParser
 		return $extension;
 	}
 
-	/**
-	 * @param TrackPointExtension $extension
-	 * @param \DOMDocument $document
-	 * @return \DOMElement
-	 */
-	public static function toXML(TrackPointExtension $extension, \DOMDocument &$document): \DOMElement
+	public static function toXML(ExtensionInterface $extension, \DOMDocument &$document, string $prefix = 'gpxtpx'): \DOMElement
 	{
-		$node = $document->createElement("gpxtpx:TrackPointExtension");
-
-		ExtensionParser::$usedNamespaces[TrackPointExtension::EXTENSION_NAME] = [
-			'namespace' => TrackPointExtension::EXTENSION_NAMESPACE,
-			'xsd' => TrackPointExtension::EXTENSION_NAMESPACE_XSD,
-			'name' => TrackPointExtension::EXTENSION_NAME,
-			'prefix' => TrackPointExtension::EXTENSION_NAMESPACE_PREFIX
-		];
+		$node = $document->createElement(sprintf("%s:%s", $prefix, $extension::getTagName()));
 
 		foreach (self::getAttributeMapper() as $key => $attribute) {
 			if (isset($extension->{$attribute['name']})) {
 				$child = $document->createElement(
-					sprintf("%s:%s", TrackPointExtension::EXTENSION_NAMESPACE_PREFIX, $key),
+					sprintf("%s:%s", $prefix, $key),
 					$extension->{$attribute['name']}
 				);
 				$node->appendChild($child);

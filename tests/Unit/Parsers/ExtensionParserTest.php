@@ -5,6 +5,7 @@ namespace phpGPX\Tests\Unit\Parsers;
 use phpGPX\Models\Extensions;
 use phpGPX\Models\Extensions\TrackPointExtension;
 use phpGPX\Parsers\ExtensionParser;
+use phpGPX\Parsers\ExtensionRegistry;
 use PHPUnit\Framework\TestCase;
 
 class ExtensionParserTest extends TestCase
@@ -21,9 +22,12 @@ class ExtensionParserTest extends TestCase
 		$trackpoint->hr = 152.0;
 
 		$this->extensions = new Extensions();
-		$this->extensions->trackPointExtension = $trackpoint;
+		$this->extensions->set($trackpoint);
 
 		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/extension.xml');
+
+		// Configure the registry for parsing
+		ExtensionParser::$registry = ExtensionRegistry::default();
 	}
 
 	public function testParse(): void
@@ -31,9 +35,11 @@ class ExtensionParserTest extends TestCase
 		$extensions = ExtensionParser::parse($this->file->extensions);
 
 		$this->assertEquals($this->extensions->unsupported, $extensions->unsupported);
-		$this->assertEquals(
-			$this->extensions->trackPointExtension->jsonSerialize(), $extensions->trackPointExtension->jsonSerialize()
-		);
+
+		$parsed = $extensions->get(TrackPointExtension::class);
+		$expected = $this->extensions->get(TrackPointExtension::class);
+		$this->assertNotNull($parsed);
+		$this->assertEquals($expected->jsonSerialize(), $parsed->jsonSerialize());
 
 		$this->assertJsonStringEqualsJsonString(
 			json_encode($this->extensions), json_encode($extensions)

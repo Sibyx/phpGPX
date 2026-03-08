@@ -94,7 +94,7 @@ foreach ($sample_data as $sample_point) {
 	$point->extensions 			= new Extensions();
 	$trackPointExtension 		= new TrackPointExtension();
 	$trackPointExtension->aTemp = $sample_point['aTemp'];
-	$point->extensions->trackPointExtension = $trackPointExtension;
+	$point->extensions->set($trackPointExtension);
 
 	$segment->points[] 			= $point;
 }

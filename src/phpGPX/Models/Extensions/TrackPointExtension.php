@@ -7,89 +7,57 @@
 namespace phpGPX\Models\Extensions;
 
 /**
- * Class TrackPointExtension
- * Extension version: v2
- * Based on namespace: http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
- * @package phpGPX\Models\Extensions
+ * Garmin TrackPointExtension model (v2).
+ *
+ * Provides sensor data per track point: heart rate, cadence, temperature, etc.
+ *
+ * @see https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
  */
-class TrackPointExtension extends AbstractExtension
+class TrackPointExtension extends AbstractExtension implements ExtensionInterface
 {
-	const EXTENSION_V1_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1';
-	const EXTENSION_V1_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd';
+	const NAMESPACE_URI = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2';
+	const SCHEMA_LOCATION = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd';
+	const TAG_NAME = 'TrackPointExtension';
 
-	const EXTENSION_NAMESPACE = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2';
-	const EXTENSION_NAMESPACE_XSD = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd';
+	public static function getNamespace(): string { return self::NAMESPACE_URI; }
+	public static function getSchemaLocation(): string { return self::SCHEMA_LOCATION; }
+	public static function getTagName(): string { return self::TAG_NAME; }
 
-	const EXTENSION_NAME = 'TrackPointExtension';
-	const EXTENSION_NAMESPACE_PREFIX = 'gpxtpx';
+	/** Air temperature in degrees Celsius. */
+	public ?float $aTemp = null;
 
-	/**
-	 * Average temperature value measured in degrees Celsius.
-	 * @var float|null
-     */
-	public ?float $aTemp;
+	/** Water temperature in degrees Celsius. */
+	public ?float $wTemp = null;
 
-	/**
-	 * @var float|null
-     */
-	public ?float $wTemp;
+	/** Depth in meters. */
+	public ?float $depth = null;
 
-	/**
-	 * Depth in meters.
-	 * @var float|null
-     */
-	public ?float $depth;
+	/** Heart rate in beats per minute. */
+	public ?float $hr = null;
 
-	/**
-	 * Heart rate in beats per minute.
-	 * @since v1.0RC3
-	 * @var float|null
-     */
-	public ?float $hr;
+	/** Cadence in revolutions per minute. */
+	public ?float $cad = null;
 
-	/**
-	 * Cadence in revolutions per minute.
-	 * @var float|null
-     */
-	public ?float $cad;
+	/** Speed in meters per second. */
+	public ?float $speed = null;
 
-	/**
-	 * Speed in meters per second.
-	 * @var float|null
-	 */
-	public ?float $speed;
+	/** Course in degrees from true north. */
+	public ?int $course = null;
 
-	/**
-	 * Course. This type contains an angle measured in degrees in a clockwise direction from the true north line.
-	 * @var int|null
-     */
-	public ?int $course;
-
-	/**
-	 * Bearing. This type contains an angle measured in degrees in a clockwise direction from the true north line.
-	 * @var int|null
-	 */
-	public ?int $bearing;
-
-	/**
-	 * TrackPointExtension constructor.
-	 */
-	public function __construct()
-	{
-		parent::__construct(self::EXTENSION_NAMESPACE, self::EXTENSION_NAME);
-	}
+	/** Bearing in degrees from true north. */
+	public ?int $bearing = null;
 
 	public function jsonSerialize(): array
 	{
 		return array_filter([
-			'aTemp' => $this->aTemp ?? null,
-			'wTemp' => $this->wTemp ?? null,
-			'depth' => $this->depth ?? null,
-			'hr' => $this->hr ?? null,
-			'cad' => $this->cad ?? null,
-			'speed' => $this->speed ?? null,
-			'course' => $this->course ?? null,
-			'bearing' => $this->bearing ?? null,
+			'aTemp' => $this->aTemp,
+			'wTemp' => $this->wTemp,
+			'depth' => $this->depth,
+			'hr' => $this->hr,
+			'cad' => $this->cad,
+			'speed' => $this->speed,
+			'course' => $this->course,
+			'bearing' => $this->bearing,
 		], fn($v) => $v !== null);
 	}
 }

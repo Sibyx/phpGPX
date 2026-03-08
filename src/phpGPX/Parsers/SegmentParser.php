@@ -57,7 +57,7 @@ abstract class SegmentParser
 			$node->appendChild(PointParser::toXML($point, $document));
 		}
 
-		if (!empty($segment->extensions)) {
+		if ($segment->extensions !== null && !$segment->extensions->isEmpty()) {
 			$node->appendChild(ExtensionParser::toXML($segment->extensions, $document));
 		}
 

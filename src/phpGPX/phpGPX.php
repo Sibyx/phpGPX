@@ -8,6 +8,8 @@ namespace phpGPX;
 
 use phpGPX\Analysis\Engine;
 use phpGPX\Models\GpxFile;
+use phpGPX\Parsers\ExtensionParser;
+use phpGPX\Parsers\ExtensionRegistry;
 use phpGPX\Parsers\MetadataParser;
 use phpGPX\Parsers\RouteParser;
 use phpGPX\Parsers\TrackParser;
@@ -24,16 +26,22 @@ class phpGPX
 	const GEOJSON_FORMAT = 'geojson';
 
 	const PACKAGE_NAME = 'phpGPX';
-	const VERSION = '2.0.0-alpha.2';
+	const VERSION = '2.0.0-alpha.3';
 
 	public readonly Config $config;
 
 	private ?Engine $engine = null;
 
-	public function __construct(?Config $config = null, ?Engine $engine = null)
-	{
+	private ExtensionRegistry $extensionRegistry;
+
+	public function __construct(
+		?Config $config = null,
+		?Engine $engine = null,
+		?ExtensionRegistry $extensionRegistry = null,
+	) {
 		$this->config = $config ?? new Config();
 		$this->engine = $engine;
+		$this->extensionRegistry = $extensionRegistry ?? ExtensionRegistry::default();
 	}
 
 	/**
@@ -44,6 +52,20 @@ class phpGPX
 	public function setEngine(Engine $engine): self
 	{
 		$this->engine = $engine;
+		return $this;
+	}
+
+	/**
+	 * Register an extension parser for a namespace URI.
+	 *
+	 * @param string $namespace The XML namespace URI
+	 * @param string $parserClass Fully qualified class implementing ExtensionParserInterface
+	 * @param string $prefix XML namespace prefix for serialization (e.g., 'gpxtpx')
+	 * @return $this Fluent interface
+	 */
+	public function registerExtension(string $namespace, string $parserClass, string $prefix = 'ext'): self
+	{
+		$this->extensionRegistry->register($namespace, $parserClass, $prefix);
 		return $this;
 	}
 
@@ -62,9 +84,13 @@ class phpGPX
 	{
 		$xmlElement = simplexml_load_string($xml);
 
+		// Configure extension parser with our registry
+		ExtensionParser::$registry = $this->extensionRegistry;
+
 		$gpx = new GpxFile($this->config);
 
 		$gpx->creator = isset($xmlElement['creator']) ? (string)$xmlElement['creator'] : null;
+		$gpx->version = isset($xmlElement['version']) ? (string)$xmlElement['version'] : null;
 		$gpx->metadata = isset($xmlElement->metadata) ? MetadataParser::parse($xmlElement->metadata) : null;
 		$gpx->waypoints = isset($xmlElement->wpt) ? WaypointParser::parse($xmlElement->wpt) : [];
 		$gpx->tracks = isset($xmlElement->trk) ? TrackParser::parse($xmlElement->trk) : [];

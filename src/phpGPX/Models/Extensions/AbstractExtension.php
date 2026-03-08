@@ -8,27 +8,4 @@ namespace phpGPX\Models\Extensions;
 
 abstract class AbstractExtension implements \JsonSerializable
 {
-
-	/**
-	 * XML namespace of extension
-	 * @var string
-	 */
-	public string $namespace;
-
-	/**
-	 * Node name extension.
-	 * @var string
-	 */
-	public string $extensionName;
-
-	/**
-	 * AbstractExtension constructor.
-	 * @param string $namespace
-	 * @param string $extensionName
-	 */
-	public function __construct(string $namespace, string $extensionName)
-	{
-		$this->namespace = $namespace;
-		$this->extensionName = $extensionName;
-	}
 }

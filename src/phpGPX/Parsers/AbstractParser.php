@@ -138,6 +138,11 @@ abstract class AbstractParser
 			return;
 		}
 
+		// Skip empty Extensions containers — avoid emitting <extensions/>
+		if ($value instanceof \phpGPX\Models\Extensions && $value->isEmpty()) {
+			return;
+		}
+
 		$parserClass = $attribute['parser'];
 
 		if ($attribute['type'] === 'array') {

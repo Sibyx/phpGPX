@@ -40,7 +40,7 @@ class TrackPointExtensionAnalyzerTest extends TestCase
 			$ext->aTemp = $aTemp;
 
 			$extensions = new Extensions();
-			$extensions->trackPointExtension = $ext;
+			$extensions->set($ext);
 			$p->extensions = $extensions;
 		}
 
