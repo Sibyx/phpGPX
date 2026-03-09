@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- gpx_style.xsd version 0.2: Public GPX extensions for text, line, and fill styles -->
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.topografix.com/GPX/gpx_style/0/2"
+	targetNamespace="http://www.topografix.com/GPX/gpx_style/0/2"
+	elementFormDefault="qualified">
+
+<xsd:element name="line"					type="lineType">
+  <xsd:annotation>
+   <xsd:documentation>
+	Graphical style for a linear feature (route, track, border of filled object, etc). 
+   </xsd:documentation>
+  </xsd:annotation>
+</xsd:element>
+<xsd:element name="fill"					type="fillType">
+  <xsd:annotation>
+   <xsd:documentation>
+	Background fill pattern for a filled object (closed track, polygon, text box, etc)
+   </xsd:documentation>
+  </xsd:annotation>
+</xsd:element>
+<xsd:element name="text"					type="textType">
+  <xsd:annotation>
+   <xsd:documentation>
+	Text size, color, style
+   </xsd:documentation>
+  </xsd:annotation>
+</xsd:element>
+<xsd:element name="align"					type="alignType">
+  <xsd:annotation>
+   <xsd:documentation>
+	Generic horizontal alignment (for text, e.g.)
+   </xsd:documentation>
+  </xsd:annotation>
+</xsd:element>
+<xsd:element name="vertical-align"			type="vertical-alignType">
+  <xsd:annotation>
+   <xsd:documentation>
+	Generic vertical alignment (for text, e.g.)
+   </xsd:documentation>
+  </xsd:annotation>
+</xsd:element>
+
+<!-- line definition -->
+
+    <xsd:complexType name="lineType">
+     <xsd:annotation>
+      <xsd:documentation>
+		Graphical style for a linear feature (route, track, border of filled object, etc).
+	  </xsd:documentation>
+	 </xsd:annotation>
+	  <xsd:sequence>	<!-- elements must appear in this order -->
+	    <xsd:element name="color"			type="colorType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Line color
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="opacity"			type="opacityType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Line opacity (0.0 = transparent; 1.0 = fully opaque)
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="width"			type="xsd:decimal"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Width, in millimeters, of the line
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="pattern"			type="xsd:string"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Dash, e.g.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="linecap"			type="linecapType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			butt, e.g.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="dasharray"		type="dasharrayType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			List of marks and spaces which define the dash pattern.  Units are millimeters.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+
+		 <xsd:element name="extensions"		type="extensionsType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			You can add extend GPX by adding your own elements from another schema here.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		 </xsd:element>
+	  </xsd:sequence>
+    </xsd:complexType>
+
+<!-- fill definition -->
+    <xsd:complexType name="fillType">
+     <xsd:annotation>
+      <xsd:documentation>
+		Background fill style for filled object (closed track, polygon, text box, etc)
+	  </xsd:documentation>
+	 </xsd:annotation>
+	  <xsd:sequence>	<!-- elements must appear in this order -->
+	    <xsd:element name="color"			type="colorType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Fill color
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="opacity"			type="opacityType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Fill opacity (0.0 = fully transparent; 1.0 = fully opaque)
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="pattern"			type="xsd:string"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Diagonal, e.g.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+
+		 <xsd:element name="extensions"		type="extensionsType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			You can add extend GPX by adding your own elements from another schema here.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		 </xsd:element>
+	  </xsd:sequence>
+    </xsd:complexType>
+
+<!-- text definition -->
+	<xsd:complexType name="textType">
+     <xsd:annotation>
+      <xsd:documentation>
+		Text font, size, color, etc.
+	  </xsd:documentation>
+	 </xsd:annotation>
+	  <xsd:sequence>	<!-- elements must appear in this order -->
+	    <xsd:element name="color"			type="colorType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Text color
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+	    <xsd:element name="opacity"			type="opacityType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Text opacity (0.0 = fully transparent; 1.0 = fully opaque)
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="font"			type="fontType"			minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Text font
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="align"			type="alignType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Text alignment (left, right, center)
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="vertical-align"	type="vertical-alignType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Vertical text alignment (top, center, bottom)
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+
+		 <xsd:element name="extensions"		type="extensionsType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			You can add extend GPX by adding your own elements from another schema here.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		 </xsd:element>
+	  </xsd:sequence>
+	</xsd:complexType>
+
+<!-- font definition -->
+	<xsd:complexType name="fontType">
+     <xsd:annotation>
+      <xsd:documentation>
+		Font size and style
+	  </xsd:documentation>
+	 </xsd:annotation>
+	  <xsd:sequence>	<!-- elements must appear in this order -->
+		<xsd:element name="family"			type="fontFamilyType"		minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Font face and generic family name
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="size"			type="xsd:decimal"			minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			Font size in millimeters (not pixels!)
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="weight"			type="weightType"			minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			bold, e.g.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="style"			type="styleType"			minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			italic, e.g.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+		<xsd:element name="text-transform"	type="textTransformType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			uppercase, e.g.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		</xsd:element>
+
+		 <xsd:element name="extensions"		type="extensionsType"	minOccurs="0">
+		  <xsd:annotation>
+		   <xsd:documentation>
+			You can add extend GPX by adding your own elements from another schema here.
+		   </xsd:documentation>
+		  </xsd:annotation>
+		 </xsd:element>
+	  </xsd:sequence>
+	</xsd:complexType>
+
+<!-- fontFamilyType definition -->
+  <xsd:complexType name="fontFamilyType">	<!-- if you specify a font, you must specify a generic "fallback" -->
+     <xsd:annotation>
+      <xsd:documentation>
+		if you specify a font, you must specify a generic "fallback"
+	  </xsd:documentation>
+	 </xsd:annotation>
+   <xsd:sequence>	<!-- elements must appear in this order -->
+    <xsd:element name="face"		type="xsd:string"		minOccurs="0">
+	  <xsd:annotation>
+	   <xsd:documentation>
+		Font face: arial, e.g.
+	   </xsd:documentation>
+	  </xsd:annotation>
+	</xsd:element>
+   </xsd:sequence>
+   <xsd:attribute name="generic" type="genericFontFamilyType" use="required">
+	  <xsd:annotation>
+	   <xsd:documentation>
+		sans-serif, e.g.
+	   </xsd:documentation>
+	  </xsd:annotation>
+	</xsd:attribute>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="dasharrayType">
+     <xsd:annotation>
+      <xsd:documentation>
+		Dasharray contains one or more dash elements
+	  </xsd:documentation>
+	 </xsd:annotation>
+   <xsd:sequence>	<!-- elements must appear in this order -->
+    <xsd:element name="dash"		type="dashType"		minOccurs="1"	maxOccurs="unbounded">
+	  <xsd:annotation>
+	   <xsd:documentation>
+		Each dash element defines a mark and a space on the line
+	   </xsd:documentation>
+	  </xsd:annotation>
+	</xsd:element>
+   </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="dashType">
+     <xsd:annotation>
+      <xsd:documentation>
+		mark and space of a dash pattern.  Units are millimeters
+	  </xsd:documentation>
+	 </xsd:annotation>
+   <xsd:attribute name="mark" type="xsd:decimal" use="required">
+	  <xsd:annotation>
+	   <xsd:documentation>
+		mark length in millimeters
+	   </xsd:documentation>
+	  </xsd:annotation>
+	</xsd:attribute>
+   <xsd:attribute name="space" type="xsd:decimal" use="required">
+	  <xsd:annotation>
+	   <xsd:documentation>
+		space length in millimeters
+	   </xsd:documentation>
+	  </xsd:annotation>
+	</xsd:attribute>
+  </xsd:complexType>
+
+
+  <xsd:simpleType name="genericFontFamilyType"> <!-- see http://www.w3.org/TR/REC-CSS2/fonts.html#generic-font-families -->
+     <xsd:annotation>
+      <xsd:documentation>
+		see http://www.w3.org/TR/REC-CSS2/fonts.html#generic-font-families
+	  </xsd:documentation>
+	 </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="serif"/>
+      <xsd:enumeration value="sans-serif"/>
+      <xsd:enumeration value="cursive"/>
+      <xsd:enumeration value="fantasy"/>	<!-- ie, symbol fonts -->
+      <xsd:enumeration value="monospace"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="textTransformType"> <!-- see http://www.w3.org/TR/REC-CSS2/text.html#caps-prop -->
+     <xsd:annotation>
+      <xsd:documentation>
+		http://www.w3.org/TR/REC-CSS2/text.html#caps-prop
+	  </xsd:documentation>
+	 </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="capitalize"/>
+      <xsd:enumeration value="uppercase"/>
+      <xsd:enumeration value="lowercase"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="colorType">
+	  <xsd:annotation>
+	   <xsd:documentation>
+		Hex RGB color (FF0000 = red)
+	   </xsd:documentation>
+	  </xsd:annotation>
+    <xsd:restriction base="xsd:hexBinary">
+      <xsd:length value="3"/>		<!-- 3 octets, RGB (ff0000) -->
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="opacityType">
+     <xsd:annotation>
+      <xsd:documentation>
+		0.0 = completely transparent; 1.0 = completely opaque
+	  </xsd:documentation>
+	 </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0.0"/>	<!-- completely transparent -->
+      <xsd:maxInclusive value="1.0"/>	<!-- completely opaque -->
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="weightType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="bold"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="linecapType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="butt"/>
+      <xsd:enumeration value="round"/>
+      <xsd:enumeration value="square"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="styleType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="italic"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="alignType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="left"/>
+      <xsd:enumeration value="center"/>
+      <xsd:enumeration value="right"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="vertical-alignType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="top"/>
+      <xsd:enumeration value="center"/>
+      <xsd:enumeration value="bottom"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="extensionsType">
+   <xsd:annotation>
+    <xsd:documentation>
+	 You can add extend GPX by adding your own elements from another schema here.
+    </xsd:documentation>
+   </xsd:annotation>
+    <xsd:sequence>
+	 <xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded">
+	   <xsd:annotation>
+		<xsd:documentation>
+		 You can add extend GPX by adding your own elements from another schema here.
+		</xsd:documentation>
+	   </xsd:annotation>
+	 </xsd:any>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema> 
