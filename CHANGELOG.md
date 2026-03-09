@@ -1,19 +1,39 @@
 # Changelog
 
-## 2.0.0 : TBD
+## 2.0.0-beta.1 : 2025-03-09
 
-- **Changed** Support for PHP 8.1+ only
-- **Fixed** Added proper return type declarations to parser classes to fix deprecated messages in PHP 8.4
-- **Fixed** Patched vendor files to fix deprecation warnings about implicitly marking parameters as nullable:
-  - sebastian/cli-parser/src/Parser.php
-  - phpunit/phpunit/src/Util/Exporter.php
-  - sebastian/exporter/src/Exporter.php
-- **Fixed** Updated tests to be compatible with PHPUnit 12.x:
-  - Added missing tests to BoundsTest class
-  - Updated test annotations to use PHPUnit 12 attributes
-  - Fixed data provider usage in SerializationHelperTest
-  - Implemented missing GpxSerializable interface methods in Bounds class
-  - Updated phpunit.xml configuration
+### Breaking Changes
+
+- **Changed**: `phpGPX` is now instance-based — `phpGPX::load()` (static) replaced by `(new phpGPX())->load()`
+- **Removed**: All static configuration properties (`$CALCULATE_STATS`, `$SORT_BY_TIMESTAMP`, `$PRETTY_PRINT`, etc.) — replaced by `Config` value object and analyzer constructors
+- **Removed**: `Summarizable` interface and `toArray()` — replaced by `JsonSerializable` returning GeoJSON (RFC 7946)
+- **Removed**: `GpxSerializable` interface — parsers handle XML serialization via Data Mapper pattern
+- **Removed**: `StatsCalculator` interface — replaced by Engine
+- **Removed**: `AbstractExtension` base class — replaced by `ExtensionInterface`
+- **Changed**: Point type constants (`Point::TRACKPOINT`, etc.) replaced by `PointType` enum
+- **Changed**: Extension access `$extensions->trackPointExtension` replaced by `$extensions->get(TrackPointExtension::class)`
+
+### Added
+
+- **Added**: Single-pass stats `Engine` with pluggable analyzers (`DistanceAnalyzer`, `ElevationAnalyzer`, `AltitudeAnalyzer`, `TimestampAnalyzer`, `BoundsAnalyzer`, `MovementAnalyzer`, `TrackPointExtensionAnalyzer`)
+- **Added**: `Engine::default()` factory with named parameters for common configuration
+- **Added**: `ExtensionRegistry` for registering custom extension parsers by namespace URI
+- **Added**: `ExtensionInterface` and `ExtensionParserInterface` for custom extensions
+- **Added**: `Config` value object for output configuration
+- **Added**: `AbstractParser` base class centralizing attribute mapping and XML handling
+- **Added**: mkdocs-material documentation site with PlantUML support
+- **Added**: Consolidated CI workflow (PHP 8.1–8.4 matrix) with Codecov integration
+
+### Changed
+
+- **Changed**: PHP 8.1+ required
+- **Changed**: `Extensions` model is now a keyed collection
+- **Changed**: Default Garmin TrackPointExtension v1 + v2 auto-registered via `ExtensionRegistry::default()`
+- **Changed**: All parsers refactored to extend `AbstractParser`
+- **Changed**: Strict typing on all model properties
+- **Changed**: Test suite restructured into `unit` and `integration` suites
+- **Changed**: PHPUnit 10+ with attributes (annotations removed)
+- **Changed**: Test fixtures standardized under `tests/Fixtures/`
 
 ## 1.3.0 : 2023-07-19
 

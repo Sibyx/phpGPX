@@ -9,8 +9,8 @@
 - `tests/` - Test suite
   - `Unit/` - Unit tests for individual components
   - `Integration/` - Full file load/save round-trip tests
-  - `fixtures/` - GPX test fixture files
-- `docs/` - Documentation (Daux.io)
+  - `Fixtures/` - GPX and parser test fixture files
+- `docs/` - Documentation (mkdocs-material)
 
 ## Branches
 
@@ -27,4 +27,20 @@ composer install
 
 ## Code style
 
-The project uses PSR-2 with **tab indentation** (configured in `.php-cs-fixer.php`).
+The project follows **PSR-12** with **tab indentation**, enforced by [PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) (configured in `.php-cs-fixer.php`).
+
+```bash
+# Check for style violations (dry run)
+composer cs-fix -- --dry-run
+
+# Auto-fix all files
+composer cs-fix
+```
+
+Key rules beyond PSR-12:
+
+- Short array syntax (`[]` not `array()`)
+- No unused imports
+- Alphabetically ordered imports
+- Single quotes for strings
+- Trailing commas in multiline arguments, arrays, and parameters

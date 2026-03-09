@@ -26,7 +26,7 @@ class phpGPX
 	const GEOJSON_FORMAT = 'geojson';
 
 	const PACKAGE_NAME = 'phpGPX';
-	const VERSION = '2.0.0-alpha.3';
+	const VERSION = '2.0.0-beta.1';
 
 	public readonly Config $config;
 
