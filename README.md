@@ -4,58 +4,22 @@
 [![Latest development](https://img.shields.io/packagist/vpre/sibyx/phpgpx.svg)](https://packagist.org/packages/sibyx/phpgpx)
 [![Packagist downloads](https://img.shields.io/packagist/dm/sibyx/phpgpx.svg)](https://packagist.org/packages/sibyx/phpgpx)
 
+PHP library for reading, creating, and manipulating [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format).
 
-Simple library written in PHP for reading and creating [GPX files](https://en.wikipedia.org/wiki/GPS_Exchange_Format).
-
-Contribution and feedback is welcome! Please check the issues for TODO. I will be happy every feature or pull request.
-
-Repository branches:
-
-- `master`: latest stable version
-- `develop`: works on `2.x`
-
-## Features
-
- - Full support of [official specification](http://www.topografix.com/GPX/1/1/).
- - Single-pass stats engine with pluggable analyzers.
- - Extensions support.
- - JSON (GeoJSON) & XML output.
-
-### Extension Registry
-
-Built-in support for Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd) (v1 + v2).
-Custom extensions can be registered via `ExtensionInterface` + `ExtensionParserInterface`:
-
-```php
-$gpx = new phpGPX();
-$gpx->registerExtension('http://example.com/ext/v1', MyExtensionParser::class, 'myext');
-```
-
-### Stats calculation
-
-Stats are provided by the `Engine` and its analyzers:
-
-- (Smoothed) Distance (m) — `DistanceAnalyzer`
-- Average speed (m/s), average pace (s/km) — derived by engine
-- Min / max altitude with coordinates — `AltitudeAnalyzer`
-- (Smoothed) Elevation gain / loss (m) — `ElevationAnalyzer`
-- Start / end timestamps with coordinates — `TimestampAnalyzer`
-- Duration (seconds) — derived by engine
-- Coordinate bounds (min/max lat/lon) — `BoundsAnalyzer`
-- Moving duration and moving average speed — `MovementAnalyzer`
-- Heart rate, cadence, temperature — `TrackPointExtensionAnalyzer`
+- Full [GPX 1.1 specification](http://www.topografix.com/GPX/1/1/) support
+- Single-pass stats engine with pluggable analyzers
+- Extension registry (Garmin TrackPointExtension built-in)
+- XML and GeoJSON (RFC 7946) output
 
 ## Installation
-
-You can easily install phpGPX library with [composer](https://getcomposer.org/).
 
 ```
 composer require sibyx/phpgpx
 ```
 
-## Examples
+Requires PHP >= 8.1.
 
-### Open GPX file and load basic stats
+## Quick Start
 
 ```php
 <?php
@@ -67,37 +31,97 @@ $gpx = new phpGPX(engine: Engine::default());
 $file = $gpx->load('example.gpx');
 
 foreach ($file->tracks as $track) {
-    // Statistics for whole track
     echo "Distance: " . round($track->stats->distance) . " m\n";
     echo "Duration: " . gmdate("H:i:s", $track->stats->duration) . "\n";
 
     foreach ($track->segments as $segment) {
-        // Statistics for segment of track
         echo "  Segment distance: " . round($segment->stats->distance) . " m\n";
     }
 }
 ```
 
-### Writing to file
+### Saving files
+
 ```php
-<?php
-use phpGPX\phpGPX;
-
-$gpx = new phpGPX();
-
-$file = $gpx->load('example.gpx');
-
-// XML
 $file->save('output.gpx', phpGPX::XML_FORMAT);
-
-// JSON (GeoJSON)
 $file->save('output.json', phpGPX::JSON_FORMAT);
 ```
 
-### Creating file from scratch
+## Advanced Usage
+
+### Configuration
+
+Output formatting is configured via the `Config` value object. Stats computation is configured via analyzer constructor arguments.
+
+```php
+use phpGPX\phpGPX;
+use phpGPX\Config;
+use phpGPX\Analysis\Engine;
+
+$gpx = new phpGPX(
+    config: new Config(prettyPrint: true),
+    engine: Engine::default(
+        sortByTimestamp: true,
+        applyElevationSmoothing: true,
+        elevationSmoothingThreshold: 2,
+        ignoreZeroElevation: false,
+    ),
+);
+
+$file = $gpx->load('track.gpx');
+```
+
+### Custom engine
+
+For fine-grained control, build the engine manually with only the analyzers you need:
+
+```php
+use phpGPX\Analysis\Engine;
+use phpGPX\Analysis\DistanceAnalyzer;
+use phpGPX\Analysis\ElevationAnalyzer;
+use phpGPX\Analysis\AltitudeAnalyzer;
+use phpGPX\Analysis\TimestampAnalyzer;
+use phpGPX\Analysis\BoundsAnalyzer;
+
+$engine = (new Engine())
+    ->addAnalyzer(new DistanceAnalyzer(applySmoothing: true, smoothingThreshold: 3))
+    ->addAnalyzer(new ElevationAnalyzer(applySmoothing: true, spikesThreshold: 100))
+    ->addAnalyzer(new AltitudeAnalyzer())
+    ->addAnalyzer(new TimestampAnalyzer())
+    ->addAnalyzer(new BoundsAnalyzer());
+
+$gpx->setEngine($engine);
+```
+
+### Stats reference
+
+The engine provides the following stats through its analyzers:
+
+| Stat                                    | Analyzer                      |
+|-----------------------------------------|-------------------------------|
+| Distance (m), smoothed                  | `DistanceAnalyzer`            |
+| Average speed (m/s), pace (s/km)        | derived by engine             |
+| Min / max altitude with coordinates     | `AltitudeAnalyzer`            |
+| Elevation gain / loss (m), smoothed     | `ElevationAnalyzer`           |
+| Start / end timestamps with coordinates | `TimestampAnalyzer`           |
+| Duration (seconds)                      | derived by engine             |
+| Coordinate bounds (min/max lat/lon)     | `BoundsAnalyzer`              |
+| Moving duration, moving avg speed       | `MovementAnalyzer`            |
+| Heart rate, cadence, temperature        | `TrackPointExtensionAnalyzer` |
+
+### Custom extensions
+
+Built-in support for Garmin [TrackPointExtension](https://www8.garmin.com/xmlschemas/TrackPointExtensionv1.xsd) (v1 + v2). Register your own via `ExtensionInterface` + `ExtensionParserInterface`:
+
+```php
+$gpx = new phpGPX();
+$gpx->registerExtension('http://example.com/ext/v1', MyExtensionParser::class, 'myext');
+```
+
+### Creating a file from scratch
+
 ```php
 <?php
-
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\PointType;
@@ -130,62 +154,19 @@ $segment->points[] = $point;
 $track->segments[] = $segment;
 $gpx_file->tracks[] = $track;
 
-// Save as GPX XML
 $gpx_file->save('output.gpx', \phpGPX\phpGPX::XML_FORMAT);
-
-// Save as GeoJSON
 $gpx_file->save('output.json', \phpGPX\phpGPX::JSON_FORMAT);
 ```
 
-Currently supported output formats:
+## Contributing
 
- - XML
- - JSON (GeoJSON, RFC 7946)
+Contributions and feedback are welcome! Please check [the issues](https://github.com/Sibyx/phpGPX/issues).
 
-## Configuration
+Repository branches:
+- `master` — latest stable release
+- `develop` — 2.x development
 
-Output formatting is configured via the `Config` value object. Stats computation is configured via analyzer constructor arguments.
-
-```php
-use phpGPX\phpGPX;
-use phpGPX\Config;
-use phpGPX\Analysis\Engine;
-
-$gpx = new phpGPX(
-    config: new Config(prettyPrint: true),
-    engine: Engine::default(
-        sortByTimestamp: true,
-        applyElevationSmoothing: true,
-        elevationSmoothingThreshold: 2,
-        ignoreZeroElevation: false,
-    ),
-);
-
-$file = $gpx->load('track.gpx');
-```
-
-For fine-grained control, build the engine manually:
-
-```php
-use phpGPX\Analysis\Engine;
-use phpGPX\Analysis\DistanceAnalyzer;
-use phpGPX\Analysis\ElevationAnalyzer;
-use phpGPX\Analysis\AltitudeAnalyzer;
-use phpGPX\Analysis\TimestampAnalyzer;
-use phpGPX\Analysis\BoundsAnalyzer;
-
-$engine = (new Engine())
-    ->addAnalyzer(new DistanceAnalyzer(applySmoothing: true, smoothingThreshold: 3))
-    ->addAnalyzer(new ElevationAnalyzer(applySmoothing: true, spikesThreshold: 100))
-    ->addAnalyzer(new AltitudeAnalyzer())
-    ->addAnalyzer(new TimestampAnalyzer())
-    ->addAnalyzer(new BoundsAnalyzer());
-
-$gpx->setEngine($engine);
-```
-
-This library started as part of my job at [BACKBONE, s.r.o.](https://www.backbone.sk/en/).
-Thank you very much for their support!
+This library started as part of my job at [BACKBONE, s.r.o.](https://www.backbone.sk/en/). Thank you for their support!
 
 ## License
 
