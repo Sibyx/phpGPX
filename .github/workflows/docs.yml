@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install mkdocs-material
-        run: pip install mkdocs-material
+        run: pip install mkdocs-material plantuml-markdown
 
       - name: Build and deploy to gh-pages (develop/)
         run: |

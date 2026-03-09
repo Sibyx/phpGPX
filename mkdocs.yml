@@ -3,6 +3,7 @@ site_description: A PHP library for reading, creating, and manipulating GPX file
 site_url: https://sibyx.github.io/phpGPX/develop/
 repo_url: https://github.com/Sibyx/phpGPX
 repo_name: Sibyx/phpGPX
+edit_uri: edit/develop/docs/
 
 theme:
   name: material
@@ -22,14 +23,26 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
   features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.indexes
+    - navigation.path
     - content.code.copy
     - content.code.annotate
+    - content.action.edit
+    - content.action.view
+    - search.suggest
     - search.highlight
+    - search.share
+    - toc.follow
   icon:
     repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
 
 markdown_extensions:
   - admonition
@@ -37,13 +50,23 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      auto_title: true
   - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.mark
+  - plantuml_markdown:
+      server: https://www.plantuml.com/plantuml
+      format: svg
   - tables
   - toc:
       permalink: true
   - attr_list
+  - md_in_html
+  - def_list
 
 nav:
   - Home: index.md
