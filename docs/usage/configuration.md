@@ -134,4 +134,4 @@ $rawFile = $raw->load('track.gpx');
 - Configuration is immutable after construction — `Config` properties are set once via constructor.
 - JSON output always uses ISO 8601 UTC for datetime values (GeoJSON convention).
 - Stats are produced exclusively by `Engine` and its analyzers — models are pure data containers.
-- Extension registry is configured per-instance. See [Extensions](05_Extensions.md) for custom extension setup.
+- Extension registry is configured per-instance. See [Extensions](extensions.md) for custom extension setup.

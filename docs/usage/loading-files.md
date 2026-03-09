@@ -66,7 +66,7 @@ When loading a GPX file, phpGPX processes:
 - **Waypoints** (`<wpt>`) - individual points with coordinates, elevation, time, and all optional GPX 1.1 attributes
 - **Tracks** (`<trk>`) - containing segments (`<trkseg>`) of track points (`<trkpt>`)
 - **Routes** (`<rte>`) - containing route points (`<rtept>`)
-- **Extensions** - Parsed via the extension registry. Garmin TrackPointExtension (heart rate, temperature, cadence) is built-in. Unsupported extensions are preserved as key-value pairs. See [Extensions](05_Extensions.md).
+- **Extensions** - Parsed via the extension registry. Garmin TrackPointExtension (heart rate, temperature, cadence) is built-in. Unsupported extensions are preserved as key-value pairs. See [Extensions](extensions.md).
 
 ## Processing pipeline
 

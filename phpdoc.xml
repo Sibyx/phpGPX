@@ -22,11 +22,5 @@
 			</ignore>
 			<default-package-name>phpGPX</default-package-name>
 		</api>
-		<guide format="md">
-			<source dsn=".">
-				<path>docs</path>
-			</source>
-			<output>guide</output>
-		</guide>
 	</version>
 </phpdocumentor>

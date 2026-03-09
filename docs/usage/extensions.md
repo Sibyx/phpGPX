@@ -189,6 +189,6 @@ The `TrackPointExtensionAnalyzer` aggregates sensor data from `TrackPointExtensi
 - `averageCadence`
 - `averageTemperature`
 
-These are computed per-segment and aggregated to track level (weighted by point count). See [Statistics](03_Statistics.md) for details.
+These are computed per-segment and aggregated to track level (weighted by point count). See [Statistics](statistics.md) for details.
 
-Custom extension analyzers can be built as `PointAnalyzerInterface` implementations and registered with the engine. See [Stats Architecture](../04_Development/04_Stats_Architecture.md).
+Custom extension analyzers can be built as `PointAnalyzerInterface` implementations and registered with the engine. See [Stats Architecture](../development/stats-architecture.md).

@@ -10,3 +10,5 @@ composer.lock
 coverage.xml
 /docs-output/
 /.phpdoc/
+/site/
+/.venv/

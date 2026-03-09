@@ -39,6 +39,9 @@
 	"scripts": {
 		"test": "phpunit",
 		"test:unit": "phpunit --testsuite unit",
-		"test:integration": "phpunit --testsuite integration"
+		"test:integration": "phpunit --testsuite integration",
+		"docs:build": "mkdocs build --strict",
+		"docs:serve": "mkdocs serve",
+		"cs-fix": "php-cs-fixer fix --config .php-cs-fixer.php"
 	}
 }

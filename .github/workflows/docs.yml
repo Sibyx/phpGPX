@@ -1,0 +1,54 @@
+name: Docs
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install mkdocs-material
+        run: pip install mkdocs-material
+
+      - name: Build and deploy to gh-pages (develop/)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Fetch gh-pages if it exists
+          git fetch origin gh-pages:gh-pages 2>/dev/null || true
+
+          # Build the site
+          mkdocs build --strict --site-dir site
+
+          # Check out gh-pages (or create orphan)
+          if git rev-parse --verify gh-pages >/dev/null 2>&1; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
+
+          # Clear develop/ subdirectory and copy new build
+          rm -rf develop/
+          cp -r site/ develop/
+
+          # Commit and push
+          git add develop/
+          git diff --cached --quiet || (git commit -m "Deploy docs (develop) from ${GITHUB_SHA::8}" && git push origin gh-pages)

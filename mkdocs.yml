@@ -1,0 +1,66 @@
+site_name: phpGPX
+site_description: A PHP library for reading, creating, and manipulating GPX files
+site_url: https://sibyx.github.io/phpGPX/develop/
+repo_url: https://github.com/Sibyx/phpGPX
+repo_name: Sibyx/phpGPX
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+  - attr_list
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quick-start.md
+  - Usage:
+      - Loading Files: usage/loading-files.md
+      - Creating Files: usage/creating-files.md
+      - Statistics: usage/statistics.md
+      - Configuration: usage/configuration.md
+      - Extensions: usage/extensions.md
+  - Output Formats:
+      - XML (GPX): output-formats/xml.md
+      - JSON (GeoJSON): output-formats/json.md
+  - Development:
+      - Contributing: development/contributing.md
+      - Testing: development/testing.md
+      - Stats Architecture: development/stats-architecture.md
+      - Migration Guide (1.x → 2.x): development/migration.md

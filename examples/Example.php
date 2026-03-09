@@ -5,15 +5,25 @@
  */
 
 use phpGPX\phpGPX;
+use phpGPX\Config;
+use phpGPX\Analysis\Engine;
 
 require_once '../vendor/autoload.php';
 
-$gpx = new phpGPX();
+$gpx = new phpGPX(
+	config: new Config(prettyPrint: true),
+	engine: Engine::default(),
+);
+
 $file = $gpx->load('endomondo.gpx');
 
-phpGPX::$PRETTY_PRINT = true;
-//$file->save('output_Evening_Ride.gpx', phpGPX::XML_FORMAT);
-
 foreach ($file->tracks as $track) {
-	var_dump($track->stats->toArray());
+	echo "Track: " . $track->name . "\n";
+	echo "Distance: " . round($track->stats->distance) . " m\n";
+	echo "Duration: " . $track->stats->duration . " s\n";
+	echo "Avg speed: " . round($track->stats->averageSpeed, 2) . " m/s\n";
+	echo "Elevation gain: " . round($track->stats->cumulativeElevationGain, 1) . " m\n";
+	echo "Elevation loss: " . round($track->stats->cumulativeElevationLoss, 1) . " m\n";
+	echo "\nFull stats:\n";
+	var_dump($track->stats->jsonSerialize());
 }
