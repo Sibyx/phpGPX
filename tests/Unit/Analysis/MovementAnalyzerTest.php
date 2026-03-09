@@ -3,8 +3,8 @@
 namespace phpGPX\Tests\Unit\Analysis;
 
 use phpGPX\Analysis\DistanceAnalyzer;
-use phpGPX\Analysis\MovementAnalyzer;
 use phpGPX\Analysis\Engine;
+use phpGPX\Analysis\MovementAnalyzer;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\PointType;

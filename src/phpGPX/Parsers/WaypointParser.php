@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            10/02/2017 15:44
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -12,7 +13,6 @@ namespace phpGPX\Parsers;
  */
 abstract class WaypointParser
 {
-
 	/**
 	 * @param \SimpleXMLElement $nodes - a non empty list of wpt elements
 	 * @return array

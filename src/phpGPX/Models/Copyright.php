@@ -11,7 +11,8 @@ class Copyright implements \JsonSerializable
 		public ?string $author = null,
 		public ?string $year = null,
 		public ?string $license = null,
-	) {}
+	) {
+	}
 
 	public function jsonSerialize(): array
 	{
@@ -19,6 +20,6 @@ class Copyright implements \JsonSerializable
 			'author' => $this->author,
 			'year' => $this->year,
 			'license' => $this->license,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 	}
 }

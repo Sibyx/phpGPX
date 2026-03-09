@@ -13,35 +13,35 @@ abstract class PointParser extends AbstractParser
 		return [
 			'ele' => [
 				'name' => 'elevation',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'time' => [
 				'name' => 'time',
-				'type' => 'datetime'
+				'type' => 'datetime',
 			],
 			'magvar' => [
 				'name' => 'magVar',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'geoidheight' => [
 				'name' => 'geoidHeight',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'name' => [
 				'name' => 'name',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'cmt' => [
 				'name' => 'comment',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'desc' => [
 				'name' => 'description',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'src' => [
 				'name' => 'source',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'link' => [
 				'name' => 'links',
@@ -50,45 +50,45 @@ abstract class PointParser extends AbstractParser
 			],
 			'sym' => [
 				'name' => 'symbol',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'type' => [
 				'name' => 'type',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'fix' => [
 				'name' => 'fix',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'sat' => [
 				'name' => 'satellitesNumber',
-				'type' => 'integer'
+				'type' => 'integer',
 			],
 			'hdop' => [
 				'name' => 'hdop',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'vdop' => [
 				'name' => 'vdop',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'pdop' => [
 				'name' => 'pdop',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'ageofdgpsdata' => [
 				'name' => 'ageOfGpsData',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'dgpsid' => [
 				'name' => 'dgpsid',
-				'type' => 'integer'
+				'type' => 'integer',
 			],
 			'extensions' => [
 				'name' => 'extensions',
 				'type' => 'object',
 				'parser' => ExtensionParser::class,
-			]
+			],
 		];
 	}
 

@@ -30,7 +30,7 @@ class GeoHelperTest extends TestCase
 			856.97,
 			GeoHelper::getRawDistance($point1, $point2),
 			1,
-			"Invalid distance between two points!"
+			'Invalid distance between two points!',
 		);
 	}
 
@@ -53,14 +53,14 @@ class GeoHelperTest extends TestCase
 			856.97,
 			GeoHelper::getRawDistance($point1, $point2),
 			1,
-			"Invalid distance between two points!"
+			'Invalid distance between two points!',
 		);
 
 		$this->assertEqualsWithDelta(
 			862,
 			GeoHelper::getRealDistance($point1, $point2),
 			1,
-			"Invalid real distance between two points!"
+			'Invalid real distance between two points!',
 		);
 	}
 

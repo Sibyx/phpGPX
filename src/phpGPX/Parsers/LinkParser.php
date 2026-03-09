@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            15/02/2017 18:44
  * @author            Jakub Dubec <jakub.dubec@gmail.com>

@@ -44,7 +44,8 @@ class DistanceAnalyzer extends AbstractPointAnalyzer
 	public function __construct(
 		private bool $applySmoothing = false,
 		private int $smoothingThreshold = 2,
-	) {}
+	) {
+	}
 
 	public function begin(): void
 	{

@@ -16,8 +16,8 @@ class CopyrightParserTest extends TestCase
 	protected function setUp(): void
 	{
 		$this->copyright = new Copyright();
-		$this->copyright->author = "Jakub Dubec";
-		$this->copyright->license = "https://github.com/Sibyx/phpGPX/blob/master/LICENSE";
+		$this->copyright->author = 'Jakub Dubec';
+		$this->copyright->license = 'https://github.com/Sibyx/phpGPX/blob/master/LICENSE';
 		$this->copyright->year = '2017';
 
 		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/copyright.xml');
@@ -39,9 +39,9 @@ class CopyrightParserTest extends TestCase
 
 	public function testToXML(): void
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$root = $document->createElement("document");
+		$root = $document->createElement('document');
 		$root->appendChild(CopyrightParser::toXML($this->copyright, $document));
 
 		$document->appendChild($root);
@@ -52,7 +52,8 @@ class CopyrightParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/copyright.json', json_encode($this->copyright->jsonSerialize())
+			self::FIXTURES_DIR . '/copyright.json',
+			json_encode($this->copyright->jsonSerialize()),
 		);
 	}
 }

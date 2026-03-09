@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            17/02/2017 17:46
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -41,7 +42,8 @@ class GpxFile implements \JsonSerializable
 
 	public function __construct(
 		public readonly Config $config = new Config(),
-	) {}
+	) {
+	}
 
 	public function jsonSerialize(): array
 	{
@@ -69,7 +71,7 @@ class GpxFile implements \JsonSerializable
 				'metadata' => $this->metadata,
 				'creator' => $this->creator,
 				'extensions' => $this->extensions,
-			], fn($v) => $v !== null);
+			], fn ($v) => $v !== null);
 		}
 
 		return $result;
@@ -88,11 +90,11 @@ class GpxFile implements \JsonSerializable
 	 */
 	public function toXML(): \DOMDocument
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$gpx = $document->createElementNS("http://www.topografix.com/GPX/1/1", "gpx");
-		$gpx->setAttribute("version", $this->version ?? "1.1");
-		$gpx->setAttribute("creator", $this->creator ? $this->creator : phpGPX::getSignature());
+		$gpx = $document->createElementNS('http://www.topografix.com/GPX/1/1', 'gpx');
+		$gpx->setAttribute('version', $this->version ?? '1.1');
+		$gpx->setAttribute('creator', $this->creator ? $this->creator : phpGPX::getSignature());
 
 		ExtensionParser::$usedNamespaces = [];
 		ExtensionParser::$registry ??= ExtensionRegistry::default();
@@ -120,14 +122,14 @@ class GpxFile implements \JsonSerializable
 		// Namespaces
 		$schemaLocationArray = [
 			'http://www.topografix.com/GPX/1/1',
-			'http://www.topografix.com/GPX/1/1/gpx.xsd'
+			'http://www.topografix.com/GPX/1/1/gpx.xsd',
 		];
 
 		foreach (ExtensionParser::$usedNamespaces as $usedNamespace) {
 			$gpx->setAttributeNS(
-				"http://www.w3.org/2000/xmlns/",
-				sprintf("xmlns:%s", $usedNamespace['prefix']),
-				$usedNamespace['namespace']
+				'http://www.w3.org/2000/xmlns/',
+				sprintf('xmlns:%s', $usedNamespace['prefix']),
+				$usedNamespace['namespace'],
 			);
 
 			$schemaLocationArray[] = $usedNamespace['namespace'];
@@ -137,7 +139,7 @@ class GpxFile implements \JsonSerializable
 		$gpx->setAttributeNS(
 			'http://www.w3.org/2001/XMLSchema-instance',
 			'xsi:schemaLocation',
-			implode(" ", $schemaLocationArray)
+			implode(' ', $schemaLocationArray),
 		);
 
 		$document->appendChild($gpx);
@@ -164,7 +166,7 @@ class GpxFile implements \JsonSerializable
 				file_put_contents($path, $this->toJSON());
 				break;
 			default:
-				throw new \RuntimeException("Unsupported file format!");
+				throw new \RuntimeException('Unsupported file format!');
 		}
 	}
 }

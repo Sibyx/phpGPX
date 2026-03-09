@@ -40,6 +40,6 @@ class Metadata implements \JsonSerializable
 			'keywords' => $this->keywords,
 			'bounds' => $this->bounds,
 			'extensions' => $this->extensions,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 	}
 }

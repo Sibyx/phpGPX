@@ -20,17 +20,17 @@ class PersonParserTest extends TestCase
 	protected function setUp(): void
 	{
 		$this->person = new Person();
-		$this->person->name = "Jakub Dubec";
+		$this->person->name = 'Jakub Dubec';
 
 		$email = new Email();
-		$email->id = "jakub.dubec";
-		$email->domain = "gmail.com";
+		$email->id = 'jakub.dubec';
+		$email->domain = 'gmail.com';
 		$this->person->email = $email;
 
 		$link = new Link();
-		$link->href = "https://jakubdubec.me";
-		$link->text = "Portfolio";
-		$link->type = "text/html";
+		$link->href = 'https://jakubdubec.me';
+		$link->text = 'Portfolio';
+		$link->type = 'text/html';
 		$this->person->links[] = $link;
 
 		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/person.xml');
@@ -66,16 +66,16 @@ class PersonParserTest extends TestCase
 
 		$gpx_file->metadata = new Metadata();
 		$gpx_file->metadata->author = new Person();
-		$gpx_file->metadata->author->name = "Arthur Dent";
+		$gpx_file->metadata->author->name = 'Arthur Dent';
 
 		$this->assertNotNull($gpx_file->toXML()->saveXML());
 	}
 
 	public function testToXML(): void
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$root = $document->createElement("document");
+		$root = $document->createElement('document');
 		$root->appendChild(PersonParser::toXML($this->person, $document));
 
 		$document->appendChild($root);
@@ -86,7 +86,8 @@ class PersonParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/person.json', json_encode($this->person->jsonSerialize())
+			self::FIXTURES_DIR . '/person.json',
+			json_encode($this->person->jsonSerialize()),
 		);
 	}
 }

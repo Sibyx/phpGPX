@@ -32,7 +32,8 @@ class AltitudeAnalyzer extends AbstractPointAnalyzer
 
 	public function __construct(
 		private bool $ignoreZeroElevation = false,
-	) {}
+	) {
+	}
 
 	public function begin(): void
 	{

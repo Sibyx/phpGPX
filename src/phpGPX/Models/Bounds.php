@@ -14,7 +14,8 @@ class Bounds implements \JsonSerializable
 		public ?float $minLongitude = null,
 		public ?float $maxLatitude = null,
 		public ?float $maxLongitude = null,
-	) {}
+	) {
+	}
 
 	/**
 	 * GeoJSON bbox: [minLon, minLat, maxLon, maxLat]
@@ -34,7 +35,7 @@ class Bounds implements \JsonSerializable
 			(float) $node['minlat'],
 			(float) $node['minlon'],
 			(float) $node['maxlat'],
-			(float) $node['maxlon']
+			(float) $node['maxlon'],
 		);
 	}
 }

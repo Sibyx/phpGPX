@@ -9,7 +9,6 @@ use phpGPX\Models\Point;
 use phpGPX\Models\PointType;
 use phpGPX\Models\Route;
 use phpGPX\Models\Segment;
-use phpGPX\Models\Stats;
 use phpGPX\Models\Track;
 use PHPUnit\Framework\TestCase;
 

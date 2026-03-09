@@ -33,7 +33,7 @@ class StatsCalculationTest extends TestCase
 		float $lat,
 		float $lon,
 		?float $ele = null,
-		?string $time = null
+		?string $time = null,
 	): Point {
 		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
@@ -47,7 +47,7 @@ class StatsCalculationTest extends TestCase
 		float $lat,
 		float $lon,
 		?float $ele = null,
-		?string $time = null
+		?string $time = null,
 	): Point {
 		$p = new Point(PointType::Routepoint);
 		$p->latitude = $lat;

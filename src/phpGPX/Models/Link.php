@@ -12,7 +12,8 @@ class Link implements \JsonSerializable
 		public ?string $href = null,
 		public ?string $text = null,
 		public ?string $type = null,
-	) {}
+	) {
+	}
 
 	public function jsonSerialize(): array
 	{
@@ -20,6 +21,6 @@ class Link implements \JsonSerializable
 			'href' => $this->href,
 			'text' => $this->text,
 			'type' => $this->type,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 	}
 }

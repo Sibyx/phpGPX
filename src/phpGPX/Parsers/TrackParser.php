@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            30/08/16 13:31
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -21,19 +22,19 @@ abstract class TrackParser extends AbstractParser
 		return [
 			'name' => [
 				'name' => 'name',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'cmt' => [
 				'name' => 'comment',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'desc' => [
 				'name' => 'description',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'src' => [
 				'name' => 'source',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'link' => [
 				'name' => 'links',
@@ -42,11 +43,11 @@ abstract class TrackParser extends AbstractParser
 			],
 			'number' => [
 				'name' => 'number',
-				'type' => 'integer'
+				'type' => 'integer',
 			],
 			'type' => [
 				'name' => 'type',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'extensions' => [
 				'name' => 'extensions',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            17/02/2017 15:58
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -22,11 +23,11 @@ abstract class MetadataParser extends AbstractParser
 		return [
 			'name' => [
 				'name' => 'name',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'desc' => [
 				'name' => 'description',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'author' => [
 				'name' => 'author',
@@ -45,11 +46,11 @@ abstract class MetadataParser extends AbstractParser
 			],
 			'time' => [
 				'name' => 'time',
-				'type' => 'datetime'
+				'type' => 'datetime',
 			],
 			'keywords' => [
 				'name' => 'keywords',
-				'type' => 'string'
+				'type' => 'string',
 			],
 			'bounds' => [
 				'name' => 'bounds',
@@ -60,7 +61,7 @@ abstract class MetadataParser extends AbstractParser
 				'name' => 'extensions',
 				'type' => 'object',
 				'parser' => ExtensionParser::class,
-			]
+			],
 		];
 	}
 

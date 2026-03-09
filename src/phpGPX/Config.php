@@ -12,5 +12,6 @@ class Config
 	public function __construct(
 		/** Pretty print XML and JSON output */
 		public bool $prettyPrint = true,
-	) {}
+	) {
+	}
 }

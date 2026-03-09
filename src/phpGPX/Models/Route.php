@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            17/02/2017 18:21
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -14,7 +15,6 @@ use phpGPX\Helpers\SerializationHelper;
  */
 class Route extends Collection
 {
-
 	/** @var Point[] */
 	public array $points = [];
 
@@ -45,7 +45,7 @@ class Route extends Collection
 			'type' => $this->type,
 			'extensions' => $this->extensions,
 			'stats' => $this->stats,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 
 		return [
 			'type' => 'Feature',

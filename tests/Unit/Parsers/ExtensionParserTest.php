@@ -42,15 +42,16 @@ class ExtensionParserTest extends TestCase
 		$this->assertEquals($expected->jsonSerialize(), $parsed->jsonSerialize());
 
 		$this->assertJsonStringEqualsJsonString(
-			json_encode($this->extensions), json_encode($extensions)
+			json_encode($this->extensions),
+			json_encode($extensions),
 		);
 	}
 
 	public function testToXML(): void
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$root = $document->createElement("document");
+		$root = $document->createElement('document');
 		$root->appendChild(ExtensionParser::toXML($this->extensions, $document));
 
 		$attributes = [
@@ -75,7 +76,8 @@ class ExtensionParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/extension.json', json_encode($this->extensions->jsonSerialize())
+			self::FIXTURES_DIR . '/extension.json',
+			json_encode($this->extensions->jsonSerialize()),
 		);
 	}
 }

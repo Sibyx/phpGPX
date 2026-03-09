@@ -19,7 +19,7 @@ class ExtensionRegistryTest extends TestCase
 		$this->assertTrue($registry->has(self::GARMIN_TPE_V1));
 		$this->assertSame(
 			TrackPointExtensionParser::class,
-			$registry->getParserClass(self::GARMIN_TPE_V2)
+			$registry->getParserClass(self::GARMIN_TPE_V2),
 		);
 	}
 

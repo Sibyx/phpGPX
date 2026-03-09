@@ -4,12 +4,7 @@ namespace phpGPX\Tests\Unit\Analysis;
 
 use phpGPX\Analysis\AbstractPointAnalyzer;
 use phpGPX\Analysis\BoundsAnalyzer;
-use phpGPX\Analysis\DistanceAnalyzer;
-use phpGPX\Analysis\ElevationAnalyzer;
-use phpGPX\Analysis\MovementAnalyzer;
-use phpGPX\Analysis\PointAnalyzerInterface;
 use phpGPX\Analysis\Engine;
-use phpGPX\Analysis\TrackPointExtensionAnalyzer;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use phpGPX\Models\PointType;
@@ -25,7 +20,7 @@ class EngineTest extends TestCase
 		float $lat,
 		float $lon,
 		?float $ele = null,
-		?string $time = null
+		?string $time = null,
 	): Point {
 		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
@@ -39,18 +34,40 @@ class EngineTest extends TestCase
 	{
 		$order = [];
 
-		$a1 = new class($order) extends AbstractPointAnalyzer {
-			public function __construct(private array &$order) {}
-			public function begin(): void { $this->order[] = 'a1:begin'; }
-			public function visit(Point $current, ?Point $previous): void { $this->order[] = 'a1:visit'; }
-			public function end(Stats $stats): void { $this->order[] = 'a1:end'; }
+		$a1 = new class ($order) extends AbstractPointAnalyzer {
+			public function __construct(private array &$order)
+			{
+			}
+			public function begin(): void
+			{
+				$this->order[] = 'a1:begin';
+			}
+			public function visit(Point $current, ?Point $previous): void
+			{
+				$this->order[] = 'a1:visit';
+			}
+			public function end(Stats $stats): void
+			{
+				$this->order[] = 'a1:end';
+			}
 		};
 
-		$a2 = new class($order) extends AbstractPointAnalyzer {
-			public function __construct(private array &$order) {}
-			public function begin(): void { $this->order[] = 'a2:begin'; }
-			public function visit(Point $current, ?Point $previous): void { $this->order[] = 'a2:visit'; }
-			public function end(Stats $stats): void { $this->order[] = 'a2:end'; }
+		$a2 = new class ($order) extends AbstractPointAnalyzer {
+			public function __construct(private array &$order)
+			{
+			}
+			public function begin(): void
+			{
+				$this->order[] = 'a2:begin';
+			}
+			public function visit(Point $current, ?Point $previous): void
+			{
+				$this->order[] = 'a2:visit';
+			}
+			public function end(Stats $stats): void
+			{
+				$this->order[] = 'a2:end';
+			}
 		};
 
 		$engine = (new Engine())->addAnalyzer($a1)->addAnalyzer($a2);

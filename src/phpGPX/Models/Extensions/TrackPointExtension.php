@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            26/08/16 17:05
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -15,13 +16,22 @@ namespace phpGPX\Models\Extensions;
  */
 class TrackPointExtension implements ExtensionInterface
 {
-	const NAMESPACE_URI = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2';
-	const SCHEMA_LOCATION = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd';
-	const TAG_NAME = 'TrackPointExtension';
+	public const NAMESPACE_URI = 'http://www.garmin.com/xmlschemas/TrackPointExtension/v2';
+	public const SCHEMA_LOCATION = 'http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd';
+	public const TAG_NAME = 'TrackPointExtension';
 
-	public static function getNamespace(): string { return self::NAMESPACE_URI; }
-	public static function getSchemaLocation(): string { return self::SCHEMA_LOCATION; }
-	public static function getTagName(): string { return self::TAG_NAME; }
+	public static function getNamespace(): string
+	{
+		return self::NAMESPACE_URI;
+	}
+	public static function getSchemaLocation(): string
+	{
+		return self::SCHEMA_LOCATION;
+	}
+	public static function getTagName(): string
+	{
+		return self::TAG_NAME;
+	}
 
 	/** Air temperature in degrees Celsius. */
 	public ?float $aTemp = null;
@@ -58,6 +68,6 @@ class TrackPointExtension implements ExtensionInterface
 			'speed' => $this->speed,
 			'course' => $this->course,
 			'bearing' => $this->bearing,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 	}
 }

@@ -34,7 +34,7 @@ class XmlRoundTripTest extends TestCase
 			$this->assertEqualsWithDelta(
 				$original->waypoints[$i]->latitude,
 				$reloaded->waypoints[$i]->latitude,
-				0.0001
+				0.0001,
 			);
 			$this->assertEquals($original->waypoints[$i]->name, $reloaded->waypoints[$i]->name);
 		}
@@ -44,13 +44,13 @@ class XmlRoundTripTest extends TestCase
 			$this->assertEquals($original->tracks[$t]->name, $reloaded->tracks[$t]->name);
 			$this->assertCount(
 				count($original->tracks[$t]->segments),
-				$reloaded->tracks[$t]->segments
+				$reloaded->tracks[$t]->segments,
 			);
 
 			for ($s = 0; $s < count($original->tracks[$t]->segments); $s++) {
 				$this->assertCount(
 					count($original->tracks[$t]->segments[$s]->points),
-					$reloaded->tracks[$t]->segments[$s]->points
+					$reloaded->tracks[$t]->segments[$s]->points,
 				);
 			}
 		}
@@ -68,7 +68,7 @@ class XmlRoundTripTest extends TestCase
 			$this->assertEquals($original->routes[$r]->name, $reloaded->routes[$r]->name);
 			$this->assertCount(
 				count($original->routes[$r]->points),
-				$reloaded->routes[$r]->points
+				$reloaded->routes[$r]->points,
 			);
 
 			for ($p = 0; $p < count($original->routes[$r]->points); $p++) {
@@ -101,7 +101,7 @@ class XmlRoundTripTest extends TestCase
 			$this->assertEqualsWithDelta(
 				$origSeg->points[$i]->elevation,
 				$reloadedSeg->points[$i]->elevation,
-				0.01
+				0.01,
 			);
 		}
 	}
@@ -129,7 +129,7 @@ class XmlRoundTripTest extends TestCase
 		$this->assertEqualsWithDelta(
 			$origPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class)->hr,
 			$reloadedPoint->extensions->get(\phpGPX\Models\Extensions\TrackPointExtension::class)->hr,
-			0.1
+			0.1,
 		);
 	}
 
@@ -149,7 +149,7 @@ class XmlRoundTripTest extends TestCase
 		$this->assertEqualsWithDelta(
 			$origStats->cumulativeElevationGain,
 			$reloadedStats->cumulativeElevationGain,
-			0.01
+			0.01,
 		);
 	}
 }

@@ -37,7 +37,8 @@ class MovementAnalyzer extends AbstractPointAnalyzer
 
 	public function __construct(
 		private float $speedThreshold = 0.5,
-	) {}
+	) {
+	}
 
 	public function begin(): void
 	{

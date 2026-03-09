@@ -16,8 +16,8 @@ class EmailParserTest extends TestCase
 	protected function setUp(): void
 	{
 		$this->email = new Email();
-		$this->email->id = "jakub.dubec";
-		$this->email->domain = "gmail.com";
+		$this->email->id = 'jakub.dubec';
+		$this->email->domain = 'gmail.com';
 
 		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/email.xml');
 	}
@@ -37,9 +37,9 @@ class EmailParserTest extends TestCase
 
 	public function testToXML(): void
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$root = $document->createElement("document");
+		$root = $document->createElement('document');
 		$root->appendChild(EmailParser::toXML($this->email, $document));
 
 		$document->appendChild($root);
@@ -50,7 +50,8 @@ class EmailParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/email.json', json_encode($this->email->jsonSerialize())
+			self::FIXTURES_DIR . '/email.json',
+			json_encode($this->email->jsonSerialize()),
 		);
 	}
 }

@@ -80,7 +80,8 @@ class Engine
 	 */
 	public function __construct(
 		private bool $sortByTimestamp = false,
-	) {}
+	) {
+	}
 
 	/**
 	 * Register an analyzer to participate in the single-pass computation.
@@ -249,7 +250,7 @@ class Engine
 	 */
 	private function sortPoints(GpxFile $gpxFile): void
 	{
-		$compare = fn($a, $b) => $a->time <=> $b->time;
+		$compare = fn ($a, $b) => $a->time <=> $b->time;
 
 		foreach ($gpxFile->tracks as $track) {
 			foreach ($track->segments as $segment) {
@@ -288,7 +289,7 @@ class Engine
 	{
 		if ($stats->startedAt instanceof \DateTime && $stats->finishedAt instanceof \DateTime) {
 			$stats->duration = abs(
-				$stats->finishedAt->getTimestamp() - $stats->startedAt->getTimestamp()
+				$stats->finishedAt->getTimestamp() - $stats->startedAt->getTimestamp(),
 			);
 
 			if ($stats->duration != 0 && $stats->distance !== null) {

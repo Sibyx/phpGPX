@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DistanceCalculator.php
  *
@@ -21,7 +22,8 @@ class DistanceCalculator
 		private array $points,
 		private bool $applySmoothing = false,
 		private int $smoothingThreshold = 2,
-	) {}
+	) {
+	}
 
 	public function getRawDistance(): float
 	{

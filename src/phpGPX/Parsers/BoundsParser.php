@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            16/02/2017 22:09
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -27,12 +28,12 @@ abstract class BoundsParser
 			return null;
 		}
 
-        return new Bounds(
-            (float) $node['minlat'],
-            (float) $node['minlon'],
-            (float) $node['maxlat'],
-            (float) $node['maxlon']
-        );
+		return new Bounds(
+			(float) $node['minlat'],
+			(float) $node['minlon'],
+			(float) $node['maxlat'],
+			(float) $node['maxlon'],
+		);
 	}
 
 	/**

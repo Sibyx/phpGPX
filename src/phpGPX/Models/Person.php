@@ -12,7 +12,8 @@ class Person implements \JsonSerializable
 		public ?Email $email = null,
 		/** @var Link[]|null */
 		public ?array $links = null,
-	) {}
+	) {
+	}
 
 	public function jsonSerialize(): array
 	{
@@ -20,6 +21,6 @@ class Person implements \JsonSerializable
 			'name' => $this->name,
 			'email' => $this->email,
 			'links' => !empty($this->links) ? $this->links : null,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 	}
 }

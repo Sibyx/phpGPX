@@ -26,7 +26,7 @@ class Segment implements \JsonSerializable
 		$properties = array_filter([
 			'extensions' => $this->extensions,
 			'stats' => $this->stats,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 
 		return [
 			'type' => 'Feature',

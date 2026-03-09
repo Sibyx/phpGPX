@@ -48,7 +48,8 @@ class ElevationAnalyzer extends AbstractPointAnalyzer
 		private bool $applySmoothing = false,
 		private int $smoothingThreshold = 2,
 		private ?int $spikesThreshold = null,
-	) {}
+	) {
+	}
 
 	public function begin(): void
 	{

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            26/08/16 13:45
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -21,12 +22,12 @@ use phpGPX\Parsers\WaypointParser;
  */
 class phpGPX
 {
-	const JSON_FORMAT = 'json';
-	const XML_FORMAT = 'xml';
-	const GEOJSON_FORMAT = 'geojson';
+	public const JSON_FORMAT = 'json';
+	public const XML_FORMAT = 'xml';
+	public const GEOJSON_FORMAT = 'geojson';
 
-	const PACKAGE_NAME = 'phpGPX';
-	const VERSION = '2.0.0-beta.1';
+	public const PACKAGE_NAME = 'phpGPX';
+	public const VERSION = '2.0.0-beta.1';
 
 	public readonly Config $config;
 
@@ -108,6 +109,6 @@ class phpGPX
 	 */
 	public static function getSignature(): string
 	{
-		return sprintf("%s/%s", self::PACKAGE_NAME, self::VERSION);
+		return sprintf('%s/%s', self::PACKAGE_NAME, self::VERSION);
 	}
 }

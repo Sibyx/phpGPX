@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            30/08/16 17:12
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -14,7 +15,6 @@ use phpGPX\Helpers\DateTimeHelper;
  */
 class Stats implements \JsonSerializable
 {
-
 	/**
 	 * Distance in meters (m)
 	 * @var float|null
@@ -172,6 +172,6 @@ class Stats implements \JsonSerializable
 			'maxHeartRate' => $this->maxHeartRate,
 			'avgCadence' => $this->averageCadence,
 			'avgTemperature' => $this->averageTemperature,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 	}
 }

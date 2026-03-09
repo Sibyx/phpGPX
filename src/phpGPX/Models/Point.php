@@ -82,7 +82,8 @@ class Point implements \JsonSerializable
 
 	public function __construct(
 		private readonly PointType $pointType,
-	) {}
+	) {
+	}
 
 	public function getPointType(): PointType
 	{
@@ -111,7 +112,7 @@ class Point implements \JsonSerializable
 			'ageofdgpsdata' => $this->ageOfGpsData,
 			'dgpsid' => $this->dgpsid,
 			'extensions' => $this->extensions,
-		], fn($v) => $v !== null);
+		], fn ($v) => $v !== null);
 
 		return [
 			'type' => 'Feature',

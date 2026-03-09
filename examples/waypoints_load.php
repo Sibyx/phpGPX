@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Created            30/08/16 15:50
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
  */
 
-use phpGPX\phpGPX;
 use phpGPX\Config;
+use phpGPX\phpGPX;
 
 require_once '../vendor/autoload.php';
 
@@ -21,7 +22,7 @@ $retcode = 0;
 system("diff $origFile $outFile", $retcode);
 
 if ($retcode != 0) {
-	throw new \Exception("waypoint file incorrect");
+	throw new \Exception('waypoint file incorrect');
 } else {
 	print "waypoint test successful\n";
 }

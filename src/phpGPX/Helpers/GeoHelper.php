@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            30/08/16 17:27
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -15,7 +16,7 @@ use phpGPX\Models\Point;
  */
 abstract class GeoHelper
 {
-	const EARTH_RADIUS = 6371000;
+	public const EARTH_RADIUS = 6371000;
 
 	/**
 	 * Returns distance in meters between two Points according to GPX coordinates.
@@ -25,7 +26,7 @@ abstract class GeoHelper
 	 * @return float
 	 */
 	public static function getRawDistance(Point $point1, Point $point2): float
-    {
+	{
 		$latFrom = deg2rad($point1->latitude);
 		$lonFrom = deg2rad($point1->longitude);
 		$latTo = deg2rad($point2->latitude);
@@ -46,7 +47,7 @@ abstract class GeoHelper
 	 * @return float
 	 */
 	public static function getRealDistance(Point $point1, Point $point2): float
-    {
+	{
 		$distance = self::getRawDistance($point1, $point2);
 
 		$elevation1 = $point1->elevation != null ? $point1->elevation : 0;

@@ -19,7 +19,7 @@ class BoundsParserTest extends TestCase
 			49.072489,
 			18.814543,
 			49.090543,
-			18.886939
+			18.886939,
 		);
 
 		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/bounds.xml');
@@ -42,9 +42,9 @@ class BoundsParserTest extends TestCase
 
 	public function testToXML(): void
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$root = $document->createElement("document");
+		$root = $document->createElement('document');
 		$root->appendChild(BoundsParser::toXML($this->bounds, $document));
 
 		$document->appendChild($root);

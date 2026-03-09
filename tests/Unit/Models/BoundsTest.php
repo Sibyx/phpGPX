@@ -16,7 +16,7 @@ class BoundsTest extends TestCase
 			49.072489,
 			18.814543,
 			49.090543,
-			18.886939
+			18.886939,
 		);
 	}
 

@@ -16,9 +16,9 @@ class LinkParserTest extends TestCase
 	protected function setUp(): void
 	{
 		$this->link = new Link();
-		$this->link->href = "https://jakubdubec.me";
-		$this->link->text = "Portfolio";
-		$this->link->type = "text/html";
+		$this->link->href = 'https://jakubdubec.me';
+		$this->link->text = 'Portfolio';
+		$this->link->type = 'text/html';
 
 		$this->file = simplexml_load_file(self::FIXTURES_DIR . '/link.xml');
 	}
@@ -37,9 +37,9 @@ class LinkParserTest extends TestCase
 
 	public function testToXML(): void
 	{
-		$document = new \DOMDocument("1.0", 'UTF-8');
+		$document = new \DOMDocument('1.0', 'UTF-8');
 
-		$root = $document->createElement("document");
+		$root = $document->createElement('document');
 		$root->appendChild(LinkParser::toXML($this->link, $document));
 
 		$document->appendChild($root);
@@ -50,7 +50,8 @@ class LinkParserTest extends TestCase
 	public function testToJSON(): void
 	{
 		$this->assertJsonStringEqualsJsonFile(
-			self::FIXTURES_DIR . '/link.json', json_encode($this->link->jsonSerialize())
+			self::FIXTURES_DIR . '/link.json',
+			json_encode($this->link->jsonSerialize()),
 		);
 	}
 }

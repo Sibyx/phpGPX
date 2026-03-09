@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created            16/02/2017 16:32
  * @author            Jakub Dubec <jakub.dubec@gmail.com>
@@ -17,36 +18,36 @@ class TrackPointExtensionParser extends AbstractParser implements ExtensionParse
 		return [
 			'atemp' => [
 				'name' => 'aTemp',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'wtemp' => [
 				'name' => 'wTemp',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'depth' => [
 				'name' => 'depth',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'hr' => [
 				'name' => 'hr',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'cad' => [
 				'name' => 'cad',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'speed' => [
 				'name' => 'speed',
-				'type' => 'float'
+				'type' => 'float',
 			],
 			'course' => [
 				'name' => 'course',
-				'type' => 'int'
+				'type' => 'int',
 			],
 			'bearing' => [
 				'name' => 'bearing',
-				'type' => 'int'
-			]
+				'type' => 'int',
+			],
 		];
 	}
 
@@ -61,13 +62,13 @@ class TrackPointExtensionParser extends AbstractParser implements ExtensionParse
 
 	public static function toXML(ExtensionInterface $extension, \DOMDocument &$document, string $prefix = 'gpxtpx'): \DOMElement
 	{
-		$node = $document->createElement(sprintf("%s:%s", $prefix, $extension::getTagName()));
+		$node = $document->createElement(sprintf('%s:%s', $prefix, $extension::getTagName()));
 
 		foreach (self::getAttributeMapper() as $key => $attribute) {
 			if (isset($extension->{$attribute['name']})) {
 				$child = $document->createElement(
-					sprintf("%s:%s", $prefix, $key),
-					$extension->{$attribute['name']}
+					sprintf('%s:%s', $prefix, $key),
+					$extension->{$attribute['name']},
 				);
 				$node->appendChild($child);
 			}

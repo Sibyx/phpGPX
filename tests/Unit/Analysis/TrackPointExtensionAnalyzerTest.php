@@ -28,7 +28,7 @@ class TrackPointExtensionAnalyzerTest extends TestCase
 		float $lon,
 		?float $hr = null,
 		?float $cad = null,
-		?float $aTemp = null
+		?float $aTemp = null,
 	): Point {
 		$p = new Point(PointType::Trackpoint);
 		$p->latitude = $lat;
