@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>phpGPX Documentation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .container { max-width: 600px; padding: 2rem; text-align: center; }
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .tagline { color: #666; margin-bottom: 2.5rem; font-size: 1.1rem; }
+    .versions { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .version-card {
+      display: block;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #333;
+      background: #fff;
+      border: 2px solid #e0e0e0;
+      transition: all 0.2s ease;
+      min-width: 200px;
+    }
+    .version-card:hover {
+      border-color: #009688;
+      box-shadow: 0 4px 12px rgba(0,150,136,0.15);
+      transform: translateY(-2px);
+    }
+    .version-card .ver { font-size: 1.5rem; font-weight: 700; }
+    .version-card .badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+    .badge-stable { background: #e8f5e9; color: #2e7d32; }
+    .badge-dev { background: #fff3e0; color: #e65100; }
+    .version-card .desc { color: #888; font-size: 0.9rem; margin-top: 0.5rem; }
+    .github {
+      margin-top: 2.5rem;
+      color: #999;
+      font-size: 0.85rem;
+    }
+    .github a { color: #009688; text-decoration: none; }
+    .github a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>phpGPX</h1>
+    <p class="tagline">A PHP library for reading, creating, and manipulating GPX files</p>
+    <div class="versions">
+      <a href="v1/" class="version-card">
+        <div class="ver">1.x <span class="badge badge-stable">stable</span></div>
+        <div class="desc">Current release</div>
+      </a>
+      <a href="develop/" class="version-card">
+        <div class="ver">2.x <span class="badge badge-dev">develop</span></div>
+        <div class="desc">Next major version</div>
+      </a>
+    </div>
+    <p class="github">
+      <a href="https://github.com/Sibyx/phpGPX">GitHub</a> &middot;
+      <a href="https://packagist.org/packages/sibyx/phpgpx">Packagist</a>
+    </p>
+  </div>
+</body>
+</html>
