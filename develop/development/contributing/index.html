@@ -1181,8 +1181,8 @@
 <li><code>tests/</code> - Test suite</li>
 <li><code>Unit/</code> - Unit tests for individual components</li>
 <li><code>Integration/</code> - Full file load/save round-trip tests</li>
-<li><code>fixtures/</code> - GPX test fixture files</li>
-<li><code>docs/</code> - Documentation (Daux.io)</li>
+<li><code>Fixtures/</code> - GPX and parser test fixture files</li>
+<li><code>docs/</code> - Documentation (mkdocs-material)</li>
 </ul>
 <h2 id="branches">Branches<a class="headerlink" href="#branches" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1195,7 +1195,21 @@
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>composer<span class="w"> </span>install
 </span></code></pre></div>
 <h2 id="code-style">Code style<a class="headerlink" href="#code-style" title="Permanent link">&para;</a></h2>
-<p>The project uses PSR-2 with <strong>tab indentation</strong> (configured in <code>.php-cs-fixer.php</code>).</p>
+<p>The project follows <strong>PSR-12</strong> with <strong>tab indentation</strong>, enforced by <a href="https://github.com/PHP-CS-Fixer/PHP-CS-Fixer">PHP CS Fixer</a> (configured in <code>.php-cs-fixer.php</code>).</p>
+<div class="language-bash highlight"><span class="filename">Bash</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Check for style violations (dry run)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>composer<span class="w"> </span>cs-fix<span class="w"> </span>--<span class="w"> </span>--dry-run
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Auto-fix all files</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>composer<span class="w"> </span>cs-fix
+</span></code></pre></div>
+<p>Key rules beyond PSR-12:</p>
+<ul>
+<li>Short array syntax (<code>[]</code> not <code>array()</code>)</li>
+<li>No unused imports</li>
+<li>Alphabetically ordered imports</li>
+<li>Single quotes for strings</li>
+<li>Trailing commas in multiline arguments, arrays, and parameters</li>
+</ul>
 
 
 
