@@ -171,11 +171,18 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
       
     </form>
     <div class="md-search__output">
@@ -287,6 +294,12 @@
   
   
     
+    
+      
+        
+      
+        
+      
     
     
     
@@ -406,6 +419,18 @@
   
   
     
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -852,6 +877,12 @@
   
     
     
+      
+        
+      
+        
+      
+    
     
     
       
@@ -968,6 +999,16 @@
   
   
     
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -1370,25 +1411,86 @@
           
             <div class="md-content" data-md-component="content">
               
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../loading-files/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Usage
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
               <article class="md-content__inner md-typeset">
                 
                   
 
 
   
+    <a href="https://github.com/Sibyx/phpGPX/edit/develop/docs/usage/statistics.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/Sibyx/phpGPX/raw/develop/docs/usage/statistics.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
+    </a>
   
 
 
 <h1 id="statistics">Statistics<a class="headerlink" href="#statistics" title="Permanent link">&para;</a></h1>
 <p>Statistics are calculated by <code>engine</code>. Models (<code>Track</code>, <code>Segment</code>, <code>Route</code>) are pure data containers — they do not calculate stats themselves.</p>
 <h2 id="enabling-statistics">Enabling statistics<a class="headerlink" href="#enabling-statistics" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="x">use phpGPX\phpGPX;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="x">use phpGPX\Analysis\Engine;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="x">$gpx = new phpGPX(engine: Engine::default());</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="x">$file = $gpx-&gt;load(&#39;track.gpx&#39;);</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="x">use phpGPX\phpGPX;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="x">use phpGPX\Analysis\Engine;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="x">$gpx = new phpGPX(engine: Engine::default());</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="x">$file = $gpx-&gt;load(&#39;track.gpx&#39;);</span>
+</span></code></pre></div>
 <p>Without <code>engine</code>, <code>$track-&gt;stats</code>, <code>$segment-&gt;stats</code>, and <code>$route-&gt;stats</code> will all be <code>null</code>.</p>
 <h2 id="available-statistics">Available statistics<a class="headerlink" href="#available-statistics" title="Permanent link">&para;</a></h2>
 <p>The <code>Stats</code> object provides:</p>
@@ -1495,106 +1597,106 @@
 </table>
 <p>Coordinate properties: <code>startedAtCoords</code>, <code>finishedAtCoords</code>, <code>minAltitudeCoords</code>, <code>maxAltitudeCoords</code> — each an array with <code>lat</code> and <code>lng</code> keys.</p>
 <h2 id="accessing-statistics">Accessing statistics<a class="headerlink" href="#accessing-statistics" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="x">use phpGPX\phpGPX;</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="x">use phpGPX\Analysis\Engine;</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="x">$gpx = new phpGPX(engine: Engine::default());</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="x">$file = $gpx-&gt;load(&#39;track.gpx&#39;);</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="x">foreach ($file-&gt;tracks as $track) {</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="x">    $stats = $track-&gt;stats;</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="x">    echo &quot;Distance: &quot; . round($stats-&gt;distance) . &quot; m\n&quot;;</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="x">    echo &quot;Real distance: &quot; . round($stats-&gt;realDistance) . &quot; m\n&quot;;</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="x">    echo &quot;Elevation gain: &quot; . round($stats-&gt;cumulativeElevationGain) . &quot; m\n&quot;;</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="x">    echo &quot;Duration: &quot; . gmdate(&quot;H:i:s&quot;, $stats-&gt;duration) . &quot;\n&quot;;</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="x">    echo &quot;Average speed: &quot; . round($stats-&gt;averageSpeed * 3.6, 1) . &quot; km/h\n&quot;;</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="x">    // Per-segment stats</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="x">    foreach ($track-&gt;segments as $i =&gt; $segment) {</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="x">        echo &quot;  Segment $i: &quot; . round($segment-&gt;stats-&gt;distance) . &quot; m\n&quot;;</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="x">    }</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="x">}</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="x">use phpGPX\phpGPX;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="x">use phpGPX\Analysis\Engine;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="x">$gpx = new phpGPX(engine: Engine::default());</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="x">$file = $gpx-&gt;load(&#39;track.gpx&#39;);</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="x">foreach ($file-&gt;tracks as $track) {</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="x">    $stats = $track-&gt;stats;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="x">    echo &quot;Distance: &quot; . round($stats-&gt;distance) . &quot; m\n&quot;;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="x">    echo &quot;Real distance: &quot; . round($stats-&gt;realDistance) . &quot; m\n&quot;;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="x">    echo &quot;Elevation gain: &quot; . round($stats-&gt;cumulativeElevationGain) . &quot; m\n&quot;;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="x">    echo &quot;Duration: &quot; . gmdate(&quot;H:i:s&quot;, $stats-&gt;duration) . &quot;\n&quot;;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="x">    echo &quot;Average speed: &quot; . round($stats-&gt;averageSpeed * 3.6, 1) . &quot; km/h\n&quot;;</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="x">    // Per-segment stats</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="x">    foreach ($track-&gt;segments as $i =&gt; $segment) {</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="x">        echo &quot;  Segment $i: &quot; . round($segment-&gt;stats-&gt;distance) . &quot; m\n&quot;;</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="x">    }</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="x">}</span>
+</span></code></pre></div>
 <h2 id="the-engine">The engine<a class="headerlink" href="#the-engine" title="Permanent link">&para;</a></h2>
 <p>The engine walks the GPX structure <strong>once</strong> and dispatches each point to all registered analyzers in a single pass. No redundant iteration.</p>
 <h3 id="quick-start-with-defaults">Quick start with defaults<a class="headerlink" href="#quick-start-with-defaults" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="x">$gpx = new phpGPX(engine: Engine::default());</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="x">$gpx = new phpGPX(engine: Engine::default());</span>
+</span></code></pre></div>
 <h3 id="customizing-via-the-factory">Customizing via the factory<a class="headerlink" href="#customizing-via-the-factory" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="x">$gpx = new phpGPX(engine: Engine::default(</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="x">    sortByTimestamp: true,</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="x">    applyElevationSmoothing: true,</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="x">    elevationSmoothingThreshold: 2,</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="x">    ignoreZeroElevation: true,</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="x">    speedThreshold: 1.0,            // m/s for movement detection</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="x">));</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="x">$gpx = new phpGPX(engine: Engine::default(</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="x">    sortByTimestamp: true,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="x">    applyElevationSmoothing: true,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="x">    elevationSmoothingThreshold: 2,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="x">    ignoreZeroElevation: true,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="x">    speedThreshold: 1.0,            // m/s for movement detection</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="x">));</span>
+</span></code></pre></div>
 <h3 id="building-manually">Building manually<a class="headerlink" href="#building-manually" title="Permanent link">&para;</a></h3>
 <p>For fine-grained control, register only the analyzers you need:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="x">use phpGPX\Analysis\Engine;</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="x">use phpGPX\Analysis\DistanceAnalyzer;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="x">use phpGPX\Analysis\ElevationAnalyzer;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="x">use phpGPX\Analysis\TimestampAnalyzer;</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="x">$engine = (new Engine(sortByTimestamp: true))</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="x">    -&gt;addAnalyzer(new DistanceAnalyzer())</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="x">    -&gt;addAnalyzer(new ElevationAnalyzer(applySmoothing: true))</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="x">    -&gt;addAnalyzer(new TimestampAnalyzer());</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="x">$gpx = new phpGPX(engine: $engine);</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="x">use phpGPX\Analysis\Engine;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="x">use phpGPX\Analysis\DistanceAnalyzer;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="x">use phpGPX\Analysis\ElevationAnalyzer;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="x">use phpGPX\Analysis\TimestampAnalyzer;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="x">$engine = (new Engine(sortByTimestamp: true))</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="x">    -&gt;addAnalyzer(new DistanceAnalyzer())</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="x">    -&gt;addAnalyzer(new ElevationAnalyzer(applySmoothing: true))</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="x">    -&gt;addAnalyzer(new TimestampAnalyzer());</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="x">$gpx = new phpGPX(engine: $engine);</span>
+</span></code></pre></div>
 <h2 id="built-in-analyzers">Built-in analyzers<a class="headerlink" href="#built-in-analyzers" title="Permanent link">&para;</a></h2>
 <h3 id="distanceanalyzer">DistanceAnalyzer<a class="headerlink" href="#distanceanalyzer" title="Permanent link">&para;</a></h3>
 <p>Computes raw (2D) and real (3D) distance via the Haversine formula.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="x">new DistanceAnalyzer(</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="x">    applySmoothing: true,     // filter GPS jitter</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="x">    smoothingThreshold: 2,    // meters — ignore movements below this</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="x">)</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="x">new DistanceAnalyzer(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="x">    applySmoothing: true,     // filter GPS jitter</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="x">    smoothingThreshold: 2,    // meters — ignore movements below this</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="x">)</span>
+</span></code></pre></div>
 <h3 id="elevationanalyzer">ElevationAnalyzer<a class="headerlink" href="#elevationanalyzer" title="Permanent link">&para;</a></h3>
 <p>Computes cumulative elevation gain and loss.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="x">new ElevationAnalyzer(</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="x">    ignoreZeroElevation: true,          // treat 0 as missing data</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="x">    applySmoothing: true,               // filter noise</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="x">    smoothingThreshold: 2,              // meters — minimum change to count</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="x">    spikesThreshold: 50,                // meters — maximum change to count</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="x">)</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="x">new ElevationAnalyzer(</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="x">    ignoreZeroElevation: true,          // treat 0 as missing data</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="x">    applySmoothing: true,               // filter noise</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="x">    smoothingThreshold: 2,              // meters — minimum change to count</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="x">    spikesThreshold: 50,                // meters — maximum change to count</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="x">)</span>
+</span></code></pre></div>
 <h3 id="altitudeanalyzer">AltitudeAnalyzer<a class="headerlink" href="#altitudeanalyzer" title="Permanent link">&para;</a></h3>
 <p>Finds minimum and maximum altitude with coordinates.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="x">new AltitudeAnalyzer(ignoreZeroElevation: true)</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="x">new AltitudeAnalyzer(ignoreZeroElevation: true)</span>
+</span></code></pre></div>
 <h3 id="timestampanalyzer">TimestampAnalyzer<a class="headerlink" href="#timestampanalyzer" title="Permanent link">&para;</a></h3>
 <p>Records first and last non-null timestamps with coordinates. Duration, speed, and pace are derived by the engine.</p>
 <h3 id="boundsanalyzer">BoundsAnalyzer<a class="headerlink" href="#boundsanalyzer" title="Permanent link">&para;</a></h3>
 <p>Computes lat/lon bounding box at segment, track, and file level. File-level bounds include waypoints.</p>
 <h3 id="movementanalyzer">MovementAnalyzer<a class="headerlink" href="#movementanalyzer" title="Permanent link">&para;</a></h3>
 <p>Detects movement vs stopped intervals based on instantaneous speed.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="x">new MovementAnalyzer(speedThreshold: 1.0)  // 3.6 km/h — walking pace</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="x">new MovementAnalyzer(speedThreshold: 1.0)  // 3.6 km/h — walking pace</span>
+</span></code></pre></div>
 <h3 id="trackpointextensionanalyzer">TrackPointExtensionAnalyzer<a class="headerlink" href="#trackpointextensionanalyzer" title="Permanent link">&para;</a></h3>
 <p>Aggregates Garmin TrackPointExtension sensor data (heart rate, cadence, temperature).</p>
 <h2 id="standalone-usage">Standalone usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>You can also use <code>engine</code> directly on a <code>GpxFile</code> you built programmatically:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="x">$gpxFile = Engine::default()-&gt;process($gpxFile);</span>
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="x">$gpxFile = Engine::default()-&gt;process($gpxFile);</span>
+</span></code></pre></div>
 <h2 id="full-example">Full example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="x">use phpGPX\phpGPX;</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="x">use phpGPX\Analysis\Engine;</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="x">$gpx = new phpGPX(engine: Engine::default(</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="x">    sortByTimestamp: true,</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="x">    applyElevationSmoothing: true,</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="x">    elevationSmoothingThreshold: 2,</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="x">));</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="x">$file = $gpx-&gt;load(&#39;track.gpx&#39;);</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>flowchart LR
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    A[load / parse] --&gt; B[&quot;engine (sort + single pass)&quot;]
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    B --&gt; C[GpxFile with stats]
-</code></pre></div>
+<div class="language-php highlight"><span class="filename">PHP</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="x">use phpGPX\phpGPX;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="x">use phpGPX\Analysis\Engine;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="x">$gpx = new phpGPX(engine: Engine::default(</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="x">    sortByTimestamp: true,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="x">    applyElevationSmoothing: true,</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="x">    elevationSmoothingThreshold: 2,</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="x">));</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="x">$file = $gpx-&gt;load(&#39;track.gpx&#39;);</span>
+</span></code></pre></div>
+<div class="language-text highlight"><span class="filename">Text Only</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>flowchart LR
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    A[load / parse] --&gt; B[&quot;engine (sort + single pass)&quot;]
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    B --&gt; C[GpxFile with stats]
+</span></code></pre></div>
 
 
 
@@ -1646,11 +1748,13 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
     
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "content.code.annotate", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.path", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view", "search.suggest", "search.highlight", "search.share", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
