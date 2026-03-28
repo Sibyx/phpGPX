@@ -16,9 +16,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Configure phpunit matchers
-      #uses: mheap/phpunit-matcher-action@v1
-      # TODO(Peter): Simplify/revert once https://github.com/mheap/phpunit-matcher-action/pull/28 is merged and released...
-      uses: peternewman/phpunit-matcher-action@php-native-matches
+      uses: mheap/phpunit-matcher-action@v1
       with:
         base_path: /app
     - uses: php-actions/composer@v6
